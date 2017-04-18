@@ -255,8 +255,8 @@ let tasks = {
   humility: new Task("humility", "Practice Humility", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
   pride: new Task("pride", "Practice Pride", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
 
-  evil: new Task("evil", "Become Evil", 1, 1000, [{id: "sin", count: 5, keep: true}], 0, [{id: "sin", count: 1}]),
-  good: new Task("good", "Become Good", 1, 1000, [{id: "good", count: 5, kee: true}], 0, [{id: "sin", count: 1}]),
+  evil: new Task("evil", "Become Evil", 1, 1000, [{id: "sin", count: 5, keep: true}]),
+  good: new Task("good", "Become Good", 1, 1000, [{id: "good", count: 5, keep: true}]),
 
   village: new Task("village", "Live Together", 1, 5000, [{id: "human", count: 0}], 0, [{id: "CHOICE_RELIGION", hidden: true, count: 1}]),
   colony: new Task("colony", "Colonize Together", 1, 5000, [{id: "village", count: 0}, {id: "human", count: 0}]),

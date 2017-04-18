@@ -173,6 +173,7 @@ class Controls extends React.Component {
   onTaskFinish(task) {
     if(task.limit > 0)
       task.limit --;
+    task.action();
     task.times ++;
 
     // we haven't completed this task before

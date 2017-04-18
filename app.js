@@ -106,12 +106,36 @@ class Card extends React.Component {
 
   // rendering of the card
   render() {
+    let requirements = {};
+    let output = {[this.props.task.id]: 1};
+    
+    for(let i = 0; i < this.props.task.output.length; i++) {
+      let out = this.props.task.output[i];
+      output[out.id] += out.count;
+    }
+
+    for(let i = 0; i < this.props.task.requirements.length; i++) {
+      let req = this.props.task.requirements[i];
+      if(req.count >= 0)
+        requirements[req.id] = (requirements[req.id] || 0) + req.count;
+    }
+
     return (<div className="card" ref="card" style={{opacity: 0}}>
       <div className="card-info">
         <div className="card-content">
           <h2>
             {this.props.task.name}
           </h2>
+          <div className="card-requirements">
+            {Object.keys(output).map(id => output[id] != 0 && (
+              <span key={"output_" + id}
+                className={'card-requirement ' + (output[id] > 0 ? "create" : "remove")}>{id}</span>
+            ))}
+            {Object.keys(requirements).map(id => (
+              <span key={"requirement_" + id}
+                className="card-requirement needed">{(requirements[id] > 0 ? requirements[id] + " " : "") + id}</span>
+            ))}
+          </div>
         </div>
         <div className="card-button">
           <button onClick={this.start} className={this.state.started ? "started" : ""}>
@@ -147,12 +171,13 @@ let tasks = {
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
   molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "elements", count: 0}]),
+  compounds: new Task("compounds", "Fashion Compounds", 1, 2000, [{id: "molecules", count: 0}]),
 
   star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
   fusion: new Task("fusion", "Fuse Atoms", 8, 3*min, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
   planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
 
-  life: new Task("life", "Breathe Life", 1, 10000, [{id: "molecules", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
+  life: new Task("life", "Breathe Life", 1, 10000, [{id: "compounds", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
   cell: new Task("cell", "Split Cell", 8, 1000, [{id: "life", count: 0}]),
   movement: new Task("movement", "Kickstart Movement", 1, 5000, [{id: "cell", count: 2}]),
   senses: new Task("senses", "Sharpen Senses", 1, 5000, [{id: "cell", count: 2}]),

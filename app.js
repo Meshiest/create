@@ -153,6 +153,7 @@ class Controls extends React.Component {
     };
 
     this.onTaskStart = this.onTaskStart.bind(this);
+    this.tryToRemoveTasks = this.tryToRemoveTasks.bind(this);
     this.onTaskFinish = this.onTaskFinish.bind(this);
   }
 
@@ -166,6 +167,11 @@ class Controls extends React.Component {
         this.completed[req.id] -= req.count
     }
 
+    this.tryToRemoveTasks();
+  }
+
+  tryToRemoveTasks() {
+    // this is needed so we can reference this class where `this` would represent something else in a different scope
     let controls = this;
 
     // check if we need to remove some tasks
@@ -173,7 +179,6 @@ class Controls extends React.Component {
       if(task === parent) {
         return;
       }
-
       // check if this task has enough ingredients
       for(let j = 0; j < task.requirements.length; j++) {
         let req = task.requirements[j];
@@ -253,6 +258,8 @@ class Controls extends React.Component {
     this.setState({
       todo: this.state.todo
     });
+
+    this.tryToRemoveTasks();
   }
 
   render() {

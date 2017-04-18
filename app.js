@@ -139,7 +139,7 @@ let tasks = {
 
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
-  molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "matter", count: 0}]),
+  molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "elements", count: 0}]),
 
   star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
   fusion: new Task("fusion", "Fuse Atoms", 8, 60000, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
@@ -223,8 +223,13 @@ class Controls extends React.Component {
                 complete(){
                   card.hide();
 
+                  // make sure we're actually removing what we think we're removing
+                  let index = controls.state.todo.indexOf(task);
+                  if(index < 0)
+                    return;
+
                   // finally remove the task
-                  controls.state.todo.splice(controls.state.todo.indexOf(task), 1);
+                  controls.state.todo.splice(index, 1);
                   controls.setState({
                     todo: controls.state.todo
                   });

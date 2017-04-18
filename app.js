@@ -212,7 +212,7 @@ let tasks = {
   electricity: new Task("electricity", "Establish Electricity", 1, 2000, [{id: "energy", count: 0}]),
 
   magic: new Task("magic", "Originate Magic", 1, 60000, [{id: "light", count: 0}, {id: "electricity", count: -1}, {id: "matter", count: -1}], 0, [{id: "CHOICE_MAGIC", count: 1, hidden: true}]),
-  sourcery: new Task("sourcery", "Originate Sourcery", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}], 0, [{id: "CHOICE_SOURCERY", count: 1, hidden: true}]),
+  sorcery: new Task("sorcery", "Originate Sorcery", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}], 0, [{id: "CHOICE_SOURCERY", count: 1, hidden: true}]),
 
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
@@ -272,14 +272,14 @@ let tasks = {
   vampire: new Task("vampire", "Encounter Vampires", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: 0}, {id: "evil", count: 0}, {id: "CHOICE_MAGIC", count: 1, hidden: true}], 0, [{id: "ATTR_MONSTER", count: 1}]),
   demon: new Task("demon", "Encounter Demons", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: 0}, {id: "evil", count: 0}, {id: "CHOICE_MAGIC", count: 1, hidden: true}], 0, [{id: "ATTR_SOLDIER", count: 1}], 0, [{id: "ATTR_MONSTER", count: 1}]),
 
-  alchemist: new Task("alchemist", "Train Alchemists", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sourcery", count: 0}, {id: "CHOICE_SOURCERY", count: 1, hidden: true}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
-  werewolves: new Task("werewolves", "Encounter Werewolves", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sourcery", count: 0}, {id: "evil", count: 0}], 0, [{id: "ATTR_MONSTER", count: 1}]),
-  sourcerer: new Task("sourcerer", "Train Sourcerers", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sourcery", count: 0}, {id: "CHOICE_SOURCERY", count: 1, hidden: true}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
+  alchemist: new Task("alchemist", "Train Alchemists", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sorcery", count: 0}, {id: "CHOICE_SOURCERY", count: 1, hidden: true}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
+  werewolves: new Task("werewolves", "Encounter Werewolves", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sorcery", count: 0}, {id: "evil", count: 0}], 0, [{id: "ATTR_MONSTER", count: 1}]),
+  sorcerer: new Task("sorcerer", "Train Sorcerers", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sorcery", count: 0}, {id: "CHOICE_SOURCERY", count: 1, hidden: true}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
   
   blood: new Task("blood", "Kill Humans", 5, 500, [{id: "ATTR_MONSTER", count: 0, hidden: true}, {id: "evil", count: 0}], 0, [{id: "villany", count: 1}]),
 
-  science: new Task("science", "Further Research", 10, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sourcery", count: -1}], 0, [{id: "ATTR_SCIENCE", count: 1, hidden: true}]),
-  science2: new Task("science2", "Further Research", 10, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sourcery", count: -1}, {id: "ATTR_SCIENCE", count: 10, hidden: true}], 0,
+  science: new Task("science", "Further Research", 10, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sorcery", count: -1}], 0, [{id: "ATTR_SCIENCE", count: 1, hidden: true}]),
+  science2: new Task("science2", "Further Research", 10, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sorcery", count: -1}, {id: "ATTR_SCIENCE", count: 10, hidden: true}], 0,
     [{id: "science", count: 1}, {id: "ATTR_SCIENCE", count: 1, hidden: true}, {id: "science2", count: -1, hidden: true}]),
 
   metal: new Task("metal", "Research Metals", 1, 2000, [{id: "science", count: 1}]),

@@ -159,7 +159,7 @@ class Card extends React.Component {
     for(let i = 0; i < this.props.task.requirements.length; i++) {
       let req = this.props.task.requirements[i];
 
-      if(out.hidden)
+      if(req.hidden)
         continue;
 
       if(req.count >= 0)

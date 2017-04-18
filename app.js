@@ -137,7 +137,7 @@ let tasks = {
   molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "matter", count: 0}]),
 
   star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
-  fusion: new Task("fusion", "Fuse Atoms", 1, 30000, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
+  fusion: new Task("fusion", "Fuse Atoms", 8, 60000, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
   planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
 
   life: new Task("life", "Breathe Life", 1, 10000, [{id: "molecules", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),

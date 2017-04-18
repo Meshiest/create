@@ -3,12 +3,12 @@
 class Task {
   constructor(id, name, limit, duration, requirements, action) {
     this.name = name;
-    this.limit = limit;
-    this.duration = duration;
-    this.requirements = requirements;
+    this.limit = limit || 1;
+    this.duration = duration || 1000;
+    this.requirements = requirements || [];
     this.id = id;
     this.times = 0;
-    this.action = action;
+    this.action = action || ()=>{};
   }
 }
 

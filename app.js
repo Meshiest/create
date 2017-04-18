@@ -28,6 +28,8 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
 
+    this.started = false;
+    
     this.state = {
       progress: 0, // percent done
       duration: this.props.task.duration, // how long it takes to do (from task)
@@ -52,6 +54,7 @@ class Card extends React.Component {
 
   // called on the start button click, initiates animation
   start() {
+    this.started = true;
     this.setState({
       started: true,
       startTime: Date.now()
@@ -121,16 +124,26 @@ class Card extends React.Component {
 // All available tasks
 let tasks = {
   energy: new Task("energy", "Fabricate Energy", 1, 2000, []),
+
   light: new Task("light", "Devise Light", 1, 2000, [{id: "energy", count: 0}]),
   electricity: new Task("electricity", "Establish Electricity", 1, 2000, [{id: "energy", count: 0}]),
-  aura: new Task("aura", "Originate Aura", 1, 20000, [{id: "electricity", count: -1}, {id: "light", count: 0}, {id: "matter", count: -1}]),
-  magic: new Task("magic", "Originate Magic", 1, 20000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}]),
+
+  aura: new Task("aura", "Originate Aura", 1, 60000, [{id: "light", count: 0},{id: "electricity", count: -1},{id: "matter", count: -1}]),
+  magic: new Task("magic", "Originate Magic", 1, 60000, [{id: "electricity", count: 0},{id: "light", count: -1},{id: "matter", count: -1}]),
+
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
   molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "matter", count: 0}]),
+
   star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
+  fusion: new Task("fusion", "Fuse Atoms", 1, 30000, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
   planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
-  life: new Task("life", "Breathe Life", 1, 8000, [{id: "molecules", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
+
+  life: new Task("life", "Breathe Life", 1, 10000, [{id: "molecules", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
+  cell: new Task("cell", "Split Cell", 8, 1000, [{id: "life", count: 0}]),
+  movement: new Task("movement", "Kickstart Movement", 1, 5000, [{id: "cell", count: 2}]),
+  senses: new Task("senses", "Sharpen Senses", 1, 5000, [{id: "cell", count: 2}]),
+  complexity: new Task("complexity", "Develop Complexity", 1, 10000, [{id: "cell", count: 4}]),
 }
 
 // Initial task
@@ -179,10 +192,16 @@ class Controls extends React.Component {
       if(task === parent) {
         return;
       }
+      let ref = this.refs["task_" + task.id + "_" + task.times];
+      let card = $(ref.refs.card);
+
+      // we don't want to interrupt this!
+      if(ref.started)
+        return;
+
       // check if this task has enough ingredients
       for(let j = 0; j < task.requirements.length; j++) {
         let req = task.requirements[j];
-        let card = $(this.refs["task_" + task.id + "_" + task.times].refs.card);
 
         // we don't have enough of something or we're not supposed to have something
         if((controls.completed[req.id] || 0) < req.count || req.count == 0 && !controls.completed[req.id] || req.count < 0 && controls.completed[req.id]) {

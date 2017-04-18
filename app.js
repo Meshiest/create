@@ -121,8 +121,10 @@ class Card extends React.Component {
 // All available tasks
 let tasks = {
   energy: new Task("energy", "Create Energy", 1, 2000, [], ()=>{}),
-  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 1}], ()=>{}),
-  test: new Task("test", "Do Forever", -1, 1000, [], ()=>{}),
+  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 0}], ()=>{}),
+  electricity: new Task("electricity", "Create Electricity", 1, 2000, [{id: "energy", count: 0}], ()=>{}),
+  matter: new Task("matter", "Create Matter", 1, 2000, [{id: "energy", count: 0}], ()=>{}),
+  elements: new Task("elements", "Create Elements", 1, 2000, [{id: "matter", count: 0}], ()=>{}),
 }
 
 // Initial task
@@ -230,8 +232,9 @@ class Controls extends React.Component {
       let hasRequirements = true;
       for(let i = 0; i < task.requirements.length; i++) {
         let req = task.requirements[i];
+        
         // if we don't have enough or we're not supposed to have a resource
-        if((this.completed[req.id] || 0) < req.count || req.count < 0 && this.completed[req.id]) {
+        if((this.completed[req.id] || 0) < req.count || req.count == 0 && !this.completed[req.id] || req.count < 0 && this.completed[req.id]) {
           hasRequirements = false;
           break;
         }

@@ -211,8 +211,8 @@ let tasks = {
   light: new Task("light", "Devise Light", 1, 2000, [{id: "energy", count: 0}]),
   electricity: new Task("electricity", "Establish Electricity", 1, 2000, [{id: "energy", count: 0}]),
 
-  aura: new Task("aura", "Originate Aura", 1, 60000, [{id: "light", count: 0}, {id: "electricity", count: -1}, {id: "matter", count: -1}]),
-  mana: new Task("mana", "Originate Mana", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}]),
+  magic: new Task("magic", "Originate Magic", 1, 60000, [{id: "light", count: 0}, {id: "electricity", count: -1}, {id: "matter", count: -1}], 0, [{id: "CHOICE_MAGIC", count: 1, hidden: true}]),
+  sourcery: new Task("sourcery", "Originate Sourcery", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}], 0, [{id: "CHOICE_SOURCERY", count: 1, hidden: true}]),
 
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
@@ -236,36 +236,59 @@ let tasks = {
   plant: new Task("plant", "Grow Plants", 1, 10000, [{id: "complexity", count: 0}, {id: "cell", count: 1}, {id: "light", count: 0}]),
   fruit: new Task("fruit", "Fertilize Fruit", 1, 2000, [{id: "plant", count: 0}]),
   animal: new Task("animal", "Prototype Animals", 1, 2000, [{id: "fruit", count: 0}, {id: "cell", count: 1}, {id: "movement", count: 0}, {id: "senses", count: 0}]),
-  breed: new Task("breed", "Breed Animals", 5, 2000, [{id: "animal", count: 0}], false, [{id: "breed", count: -1}, {id: "animal", count: 1}]),
+  breed: new Task("breed", "Breed Animals", 5, 2000, [{id: "animal", count: 0}, {id: "villany", count: -1}, {id: "primates", count: -1}], 0, [{id: "breed", count: -1}, {id: "animal", count: 1}]),
+
+  meat: new Task("meat", "Elimiate Animals", 1, 500, [{id: "animal", count: 5}], 0, [{id: "villany", count: 1}, {id: "blood", count: 1}, {id: "ATTR_KILLER", count: 1, hidden: true}]),
+
   primates: new Task("primates", "Evolve Primates", 1, 10000, [{id: "animal", count: 5}]),
-  human: new Task("human", "First Humans", 1, 10000, [{id: "primates", count: 0}], 0, [{id: "CREDIT_HUMAN", hidden: true, count: 5}]),
+  human: new Task("human", "First Humans", 1, 10000, [{id: "primates", count: 0}], 0, [{id: "CREDIT_VALUES", hidden: true, count: 5}]),
 
-  chastity: new Task("chastity", "Practice Chastity", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  lust: new Task("lust", "Practice Lust", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
-  temperance: new Task("temperance", "Practice Temperance", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  gluttony: new Task("gluttony", "Practice Gluttony", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
-  charity: new Task("charity", "Practice Charity", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  greed: new Task("greed", "Practice Greed", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
-  diligence: new Task("diligence", "Practice Diligence", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  sloth: new Task("sloth", "Practice Sloth", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
-  forgiveness: new Task("forgiveness", "Practice Forgiveness", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  wrath: new Task("wrath", "Practice Wrath", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
-  kindness: new Task("kindness", "Practice Kindness", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  envy: new Task("envy", "Practice Envy", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
-  humility: new Task("humility", "Practice Humility", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
-  pride: new Task("pride", "Practice Pride", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_HUMAN", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  chastity: new Task("chastity", "Practice Chastity", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  lust: new Task("lust", "Practice Lust", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  temperance: new Task("temperance", "Practice Temperance", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  gluttony: new Task("gluttony", "Practice Gluttony", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  charity: new Task("charity", "Practice Charity", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  greed: new Task("greed", "Practice Greed", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  diligence: new Task("diligence", "Practice Diligence", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  sloth: new Task("sloth", "Practice Sloth", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  forgiveness: new Task("forgiveness", "Practice Forgiveness", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  wrath: new Task("wrath", "Practice Wrath", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  kindness: new Task("kindness", "Practice Kindness", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  envy: new Task("envy", "Practice Envy", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
+  humility: new Task("humility", "Practice Humility", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "virtue", count: 1}]),
+  pride: new Task("pride", "Practice Pride", -1, 1000, [{id: "human", count: 0}, {id: "CREDIT_VALUES", count: 1, hidden: true}], 0, [{id: "sin", count: 1}]),
 
-  evil: new Task("evil", "Become Evil", 1, 1000, [{id: "sin", count: 5, keep: true}]),
-  good: new Task("good", "Become Good", 1, 1000, [{id: "good", count: 5, keep: true}]),
+  evil: new Task("evil", "Become Evil", 1, min, [{id: "sin", count: 3, keep: true}, {id: "CREDIT_VALUES", count: -1, hidden: true}]),
+  good: new Task("good", "Become Good", 1, min, [{id: "good", count: 3, keep: true}, {id: "CREDIT_VALUES", count: -1, hidden: true}]),
 
   village: new Task("village", "Live Together", 1, 5000, [{id: "human", count: 0}], 0, [{id: "CHOICE_RELIGION", hidden: true, count: 1}]),
+  sex: new Task("sex", "Have Sex", 1, min, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "lust", count: 3, keep: true}, {id: "CREDIT_VALUES", count: -1, hidden: true}]),
   colony: new Task("colony", "Colonize Together", 1, 5000, [{id: "village", count: 0}, {id: "human", count: 0}]),
 
-  religion: new Task("religion", "Become Faithful", 1, 10000, [{id: "human", count: 0}, {id: "CHOICE_RELIGION", hidden: true, count: 1}, {id: "village", count: 0}, {id: "aura", count: -1}, {id: "atheism", count: -1}]),
+  religion: new Task("religion", "Become Faithful", 1, 10000, [{id: "human", count: 0}, {id: "CHOICE_RELIGION", hidden: true, count: 1}, {id: "village", count: 0}, {id: "alchemy", count: -1}, {id: "atheism", count: -1}]),
   atheism: new Task("atheism", "Reject Faith", 1, 10000, [{id: "human", count: 0},  {id: "CHOICE_RELIGION", hidden: true, count: 1}, {id: "village", count: 0}, {id: "religion", count: -1}]),
 
-  magic: new Task("magic", "Discover Magic", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "mana", count: 0}]),
-  mage: new Task("mage", "Train Mages", 1, 5000, [{id: "human", count: 0}, {id: "magic", count: 0}]),
+  mage: new Task("mage", "Train Mages", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: 0}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
+  vampire: new Task("vampire", "Encounter Vampires", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: 0}, {id: "evil", count: 0}, {id: "CHOICE_MAGIC", count: 1, hidden: true}], 0, [{id: "ATTR_MONSTER", count: 1}]),
+  demon: new Task("demon", "Encounter Demons", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: 0}, {id: "evil", count: 0}, {id: "CHOICE_MAGIC", count: 1, hidden: true}], 0, [{id: "ATTR_SOLDIER", count: 1}], 0, [{id: "ATTR_MONSTER", count: 1}]),
+
+  alchemist: new Task("alchemist", "Train Alchemists", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sourcery", count: 0}, {id: "CHOICE_SOURCERY", count: 1, hidden: true}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
+  werewolves: new Task("werewolves", "Encounter Werewolves", 1, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sourcery", count: 0}, {id: "evil", count: 0}], 0, [{id: "ATTR_MONSTER", count: 1}]),
+  sourcerer: new Task("sourcerer", "Train Sourcerers", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "sourcery", count: 0}, {id: "CHOICE_SOURCERY", count: 1, hidden: true}, {id: "good", count: 0}], 0, [{id: "ATTR_SOLDIER", count: 1}]),
+  
+  blood: new Task("blood", "Kill Humans", 5, 500, [{id: "ATTR_MONSTER", count: 0, hidden: true}, {id: "evil", count: 0}], 0, [{id: "villany", count: 1}]),
+
+  science: new Task("science", "Further Research", 10, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sourcery", count: -1}], 0, [{id: "ATTR_SCIENCE", count: 1, hidden: true}]),
+  science2: new Task("science2", "Further Research", 10, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sourcery", count: -1}, {id: "ATTR_SCIENCE", count: 10, hidden: true}], 0,
+    [{id: "science", count: 1}, {id: "ATTR_SCIENCE", count: 1, hidden: true}, {id: "science2", count: -1, hidden: 1}]),
+
+  metal: new Task("metal", "Research Metals", 1, 2000, [{id: "science", count: 1}]),
+  mechanisms: new Task("mechanisms", "Research Mechanisms", 1, 2000, [{id: "science", count: 2}, {id: "metal", count: 0}]),
+  alloys: new Task("alloys", "Research Alloys", 1, 2000, [{id: "science", count: 1}, {id: "metal", count: 0}]),
+  gun: new Task("gun", "Research Guns", 1, 20*sec, [{id: "science", count: 2}, {id: "metal", count: 0}, {id: "mechanisms", count: 0}, {id: "sin", count: 2, hidden: true}]),
+  vehicle: new Task("vehicle", "Research Vehicles", 1, 40*sec, [{id: "science", count: 2}, {id: "alloys", count: 0}, {id: "mechanisms", count: 0}]),
+  space: new Task("space", "Research Space", 1, min, [{id: "science", count: 4}, {id: "vehicle", count: 0}, {id: "starsystem", count: 0}]),
+
 }
 
 // Initial task

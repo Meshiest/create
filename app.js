@@ -156,7 +156,7 @@ let tasks = {
   cell: new Task("cell", "Split Cell", 8, 1000, [{id: "life", count: 0}]),
   movement: new Task("movement", "Kickstart Movement", 1, 5000, [{id: "cell", count: 2}]),
   senses: new Task("senses", "Sharpen Senses", 1, 5000, [{id: "cell", count: 2}]),
-  complexity: new Task("complexity", "Develop Complexity", 1, 10000, [{id: "cell", count: 4}]),
+  complexity: new Task("complexity", "Begin Complexity", 1, 10000, [{id: "cell", count: 4}]),
 }
 
 // Initial task

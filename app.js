@@ -12,8 +12,12 @@ class Task {
       if count < 0, the requirement means there must be none of specified task completed
       when keep is true resources will not be consumed
     action: A callback run when the task is completed
+    output:
+      [{id: "task id", count: "num extra output"}]
+      Adding the current task's id into output will double add the output
+      Making the output count negative will remove items from completed
    */
-  constructor(id, name, limit, duration, requirements, action) {
+  constructor(id, name, limit, duration, requirements, action, output) {
     this.name = name;
     this.limit = limit || 1;
     this.duration = duration || 1000;
@@ -21,6 +25,7 @@ class Task {
     this.id = id;
     this.times = 0;
     this.action = action || ()=>{};
+    this.output = output || [];
   }
 }
 
@@ -247,6 +252,12 @@ class Controls extends React.Component {
       this.completed[task.id] = 1;
     else // complete it again
       this.completed[task.id] ++;
+
+    // give potential for multiple outputs
+    for(let i = 0; i < task.output.length; i++) {
+      let output = task.output[i];
+      this.completed[output.id] = (this.completed[output.id] || 0) + output.count;
+    }
 
     // remove it
     this.state.todo.splice(this.state.todo.indexOf(task), 1);

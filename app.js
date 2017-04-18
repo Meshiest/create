@@ -29,6 +29,56 @@ class Task {
   }
 }
 
+// Separate the progress bar from the card so we don't have to redraw the entire card every frame
+class ProgressBar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      progress: 0,
+      duration: this.props.duration
+    };
+
+    this.start = this.start.bind(this);
+    this.tick = this.tick.bind(this);
+  }
+
+  // Starts rendering
+  start() {
+    this.setState({
+      started: true,
+      startTime: Date.now()
+    });
+    window.requestAnimationFrame(this.tick);
+  }
+
+  // animation tick, called until time is up
+  tick() {
+    let time = Date.now() - this.state.startTime;
+    let progress = Math.min(1, time / this.state.duration);
+
+    // show updated progress
+    this.setState({
+      progress: progress
+    });
+
+    // end if we are done and show an animation before calling onTaskFinish
+    if(progress == 1) {
+      this.props.onFinish();
+    } else {
+      // otherwise continue animating progress
+      window.requestAnimationFrame(this.tick);
+    }
+  }
+
+  render() {
+    return (<div className="card-progress">
+      <div className="card-progress-bar" style={{width: (this.state.progress*100)+"%"}}>
+      </div>
+    </div>);
+  }
+}
+
 // Card React Component
 class Card extends React.Component {
   constructor(props) {
@@ -44,7 +94,7 @@ class Card extends React.Component {
     };
 
     this.start = this.start.bind(this);
-    this.tick = this.tick.bind(this);
+    this.finish = this.finish.bind(this);
   }
 
   // show an animation when this card mounts
@@ -58,50 +108,32 @@ class Card extends React.Component {
     });
   }
 
-  // called on the start button click, initiates animation
+  // called on the start button click, starts the progress bar
   start() {
     this.started = true;
-    this.setState({
-      started: true,
-      startTime: Date.now()
-    });
     this.props.onTaskStart(this.props.task);
-    window.requestAnimationFrame(this.tick);
+    this.refs.progressBar.start();
   }
 
-  // animation tick, called until time is up
-  tick() {
-    let time = Date.now() - this.state.startTime;
-    let progress = Math.min(1, time / this.state.duration);
+  finish() {
     let comp = this;
-
-    // show updated progress
-    this.setState({
-      progress: progress
+    let card = $(this.refs.card);
+    card.animate({opacity: 0}, {
+      step(now, fx) {
+        card.css('transform', 'translateX('+(100-now*100)+"%)");
+      },
+      duration: "slow",
+      complete() {
+        card.animate({height: 0}, {
+          duration: "fast",
+          complete(){
+            card.hide();
+            console.log();
+            comp.props.onTaskFinish(comp.props.task);
+          }
+        });
+      }
     });
-
-    // end if we are done and show an animation before calling onTaskFinish
-    if(progress == 1) {
-      let card = $(this.refs.card);
-      card.animate({opacity: 0}, {
-        step(now, fx) {
-          card.css('transform', 'translateX('+(100-now*100)+"%)");
-        },
-        duration: "slow",
-        complete() {
-          card.animate({height: 0}, {
-            duration: "fast",
-            complete(){
-              card.hide();
-              comp.props.onTaskFinish(comp.props.task);
-            }
-          });
-        }
-      });
-    } else {
-      // otherwise continue animating progress
-      window.requestAnimationFrame(this.tick);
-    }
   }
 
   // rendering of the card
@@ -143,10 +175,7 @@ class Card extends React.Component {
           </button>
         </div>
       </div>
-      <div className="card-progress">
-        <div className="card-progress-bar" style={{width: (this.state.progress*100)+"%"}}>
-        </div>
-      </div>
+      <ProgressBar ref="progressBar" onFinish={this.finish} duration={this.state.duration} />
     </div>);
   }
 }

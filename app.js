@@ -34,9 +34,11 @@ class ProgressBar extends React.Component {
   constructor(props) {
     super(props);
 
+    this.duration = this.props.duration;
+    
     this.state = {
       progress: 0,
-      duration: this.props.duration
+      startTime: 0,
     };
 
     this.start = this.start.bind(this);
@@ -46,7 +48,6 @@ class ProgressBar extends React.Component {
   // Starts rendering
   start() {
     this.setState({
-      started: true,
       startTime: Date.now()
     });
     window.requestAnimationFrame(this.tick);
@@ -55,7 +56,7 @@ class ProgressBar extends React.Component {
   // animation tick, called until time is up
   tick() {
     let time = Date.now() - this.state.startTime;
-    let progress = Math.min(1, time / this.state.duration);
+    let progress = Math.min(1, time / this.duration);
 
     // show updated progress
     this.setState({
@@ -111,6 +112,10 @@ class Card extends React.Component {
   // called on the start button click, starts the progress bar
   start() {
     this.started = true;
+    this.setState({
+      started: true,
+      startTime: Date.now
+    })
     this.props.onTaskStart(this.props.task);
     this.refs.progressBar.start();
   }

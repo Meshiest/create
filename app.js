@@ -8,8 +8,9 @@ class Task {
     limit: Number of times task can be done, -1 for unlimited
     duration: How long it takes to do the task
     requirements: 
-      [{id: "task id", count: "num required times task was run"}]
+      [{id: "task id", count: "num required times task was run", keep: true/false}]
       if count < 0, the requirement means there must be none of specified task completed
+      when keep is true resources will not be consumed
     action: A callback run when the task is completed
    */
   constructor(id, name, limit, duration, requirements, action) {
@@ -29,7 +30,7 @@ class Card extends React.Component {
     super(props);
 
     this.started = false;
-    
+
     this.state = {
       progress: 0, // percent done
       duration: this.props.task.duration, // how long it takes to do (from task)
@@ -176,7 +177,7 @@ class Controls extends React.Component {
     // remove our resources
     for(let i = 0; i < parent.requirements.length; i++) {
       let req = parent.requirements[i];
-      if(req.count > 0)
+      if(req.count > 0 && !req.keep)
         this.completed[req.id] -= req.count
     }
 

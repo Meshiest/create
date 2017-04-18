@@ -227,7 +227,7 @@ let tasks = {
 }
 
 // Initial task
-let initial = [tasks.energy, tasks.animal];
+let initial = [tasks.energy];
 
 // Controls component: manages tasks
 class Controls extends React.Component {

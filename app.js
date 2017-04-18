@@ -280,7 +280,7 @@ let tasks = {
 
   science: new Task("science", "Further Research", 10, 5000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sourcery", count: -1}], 0, [{id: "ATTR_SCIENCE", count: 1, hidden: true}]),
   science2: new Task("science2", "Further Research", 10, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "magic", count: -1}, {id: "sourcery", count: -1}, {id: "ATTR_SCIENCE", count: 10, hidden: true}], 0,
-    [{id: "science", count: 1}, {id: "ATTR_SCIENCE", count: 1, hidden: true}, {id: "science2", count: -1, hidden: 1}]),
+    [{id: "science", count: 1}, {id: "ATTR_SCIENCE", count: 1, hidden: true}, {id: "science2", count: -1, hidden: true}]),
 
   metal: new Task("metal", "Research Metals", 1, 2000, [{id: "science", count: 1}]),
   mechanisms: new Task("mechanisms", "Research Mechanisms", 1, 2000, [{id: "science", count: 2}, {id: "metal", count: 0}]),

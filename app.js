@@ -1,6 +1,17 @@
 /* jshint esversion: 6 */
 
+// Task storage
 class Task {
+  /**
+    id: Task Id
+    name: Task Name
+    limit: Number of times task can be done, -1 for unlimited
+    duration: How long it takes to do the task
+    requirements: 
+      [{id: "task id", count: "num required times task was run"}]
+      if count < 0, the requirement means there must be none of specified task completed
+    action: A callback run when the task is completed
+   */
   constructor(id, name, limit, duration, requirements, action) {
     this.name = name;
     this.limit = limit || 1;
@@ -12,21 +23,23 @@ class Task {
   }
 }
 
+// Card React Component
 class Card extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      progress: 0,
-      duration: this.props.task.duration,
-      startTime: 0,
-      started: false
+      progress: 0, // percent done
+      duration: this.props.task.duration, // how long it takes to do (from task)
+      startTime: 0, // when the task was started
+      started: false // if the task was started
     };
 
     this.start = this.start.bind(this);
     this.tick = this.tick.bind(this);
   }
 
+  // show an animation when this card mounts
   componentDidMount() {
     let card = $(this.refs.card);
     card.animate({opacity: 1}, {
@@ -37,6 +50,7 @@ class Card extends React.Component {
     });
   }
 
+  // called on the start button click, initiates animation
   start() {
     this.setState({
       started: true,
@@ -46,15 +60,18 @@ class Card extends React.Component {
     window.requestAnimationFrame(this.tick);
   }
 
+  // animation tick, called until time is up
   tick() {
     let time = Date.now() - this.state.startTime;
     let progress = Math.min(1, time / this.state.duration);
     let comp = this;
 
+    // show updated progress
     this.setState({
       progress: progress
     });
 
+    // end if we are done and show an animation before calling onTaskFinish
     if(progress == 1) {
       let card = $(this.refs.card);
       card.animate({opacity: 0}, {
@@ -73,10 +90,12 @@ class Card extends React.Component {
         }
       });
     } else {
+      // otherwise continue animating progress
       window.requestAnimationFrame(this.tick);
     }
   }
 
+  // rendering of the card
   render() {
     return (<div className="card" ref="card" style={{opacity: 0}}>
       <div className="card-info">
@@ -99,32 +118,43 @@ class Card extends React.Component {
   }
 }
 
+// All available tasks
 let tasks = {
   energy: new Task("energy", "Create Energy", 1, 2000, [], ()=>{}),
-  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 1, consume: true}], ()=>{}),
+  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 1}], ()=>{}),
   test: new Task("test", "Do Forever", -1, 1000, [], ()=>{}),
 }
+
+// Initial task
 let initial = [tasks.energy];
 
+// Controls component: manages tasks
 class Controls extends React.Component {
   constructor(props) {
     super(props);
 
+    // list of all tasks
     this.tasks = tasks
+
+    // storage for completed tasks and how many times the tasks were completed
+    // {[taskId]: num}
     this.completed = {};
+
     this.state = {
-      todo: initial
+      todo: initial // initial tasks are displayed
     };
 
     this.onTaskStart = this.onTaskStart.bind(this);
     this.onTaskFinish = this.onTaskFinish.bind(this);
   }
 
+  // callback for when the start button is pressed on the card component
+  // consumes ingredients and removes unqualified tasks if necessary
   onTaskStart(parent) {
     // remove our resources
     for(let i = 0; i < parent.requirements.length; i++) {
       let req = parent.requirements[i];
-      if(req.consume)
+      if(req.count > 0)
         this.completed[req.id] -= req.count
     }
 
@@ -142,7 +172,7 @@ class Controls extends React.Component {
         let card = $(this.refs["task_" + task.id + "_" + task.times].refs.card);
 
         // we don't have enough of something
-        if(controls.completed[req.id] < req.count) {
+        if((controls.completed[req.id] || 0) < req.count) {
           // hide the task
           card.animate({opacity: 0}, {
             step(now, fx) {
@@ -170,9 +200,12 @@ class Controls extends React.Component {
     });
   }
 
+  // Called when the duration for a task is done
   onTaskFinish(task) {
+    // decrease the task if it's not an unlimited task
     if(task.limit > 0)
       task.limit --;
+
     task.action();
     task.times ++;
 
@@ -197,7 +230,8 @@ class Controls extends React.Component {
       let hasRequirements = true;
       for(let i = 0; i < task.requirements.length; i++) {
         let req = task.requirements[i];
-        if(this.completed[req.id] < req.count) {
+        // if we don't have enough or we're not supposed to have a resource
+        if((this.completed[req.id] || 0) < req.count || req.count < 0 && this.completed[req.id]) {
           hasRequirements = false;
           break;
         }

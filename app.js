@@ -101,7 +101,7 @@ class Card extends React.Component {
 
 let tasks = {
   energy: new Task("energy", "Create Energy", 1, 2000, [], ()=>{}),
-  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 1}], ()=>{}),
+  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 1, consume: true}], ()=>{}),
   test: new Task("test", "Do Forever", -1, 1000, [], ()=>{}),
 }
 let initial = [tasks.energy];
@@ -124,7 +124,8 @@ class Controls extends React.Component {
     // remove our resources
     for(let i = 0; i < parent.requirements.length; i++) {
       let req = parent.requirements[i];
-      this.completed[req.id] -= req.count
+      if(req.consume)
+        this.completed[req.id] -= req.count
     }
 
     let controls = this;

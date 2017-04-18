@@ -8,14 +8,15 @@ class Task {
     limit: Number of times task can be done, -1 for unlimited
     duration: How long it takes to do the task
     requirements: 
-      [{id: "task id", count: "num required times task was run", keep: true/false}]
+      [{id: "task id", count: "num required times task was run", keep: true/false, hidden: true/false}]
       if count < 0, the requirement means there must be none of specified task completed
       when keep is true resources will not be consumed
     action: A callback run when the task is completed
     output:
-      [{id: "task id", count: "num extra output"}]
+      [{id: "task id", count: "num extra output", hidden: true/false}]
       Adding the current task's id into output will double add the output
       Making the output count negative will remove items from completed
+
    */
   constructor(id, name, limit, duration, requirements, action, output) {
     this.name = name;
@@ -148,11 +149,19 @@ class Card extends React.Component {
     
     for(let i = 0; i < this.props.task.output.length; i++) {
       let out = this.props.task.output[i];
+
+      if(out.hidden)
+        continue;
+
       output[out.id] = (output[out.id] || 0) + out.count;
     }
 
     for(let i = 0; i < this.props.task.requirements.length; i++) {
       let req = this.props.task.requirements[i];
+
+      if(out.hidden)
+        continue;
+
       if(req.count >= 0)
         requirements[req.id] = (requirements[req.id] || 0) + req.count;
     }
@@ -213,6 +222,10 @@ let tasks = {
   star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
   fusion: new Task("fusion", "Fuse Atoms", 8, 3*min, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
   planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
+  starsystem: new Task("starsystem", "Arrange Systems", 1, 4000, [{id: "planet", count: 0}, {id: "star", count: 0}]),
+  galaxy: new Task("galaxy", "Spin Galaxies", 1, 4000, [{id: "starsystem", count: 0}]),
+  cluster: new Task("cluster", "Group Clusters", 1, 4000, [{id: "galaxy", count: 0}]),
+  supercluster: new Task("supercluster", "Cluster Superclusters", 1, 4000, [{id: "cluster", count: 0}]),
 
   life: new Task("life", "Breathe Life", 1, 10000, [{id: "compounds", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
   cell: new Task("cell", "Split Cell", 10, 1000, [{id: "life", count: 0}]),
@@ -221,9 +234,20 @@ let tasks = {
   complexity: new Task("complexity", "Begin Complexity", 1, 10000, [{id: "cell", count: 4}]),
 
   plant: new Task("plant", "Grow Plants", 1, 10000, [{id: "complexity", count: 0}, {id: "cell", count: 1}, {id: "light", count: 0}]),
-  fruit: new Task("fruit", "Fertilize Fruit", 1, 1000, [{id: "plant", count: 0}]),
-  animal: new Task("animal", "Prototype Animals", 1, 1000, [{id: "fruit", count: 0}, {id: "cell", count: 1}]),
-  breed: new Task("breed", "Breed Animals", 5, 1000, [{id: "animal", count: 0}], false, [{id: "breed", count: -1}, {id: "animal", count: 1}])
+  fruit: new Task("fruit", "Fertilize Fruit", 1, 2000, [{id: "plant", count: 0}]),
+  animal: new Task("animal", "Prototype Animals", 1, 2000, [{id: "fruit", count: 0}, {id: "cell", count: 1}, {id: "movement", count: 0}, {id: "senses", count: 0}]),
+  breed: new Task("breed", "Breed Animals", 5, 2000, [{id: "animal", count: 0}], false, [{id: "breed", count: -1}, {id: "animal", count: 1}]),
+  primates: new Task("primates", "Evolve Primates", 1, 10000, [{id: "animal", count: 5}]),
+  human: new Task("human", "First Humans", 1, 10000, [{id: "primates", count: 0}]),
+
+  village: new Task("village", "Live Together", 1, 5000, [{id: "human", count: 0}], 0, {id: "CHOICE_RELIGION", hidden: true, count: 1}),
+  colony: new Task("colony", "Colonize Together", 1, 5000, [{id: "village", count: 0}, {id: "human", count: 0}]),
+
+  religion: new Task("religion", "Become Faithful", 1, 10000, [{id: "human", count: 0}, {id: "CHOICE_RELIGION", hidden: true, count: 1}, {id: "village", count: 0}, {id: "aura", count: -1}, {id: "atheism", count: -1}]),
+  atheism: new Task("atheism", "Reject Faith", 1, 10000, [{id: "human", count: 0},  {id: "CHOICE_RELIGION", hidden: true, count: 1}, {id: "village", count: 0}, {id: "religion", count: -1}]),
+
+  magic: new Task("magic", "Discover Magic", 1, 20000, [{id: "human", count: 0}, {id: "village", count: 0}, {id: "mana", count: 0}]),
+  mage: new Task("mage", "Train Mages", 1, 5000, [{id: "human", count: 0}, {id: "magic", count: 0}]),
 }
 
 // Initial task

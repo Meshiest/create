@@ -120,11 +120,17 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  energy: new Task("energy", "Create Energy", 1, 2000, [], ()=>{}),
-  light: new Task("light", "Create Light", 1, 2000, [{id: "energy", count: 0}], ()=>{}),
-  electricity: new Task("electricity", "Create Electricity", 1, 2000, [{id: "energy", count: 0}], ()=>{}),
-  matter: new Task("matter", "Create Matter", 1, 2000, [{id: "energy", count: 0}], ()=>{}),
-  elements: new Task("elements", "Create Elements", 1, 2000, [{id: "matter", count: 0}], ()=>{}),
+  energy: new Task("energy", "Fabricate Energy", 1, 2000, []),
+  light: new Task("light", "Devise Light", 1, 2000, [{id: "energy", count: 0}]),
+  electricity: new Task("electricity", "Establish Electricity", 1, 2000, [{id: "energy", count: 0}]),
+  aura: new Task("aura", "Originate Aura", 1, 20000, [{id: "electricity", count: -1}, {id: "light", count: 0}, {id: "matter", count: -1}]),
+  magic: new Task("magic", "Originate Magic", 1, 20000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}]),
+  matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
+  elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
+  molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "matter", count: 0}]),
+  star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
+  planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
+  life: new Task("life", "Breathe Life", 1, 8000, [{id: "molecules", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
 }
 
 // Initial task
@@ -173,8 +179,8 @@ class Controls extends React.Component {
         let req = task.requirements[j];
         let card = $(this.refs["task_" + task.id + "_" + task.times].refs.card);
 
-        // we don't have enough of something
-        if((controls.completed[req.id] || 0) < req.count) {
+        // we don't have enough of something or we're not supposed to have something
+        if((controls.completed[req.id] || 0) < req.count || req.count == 0 && !controls.completed[req.id] || req.count < 0 && controls.completed[req.id]) {
           // hide the task
           card.animate({opacity: 0}, {
             step(now, fx) {
@@ -232,7 +238,7 @@ class Controls extends React.Component {
       let hasRequirements = true;
       for(let i = 0; i < task.requirements.length; i++) {
         let req = task.requirements[i];
-        
+
         // if we don't have enough or we're not supposed to have a resource
         if((this.completed[req.id] || 0) < req.count || req.count == 0 && !this.completed[req.id] || req.count < 0 && this.completed[req.id]) {
           hasRequirements = false;

@@ -35,7 +35,7 @@ class ProgressBar extends React.Component {
     super(props);
 
     this.duration = this.props.duration;
-    
+
     this.state = {
       progress: 0,
       startTime: 0,
@@ -148,7 +148,7 @@ class Card extends React.Component {
     
     for(let i = 0; i < this.props.task.output.length; i++) {
       let out = this.props.task.output[i];
-      output[out.id] += out.count;
+      output[out.id] = (output[out.id] || 0) + out.count;
     }
 
     for(let i = 0; i < this.props.task.requirements.length; i++) {
@@ -166,7 +166,10 @@ class Card extends React.Component {
           <div className="card-requirements">
             {Object.keys(output).map(id => output[id] != 0 && (
               <span key={"output_" + id}
-                className={'card-requirement ' + (output[id] > 0 ? "create" : "remove")}>{id}</span>
+                num={output[id]}
+                className={'card-requirement ' + (output[id] > 0 ? "create" : "remove")}>
+                  {(output[id] > 0 ? Math.abs(output[id]) + " " : "") + id}
+                </span>
             ))}
             {Object.keys(requirements).map(id => (
               <span key={"requirement_" + id}
@@ -200,7 +203,7 @@ let tasks = {
   electricity: new Task("electricity", "Establish Electricity", 1, 2000, [{id: "energy", count: 0}]),
 
   aura: new Task("aura", "Originate Aura", 1, 60000, [{id: "light", count: 0}, {id: "electricity", count: -1}, {id: "matter", count: -1}]),
-  magic: new Task("magic", "Originate Magic", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}]),
+  mana: new Task("mana", "Originate Mana", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}]),
 
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),
@@ -212,14 +215,19 @@ let tasks = {
   planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
 
   life: new Task("life", "Breathe Life", 1, 10000, [{id: "compounds", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),
-  cell: new Task("cell", "Split Cell", 8, 1000, [{id: "life", count: 0}]),
+  cell: new Task("cell", "Split Cell", 10, 1000, [{id: "life", count: 0}]),
   movement: new Task("movement", "Kickstart Movement", 1, 5000, [{id: "cell", count: 2}]),
   senses: new Task("senses", "Sharpen Senses", 1, 5000, [{id: "cell", count: 2}]),
   complexity: new Task("complexity", "Begin Complexity", 1, 10000, [{id: "cell", count: 4}]),
+
+  plant: new Task("plant", "Grow Plants", 1, 10000, [{id: "complexity", count: 0}, {id: "cell", count: 1}, {id: "light", count: 0}]),
+  fruit: new Task("fruit", "Fertilize Fruit", 1, 1000, [{id: "plant", count: 0}]),
+  animal: new Task("animal", "Prototype Animals", 1, 1000, [{id: "fruit", count: 0}, {id: "cell", count: 1}]),
+  breed: new Task("breed", "Breed Animals", 5, 1000, [{id: "animal", count: 0}], false, [{id: "breed", count: -1}, {id: "animal", count: 1}])
 }
 
 // Initial task
-let initial = [tasks.energy];
+let initial = [tasks.energy, tasks.animal];
 
 // Controls component: manages tasks
 class Controls extends React.Component {

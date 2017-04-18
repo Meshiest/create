@@ -127,6 +127,13 @@ class Card extends React.Component {
   }
 }
 
+// Time units
+let sec = 1000;
+let min = 60 * sec;
+let hour = 60 * min;
+let day = 24 * hour;
+let week = 7 * day;
+
 // All available tasks
 let tasks = {
   energy: new Task("energy", "Fabricate Energy", 1, 2000, []),
@@ -142,7 +149,7 @@ let tasks = {
   molecules: new Task("molecules", "Design Molecules", 1, 2000, [{id: "elements", count: 0}]),
 
   star: new Task("star", "Shape Stars", 1, 4000, [{id: "light", count: 0}, {id: "elements", count: 0}]),
-  fusion: new Task("fusion", "Fuse Atoms", 8, 60000, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
+  fusion: new Task("fusion", "Fuse Atoms", 8, 3*min, [{id: "star", count: 0}, {id: "electricity", count: 0}]),
   planet: new Task("planet", "Develop Planets", 1, 4000, [{id: "molecules", count: 0}, {id: "elements", count: 0}]),
 
   life: new Task("life", "Breathe Life", 1, 10000, [{id: "molecules", count: 0}, {id: "light", count: 0}, {id: "electricity", count: 0}]),

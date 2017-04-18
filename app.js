@@ -141,8 +141,8 @@ let tasks = {
   light: new Task("light", "Devise Light", 1, 2000, [{id: "energy", count: 0}]),
   electricity: new Task("electricity", "Establish Electricity", 1, 2000, [{id: "energy", count: 0}]),
 
-  aura: new Task("aura", "Originate Aura", 1, 60000, [{id: "light", count: 0},{id: "electricity", count: -1},{id: "matter", count: -1}]),
-  magic: new Task("magic", "Originate Magic", 1, 60000, [{id: "electricity", count: 0},{id: "light", count: -1},{id: "matter", count: -1}]),
+  aura: new Task("aura", "Originate Aura", 1, 60000, [{id: "light", count: 0}, {id: "electricity", count: -1}, {id: "matter", count: -1}]),
+  magic: new Task("magic", "Originate Magic", 1, 60000, [{id: "electricity", count: 0}, {id: "light", count: -1}, {id: "matter", count: -1}]),
 
   matter: new Task("matter", "Make Matter", 1, 2000, [{id: "energy", count: 0}]),
   elements: new Task("elements", "Forge Elements", 1, 2000, [{id: "matter", count: 0}]),

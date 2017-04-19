@@ -34,11 +34,18 @@ body > div {
 }
 
 .toolbar {
-  bottom: calc(100vh - 60px);
+  top: calc(-100vh + 60px);
   /*bottom: calc(0vh - 0px);*/
   left: 0;
   position: fixed;
   width: 100vw;
+}
+
+.inventory {
+  background-color: #eee;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  width: 100%;
 }
 
 .inventory-content {
@@ -48,7 +55,6 @@ body > div {
   flex-wrap: wrap;
   justify-content: center;
   max-width: 400px;
-  overflow: auto;
   padding: 10px;
 }
 
@@ -80,12 +86,6 @@ body > div {
   height: 60px;
   justify-content: center;
   margin: auto;
-}
-
-.inventory {
-  background-color: #eee;
-  height: calc(100vh - 60px);
-  width: 100%;
 }
 
 .card-container {

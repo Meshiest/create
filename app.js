@@ -467,14 +467,9 @@ class Controls extends React.Component {
 
   toggleInventory() {
     let show = this.showInventory = !this.showInventory;
-    let toolbar = $(this.refs.toolbar);
-    toolbar.animate({
-      top: !show ? -$('body').height() + 60 : 0
-    }, {
-      complete() {
-        if(!show)
-          toolbar.css('top', 'calc(-100vh + 60px)');
-      }
+    let inventory = $(this.refs.inventory);
+    inventory.animate({
+      top: !show ? "-100vh" : 0
     });
   }
 
@@ -483,16 +478,17 @@ class Controls extends React.Component {
       <div className="card-container">
         {this.state.todo.map((t, i) => <Card key={t.id + "_" + t.times} ref={"task_" + t.id + "_" + t.times} task={t} onTaskStart={this.onTaskStart} onTaskFinish={this.onTaskFinish}/>)}
       </div>
-      <div className="toolbar" ref="toolbar">
-        <div className="inventory">
-          <div className="inventory-content">
-            {Object.keys(this.state.completed).map(k => (
-              this.state.completed[k] > -1 && <span className="inventory-item" key={k}>
-                {this.state.completed[k] + " " + k}
-              </span>
-            ))}
-          </div>
+      <div className="inventory" ref="inventory">
+        <div className="inventory-content">
+          {!Object.keys(this.state.completed).length && <h2>Nothing Here Yet!</h2>}
+          {Object.keys(this.state.completed).map(k => (
+            this.state.completed[k] > -1 && <span className="inventory-item" key={k}>
+              {this.state.completed[k] + " " + k}
+            </span>
+          ))}
         </div>
+      </div>
+      <div className="toolbar">
         <div className="toolbar-content" onClick={this.toggleInventory}>
           <i className="material-icons">shopping_cart</i>
         </div>

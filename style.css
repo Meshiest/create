@@ -34,7 +34,7 @@ body > div {
 }
 
 .toolbar {
-  top: calc(-100vh + 60px);
+  top: 0;
   /*bottom: calc(0vh - 0px);*/
   left: 0;
   position: fixed;
@@ -42,20 +42,32 @@ body > div {
 }
 
 .inventory {
+  height: 100vh;
+  left: 0;
   background-color: #eee;
-  height: calc(100vh - 60px);
   overflow-y: auto;
-  width: 100%;
+  padding-top: 60px;
+  position: fixed;
+  top: -100vh;
+  width: 100vw;
 }
 
 .inventory-content {
   align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  flex-basis: 0;
   max-width: 400px;
   padding: 10px;
+  margin: 10px;
+}
+
+.inventory-content h2 {
+  color: #888;
 }
 
 .inventory-item {
@@ -103,11 +115,12 @@ body > div {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 10px;
+  margin: 0 10px 10px 10px;
 }
 
 .card:first-child {
   margin-top: 70px;
+  margin-bottom: 10px;
 }
 
 .card-info {
@@ -201,6 +214,7 @@ body > div {
   justify-content: center;
   text-transform: uppercase;
   transition: all 0.5s ease-out;
+  vertical-align: middle;
   width: 35px;
 }
 

@@ -469,10 +469,10 @@ class Controls extends React.Component {
     let show = this.showInventory = !this.showInventory;
     let toolbar = $(this.refs.toolbar);
     toolbar.animate({
-      top: show ? -$('body').height() + 60 : 0
+      top: !show ? -$('body').height() + 60 : 0
     }, {
       complete() {
-        if(show)
+        if(!show)
           toolbar.css('top', 'calc(-100vh + 60px)');
       }
     });

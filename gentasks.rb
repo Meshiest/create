@@ -119,7 +119,7 @@ raw = $things.map{|k, v| what_is k}.flatten
 base = raw.uniq.map{|t| "{id: \"#{t.downcase}\", count: #{raw.count(t)}}"}
 
 tasks = $things.map { |k, v|
-  "  #{k.downcase}: new Task(\"#{k.downcase}\", \"#{k}\", -1, #{500 + what_is(k).length * 500}, [#{v.map{|t| "{id: \"#{t.downcase}\", count: 1}"}.join(", ")}]),"
+  "  #{k.downcase}: new Task(\"#{k.downcase}\", \"#{k}\", -1, #{1000 + what_is(k).length * 1000}, [#{v.map{|t| "{id: \"#{t.downcase}\", count: 1}"}.join(", ")}]),"
 }.join("\n")
 
 puts """

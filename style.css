@@ -115,11 +115,11 @@ body > div {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 0 10px 10px 10px;
+  margin: 10px;
 }
 
 .card:first-child {
-  margin-top: 70px;
+  margin-top: 80px;
   margin-bottom: 10px;
 }
 

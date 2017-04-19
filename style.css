@@ -33,12 +33,81 @@ body > div {
   background: #000;
 }
 
+.toolbar {
+  bottom: calc(100vh - 60px);
+  /*bottom: calc(0vh - 0px);*/
+  left: 0;
+  position: fixed;
+  width: 100vw;
+}
+
+.inventory-content {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 400px;
+  overflow: auto;
+  padding: 10px;
+}
+
+.inventory-item {
+  align-items: center;
+  animation: fadeIn 1 0.5s ease;
+  background-color: #558B2F;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  height: 20px;
+  justify-content: center;
+  margin: 2px 2px 2px 2px;
+  padding: 0 5px 0 5px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.toolbar-content {
+  align-items: center;
+  background-color: #1E88E5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  justify-content: center;
+  margin: auto;
+}
+
+.inventory {
+  background-color: #eee;
+  height: calc(100vh - 60px);
+  width: 100%;
+}
+
+.card-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  max-width: 400px;
+}
+
 .card {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   margin: 10px;
+}
+
+.card:first-child {
+  margin-top: 70px;
 }
 
 .card-info {
@@ -67,21 +136,30 @@ body > div {
 
 .card-requirement {
   align-items: center;
-  color: #fff;
   border-radius: 5px;
+  color: #fff;
   display: flex;
   flex-direction: row;
   font-size: 12px;
   height: 20px;
   justify-content: center;
-  padding: 0 5px 0 5px;
   margin: 2px 2px 2px 2px;
+  padding: 0 5px 0 5px;
   text-align: center;
   text-transform: uppercase;
 }
 
 .card-requirement.create {
   background-color: #558B2F;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+  from {
+    opacity: 0;
+  }
 }
 
 .card-requirement.create::before {

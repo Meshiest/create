@@ -200,7 +200,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  elements: new Task("elements", "Create Elements", 1, 2000, [], 0, [{id: "elements", count: -1}, {id: "earth", count: 984}, {id: "air", count: 344}, {id: "fire", count: 731}, {id: "water", count: 911}]),
+  elements: new Task("elements", "Create Elements", 1, 2000, [], 0, [{id: "earth", count: 984}, {id: "air", count: 344}, {id: "fire", count: 731}, {id: "water", count: 911}]),
   dust: new Task("dust", "Dust", -1, 2000, [{id: "earth", count: 1}, {id: "air", count: 1}]),
   lava: new Task("lava", "Lava", -1, 2000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 2000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
@@ -325,17 +325,18 @@ class Controls extends React.Component {
     // list of all tasks
     this.tasks = tasks
 
-    // storage for completed tasks and how many times the tasks were completed
-    // {[taskId]: num}
-    this.completed = {};
-
+    this.showInventory = false;
+    
     this.state = {
-      todo: initial // initial tasks are displayed
+      todo: initial, // initial tasks are displayed
+      completed: {} // storage for completed tasks and how many times the tasks were completed
+        // {[taskId]: num}
     };
 
     this.onTaskStart = this.onTaskStart.bind(this);
     this.tryToRemoveTasks = this.tryToRemoveTasks.bind(this);
     this.onTaskFinish = this.onTaskFinish.bind(this);
+    this.toggleInventory = this.toggleInventory.bind(this);
   }
 
   // callback for when the start button is pressed on the card component
@@ -345,8 +346,10 @@ class Controls extends React.Component {
     for(let i = 0; i < parent.requirements.length; i++) {
       let req = parent.requirements[i];
       if(req.count > 0 && !req.keep)
-        this.completed[req.id] -= req.count
+        this.state.completed[req.id] -= req.count
     }
+
+    this.setState({completed: this.state.completed});
 
     this.tryToRemoveTasks();
   }
@@ -372,7 +375,7 @@ class Controls extends React.Component {
         let req = task.requirements[j];
 
         // we don't have enough of something or we're not supposed to have something
-        if((controls.completed[req.id] || 0) < req.count || req.count == 0 && !controls.completed[req.id] || req.count < 0 && controls.completed[req.id]) {
+        if((controls.state.completed[req.id] || 0) < req.count || req.count == 0 && !controls.state.completed[req.id] || req.count < 0 && controls.state.completed[req.id]) {
           // hide the task
           card.animate({opacity: 0}, {
             step(now, fx) {
@@ -415,15 +418,15 @@ class Controls extends React.Component {
     task.times ++;
 
     // we haven't completed this task before
-    if(!this.completed[task.id])
-      this.completed[task.id] = 1;
+    if(!this.state.completed[task.id])
+      this.state.completed[task.id] = 1;
     else // complete it again
-      this.completed[task.id] ++;
+      this.state.completed[task.id] ++;
 
     // give potential for multiple outputs
     for(let i = 0; i < task.output.length; i++) {
       let output = task.output[i];
-      this.completed[output.id] = (this.completed[output.id] || 0) + output.count;
+      this.state.completed[output.id] = (this.state.completed[output.id] || 0) + output.count;
     }
 
     // remove it
@@ -443,7 +446,7 @@ class Controls extends React.Component {
         let req = task.requirements[i];
 
         // if we don't have enough or we're not supposed to have a resource
-        if((this.completed[req.id] || 0) < req.count || req.count == 0 && !this.completed[req.id] || req.count < 0 && this.completed[req.id]) {
+        if((this.state.completed[req.id] || 0) < req.count || req.count == 0 && !this.state.completed[req.id] || req.count < 0 && this.state.completed[req.id]) {
           hasRequirements = false;
           break;
         }
@@ -453,17 +456,48 @@ class Controls extends React.Component {
         this.state.todo.push(task);
       }
     }
+
     this.setState({
-      todo: this.state.todo
+      todo: this.state.todo,
+      completed: this.state.completed
     });
 
     this.tryToRemoveTasks();
   }
 
+  toggleInventory() {
+    let show = this.showInventory = !this.showInventory;
+    let toolbar = $(this.refs.toolbar);
+    toolbar.animate({
+      bottom: show ? 0 : $('body').height() - 60
+    }, {
+      complete() {
+        if(!show)
+          toolbar.css('bottom', 'calc(100vh - 60px)');
+      }
+    });
+  }
+
   render() {
     return (<div>
-      {this.state.todo.map((t, i) => <Card key={t.id + "_" + t.times} ref={"task_" + t.id + "_" + t.times} task={t} onTaskStart={this.onTaskStart} onTaskFinish={this.onTaskFinish}/>)}
-    </div>)
+      <div className="card-container">
+        {this.state.todo.map((t, i) => <Card key={t.id + "_" + t.times} ref={"task_" + t.id + "_" + t.times} task={t} onTaskStart={this.onTaskStart} onTaskFinish={this.onTaskFinish}/>)}
+      </div>
+      <div className="toolbar" ref="toolbar">
+        <div className="inventory">
+          <div className="inventory-content">
+            {Object.keys(this.state.completed).map(k => (
+              this.state.completed[k] > -1 && <span className="inventory-item" key={k}>
+                {this.state.completed[k] + " " + k}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="toolbar-content" onClick={this.toggleInventory}>
+          <i className="material-icons">shopping_cart</i>
+        </div>
+      </div>
+    </div>);
   }
 }
 

@@ -230,6 +230,7 @@ button.started {
   transform: scale(0.8);
   opacity: 0;
 }
+
 button:hover {
   background-color: #1976D2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);

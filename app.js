@@ -25,6 +25,8 @@ class Task {
     this.requirements = requirements || [];
     this.id = id;
     this.times = 0;
+    this.started = false;
+    this.startTime = 0;
     this.action = action || ()=>{};
     this.output = output || [];
   }
@@ -47,9 +49,9 @@ class ProgressBar extends React.Component {
   }
 
   // Starts rendering
-  start() {
+  start(time) {
     this.setState({
-      startTime: Date.now()
+      startTime: time || Date.now()
     });
     window.requestAnimationFrame(this.tick);
   }
@@ -86,13 +88,12 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
 
-    this.started = false;
+    this.started = this.props.task.started;
 
     this.state = {
-      progress: 0, // percent done
       duration: this.props.task.duration, // how long it takes to do (from task)
-      startTime: 0, // when the task was started
-      started: false // if the task was started
+      startTime: this.props.task.startTime, // when the task was started
+      started: this.props.task.started // if the task was started
     };
 
     this.start = this.start.bind(this);
@@ -102,23 +103,32 @@ class Card extends React.Component {
   // show an animation when this card mounts
   componentDidMount() {
     let card = $(this.refs.card);
+    let comp = this;
     card.animate({opacity: 1}, {
       step(now, fx) {
         card.css('transform', 'translateX(-'+(100-now*100)+"%)");
       },
       duration: "slow",
+      complete() {
+        if(comp.state.started) {
+          comp.start(comp.state.startTime);
+        }
+      }
     });
   }
 
   // called on the start button click, starts the progress bar
-  start() {
-    this.started = true;
+  start(time) {
+    this.props.task.startTime = time || Date.now();
+    this.props.task.started = true;
+
     this.setState({
       started: true,
-      startTime: Date.now
-    })
+      startTime: time || Date.now()
+    });
+
     this.props.onTaskStart(this.props.task);
-    this.refs.progressBar.start();
+    this.refs.progressBar.start(time);
   }
 
   finish() {
@@ -134,7 +144,6 @@ class Card extends React.Component {
           duration: "fast",
           complete(){
             card.hide();
-            console.log();
             comp.props.onTaskFinish(comp.props.task);
           }
         });
@@ -187,7 +196,7 @@ class Card extends React.Component {
           </div>
         </div>
         <div className="card-button">
-          <button onClick={this.start} className={this.state.started ? "started" : ""}>
+          <button onClick={()=>{this.start()}} className={this.state.started ? "started" : ""}>
             <i className="material-icons">arrow_forward</i>
           </button>
         </div>
@@ -200,7 +209,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 0}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
@@ -495,14 +504,52 @@ let initial = [tasks.things];
    Frontier (661 raw, 584 steps)
  */
 
+$(document).ready(() => {
+  // Make sure we can store things
+  if(typeof Storage === "undefined")
+    return;
 
-// Game Loading Logic
-tasks.__loaded_game = new Task("__loaded_game", "Load Game", 1, 5000, [{id: "__start", count: 1}], ()=>{
+  // Game Loading Logic
+  let saveData;
+  // make sure we can parse the json
+  try {
+    saveData = JSON.parse(localStorage.CreateSaveData);
+  } catch (e) {
+    console.log("Error Loading Save");
+    console.error(e);
+    return;
+  }
 
+  // Create our load game task
+  tasks.__loaded_game = new Task("__loaded_game", "Load Game", 1, 5000, [{id: "__start", count: 0}], ()=>{
+    let todo = [];
+    for(let i = 0; i < saveData.todo.length; i++) {
+      let item = saveData.todo[i];
+      if(!tasks[item.id])
+        continue;
+
+      let task = tasks[item.id];
+      task.started = item.started;
+      task.startTime = item.startTime;
+      task.times = saveData.times[item.id];
+
+      todo.push(task);
+    }
+
+    GameController.setState({
+      todo: todo,
+    });
+  }, Object.keys(saveData.completed).map(t => ({id: t, count: saveData.completed[t]})));
+
+  GameController.state.todo.push(tasks.__loaded_game);
+
+  GameController.setState({
+    todo: GameController.state.todo
+  })
 });
+
 hidden.__loaded_game = 1;
 hidden.__start = 1;
-initial.push(tasks.__loaded_game);
 
 // Controls component: manages tasks
 class Controls extends React.Component {
@@ -555,7 +602,7 @@ class Controls extends React.Component {
       let card = $(ref.refs.card);
 
       // we don't want to interrupt this!
-      if(ref.started)
+      if(task.started)
         return;
 
       // check if this task has enough ingredients
@@ -603,6 +650,8 @@ class Controls extends React.Component {
       task.limit --;
 
     task.action();
+    task.started = false;
+    task.startTime = 0;
     task.times ++;
 
     // we haven't completed this task before
@@ -662,7 +711,34 @@ class Controls extends React.Component {
   }
 
   saveGame() {
+    // Can't save to storage
+    if(typeof Storage === "undefined") {
+      $(this.refs.saveButton).shake();
+      return;
+    }
 
+    // Generate save data blob
+    let comp = this;
+    let saveData = {
+      completed: this.state.completed,
+      todo: this.state.todo.map(t => {
+        let ref = comp.refs["task_" + t.id + "_" + t.times];
+        return {id: t.id, started: ref.started, startTime: ref.state.startTime };
+      })
+    };
+    saveData.times = {};
+    Object.keys(tasks).forEach(t => {
+      saveData.times[t] = tasks[t].times;
+    });
+    
+    // Save to storage
+    localStorage.CreateSaveData = JSON.stringify(saveData);
+
+    // Animate Button
+    let elem = $(this.refs.saveButton);
+    $(this.refs.saveButton).shake({direction: "up", times: 0.5, distance: 20});
+    
+    console.log("Saved Game");
   }
 
   render() {
@@ -672,9 +748,9 @@ class Controls extends React.Component {
       </div>
       <div className="inventory" ref="inventory">
         <div className="inventory-buttons">
-          <button onClick={this.saveGame}>
+          {this.state.completed.things && <button ref="saveButton" onClick={this.saveGame}>
             <i className="material-icons">save</i>
-          </button>
+          </button>}
         </div>
         <div className="inventory-content">
           {!Object.keys(this.state.completed).length && <h2>Nothing Here Yet!</h2>}

@@ -45,13 +45,13 @@ $things = {
   "Love" => ["Human", "Human", "Time"],
   "Children" => ["Sex", "Love", "Time"],
   "Abuse" => ["Alcoholic", "Children"],
-  "Hunter" => ["Human", "Weapon"],
+  "Hunter" => ["Human", "Spear"],
   "Ninja" => ["Hunter", "Assassin"],
   "Ninjutsu" => ["Ninja", "Magic"],
   "Katana" => ["Weapon", "Tools"],
   "Clay" => ["Swamp", "Sand"],
   "Golem" => ["Life", "Clay"],
-  "Warrior" => ["Hunter", "Weapon"],
+  "Warrior" => ["Human", "Weapon"],
   "Armor" => ["Tools", "Metal", "Leather"],
   "Knight" => ["Armor", "Warrior"],
   "Hero" => ["Knight", "Dragon", "Light"],
@@ -164,7 +164,7 @@ $things = {
   "Computer" => ["Processor", "Lamp"],
   "Internet" => ["Science", "Computer", "Computer", "Human", "Human"],
   "Camera" => ["Mechanism", "Lense", "Lamp"],
-  "Video" => ["Mechanism", "Camera"],
+  "Video" => ["Mechanism", "Camera", "Battery"],
   "Porn" => ["Sex", "Video"],
   "Pornhub" => ["Porn", "Internet"],
   "Boredom" => ["Human", "Time", "Time", "Time", "Time", "Time"],
@@ -180,18 +180,20 @@ $things = {
   "Space" => ["Rocket", "Human"],
   "Moon" => ["Space", "Flag"],
   "Flag" => ["Fabric", "Metal"],
-  "Rover" => ["Car", "Space", "Moon"],
+  "Rover" => ["Car", "Space", "Moon", "Battery"],
+  "Mars" => ["Curiosity", "Rover"],
   "Pillage" => ["Flag", "Village", "Army"],
   "Conquer" => ["Pillage", "Blood"],
   "Blood" => ["Human", "Weapon"],
   "Frontier" => ["Pillage", "Space"],
   "Flint" => ["Stone", "Sand"],
+  "Spear" => ["Flint", "Wood"],
   "Time" => ["Sand", "Glass"],
   "Anime" => ["Time", "Video", "Paper"],
   "Monk" => ["Human", "Intellect", "Time"],
-  "Watch" => ["Time", "Crystal", "Circuit"],
+  "Watch" => ["Time", "Crystal", "Circuit", "Battery"],
   "Tribe" => ["Human", "Human", "Human"],
-  "Village" => ["Warrior", "Tribe"],
+  "Village" => ["Warrior", "Hunter", "Tribe"],
   "Colony" => ["Tribe", "House"],
   "Army" => ["Warrior", "Hero"],
   "King" => ["Hero", "Royalty"],
@@ -210,6 +212,7 @@ $things = {
   "Bandage" => ["Fabric", "Blood"],
   "Nurse" => ["Human", "Love", "Bandage"],
   "Doctor" => ["Human", "Science", "Bandage"],
+  "Battery" => ["Energy", "Electricity", "Metal"],
   "Lust" => ["Sex"] * 7,
   "Gluttony" => ["Meat"] * 7,
   "Greed" => ["Money"] * 7,
@@ -265,16 +268,24 @@ $upgrades = {
     input: what_is("Human"),
     output: ["Human"],
   },
+  "Cloner" => {
+    cost: ["Breeder", "Sex", "Scientist", "Beaker"],
+    action: "Clone Human",
+    uses: -1,
+    speed: 750,
+    input: what_is("Human") * 5,
+    output: ["Human"] * 5,
+  },
   "Farmer" => {
-    cost: ["Science", "Tools", "Tree", "Animal", "Seeds", "Seeds", "Beaker"],
+    cost: ["Tools", "Field", "Animal", "Seeds", "Fertilizer"],
     action: "Farm Plants",
     uses: -1,
     speed: 750,
-    input: what_are(["Seeds", "Tree"]) * 5 + what_is("Animal") * 2,
-    output: ["Seeds", "Tree"] * 5 + ["Animal"] * 2,
+    input:  what_is("Seeds") + what_are(["Grass", "Tree"]) * 3 + what_is("Animal") * 2,
+    output: ["Seeds"] + ["Grass", "Tree"] * 3 + ["Animal"] * 2,
   },
   "Timekeeper" => {
-    cost: ["Magic", "Wizard", "Time", "Time", "Sand", "Sand", "Blood"],
+    cost: ["Magic", "Wizard", "Time", "Sand", "Blood"],
     action: "Rewind Time",
     uses: -1,
     speed: 1200,
@@ -286,8 +297,8 @@ $upgrades = {
     action: "Smith Tools",
     uses: -1,
     speed: 750,
-    input: what_is("Tools") * 10,
-    output: ["Tools"] * 10,
+    input: what_are(["Tools", "Weapon"]) * 3,
+    output: ["Tools", "Weapon"] * 3,
   },
   "Provider" => {
     cost: ["Internet", "Skyscraper", "FiberOptics"],
@@ -296,6 +307,14 @@ $upgrades = {
     speed: 750,
     input: what_is("Internet"),
     output: ["Internet"],
+  },
+  "Generator" => {
+    cost: ["Energy", "Mechanism", "Solarpanel", "Science", "Battery", "Electricity"],
+    action: "Generate Electricity",
+    uses: -1,
+    speed: 750,
+    input: what_is("Electricity") * 3 + what_is("Energy"),
+    output: ["Electricity"] * 3 + ["Energy"],
   },
   "Builder" => {
     cost: ["Mechanism", "Building", "Cement", "Tools", "Human"],
@@ -352,6 +371,11 @@ def how_long thing
   $things[thing] && (1 + $things[thing].map{|t|how_long(t)}.inject(&:+)) || 0
 end
 
+# If a thing is used in a recipe
+def is_used? thing
+  !$things.values.flatten.include? thing
+end
+
 # Add all the upgrade roots as things
 $upgrades.each { |k, v|
   $things[k] = v[:cost]
@@ -395,10 +419,14 @@ let initial = [tasks.things];
 /* -- Things --
 
   Raw Counts:
-#{everything.uniq.map{|thing| "    #{thing}: #{everything.count(thing)}"}.join("\n")}
+#{everything.uniq.map{|thing| "    #{thing.rjust(5)}: #{everything.count(thing)}"}.join("\n")}
 
   Total Tasks: #{$things.length}
+
   Largest Tasks:
-#{$things.keys.sort{|a,b|how_long(b)-how_long(a)}[0..10].map{|a|"   #{a} (#{what_is(a).length} raw, #{how_long(a)} steps)"}.join("\n")}
+#{$things.keys.sort{|a,b|how_long(b)-how_long(a)}[0..3].map{|a|"#{a.rjust(15)} (#{what_is(a).length} raw, #{how_long(a)} steps)"}.join("\n")}
+
+  Shortest Ends:
+#{$things.keys.select{|t|is_used? t}.sort{|a,b|how_long(a)-how_long(b)}[0..3].map{|a|"#{a.rjust(15)} (#{what_is(a).length} raw, #{how_long(a)} steps)"}.join("\n")}
  */
 """

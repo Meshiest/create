@@ -1,6 +1,6 @@
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 9006}, {id: "fire", count: 7460}, {id: "water", count: 8433}, {id: "air", count: 3083}, {id: "light", count: 3556}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
@@ -31,7 +31,7 @@ let tasks = {
   human: new Task("human", "Human", -1, 17000, [{id: "beast", count: 1}, {id: "life", count: 1}]),
   magic: new Task("magic", "Magic", -1, 20000, [{id: "energy", count: 1}, {id: "light", count: 1}, {id: "human", count: 1}]),
   sorcery: new Task("sorcery", "Sorcery", -1, 23000, [{id: "magic", count: 1}, {id: "stone", count: 1}]),
-  necromancer: new Task("necromancer", "Necromancer", -1, 116000, [{id: "skull", count: 1}, {id: "wizard", count: 1}]),
+  necromancer: new Task("necromancer", "Necromancer", -1, 92000, [{id: "skull", count: 1}, {id: "wizard", count: 1}]),
   wizard: new Task("wizard", "Wizard", -1, 36000, [{id: "magic", count: 1}, {id: "human", count: 1}]),
   demigod: new Task("demigod", "Demigod", -1, 39000, [{id: "wizard", count: 1}, {id: "energy", count: 1}, {id: "light", count: 1}]),
   vampire: new Task("vampire", "Vampire", -1, 57000, [{id: "human", count: 1}, {id: "blood", count: 1}]),
@@ -47,16 +47,16 @@ let tasks = {
   love: new Task("love", "Love", -1, 43000, [{id: "human", count: 2}, {id: "time", count: 1}]),
   children: new Task("children", "Children", -1, 85000, [{id: "sex", count: 1}, {id: "love", count: 1}, {id: "time", count: 1}]),
   abuse: new Task("abuse", "Abuse", -1, 104000, [{id: "alcoholic", count: 1}, {id: "children", count: 1}]),
-  hunter: new Task("hunter", "Hunter", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
-  ninja: new Task("ninja", "Ninja", -1, 109000, [{id: "hunter", count: 1}, {id: "assassin", count: 1}]),
-  ninjutsu: new Task("ninjutsu", "Ninjutsu", -1, 128000, [{id: "ninja", count: 1}, {id: "magic", count: 1}]),
+  hunter: new Task("hunter", "Hunter", -1, 54000, [{id: "human", count: 1}, {id: "spear", count: 1}]),
+  ninja: new Task("ninja", "Ninja", -1, 122000, [{id: "hunter", count: 1}, {id: "assassin", count: 1}]),
+  ninjutsu: new Task("ninjutsu", "Ninjutsu", -1, 141000, [{id: "ninja", count: 1}, {id: "magic", count: 1}]),
   katana: new Task("katana", "Katana", -1, 45000, [{id: "weapon", count: 1}, {id: "tools", count: 1}]),
   clay: new Task("clay", "Clay", -1, 7000, [{id: "swamp", count: 1}, {id: "sand", count: 1}]),
   golem: new Task("golem", "Golem", -1, 12000, [{id: "life", count: 1}, {id: "clay", count: 1}]),
-  warrior: new Task("warrior", "Warrior", -1, 65000, [{id: "hunter", count: 1}, {id: "weapon", count: 1}]),
+  warrior: new Task("warrior", "Warrior", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
   armor: new Task("armor", "Armor", -1, 116000, [{id: "tools", count: 1}, {id: "metal", count: 1}, {id: "leather", count: 1}]),
-  knight: new Task("knight", "Knight", -1, 180000, [{id: "armor", count: 1}, {id: "warrior", count: 1}]),
-  hero: new Task("hero", "Hero", -1, 193000, [{id: "knight", count: 1}, {id: "dragon", count: 1}, {id: "light", count: 1}]),
+  knight: new Task("knight", "Knight", -1, 156000, [{id: "armor", count: 1}, {id: "warrior", count: 1}]),
+  hero: new Task("hero", "Hero", -1, 169000, [{id: "knight", count: 1}, {id: "dragon", count: 1}, {id: "light", count: 1}]),
   mushroom: new Task("mushroom", "Mushroom", -1, 9000, [{id: "earth", count: 1}, {id: "weeds", count: 1}]),
   werewolf: new Task("werewolf", "Werewolf", -1, 68000, [{id: "beast", count: 1}, {id: "vampire", count: 1}]),
   seeds: new Task("seeds", "Seeds", -1, 10000, [{id: "sand", count: 1}, {id: "life", count: 1}]),
@@ -89,10 +89,10 @@ let tasks = {
   airport: new Task("airport", "Airport", -1, 252000, [{id: "airplane", count: 1}, {id: "building", count: 1}]),
   teacher: new Task("teacher", "Teacher", -1, 73000, [{id: "student", count: 1}, {id: "time", count: 1}]),
   student: new Task("student", "Student", -1, 63000, [{id: "human", count: 1}, {id: "curiosity", count: 1}]),
-  school: new Task("school", "School", -1, 276000, [{id: "building", count: 1}, {id: "teacher", count: 1}, {id: "student", count: 1}, {id: "book", count: 1}]),
+  school: new Task("school", "School", -1, 289000, [{id: "building", count: 1}, {id: "teacher", count: 1}, {id: "student", count: 1}, {id: "book", count: 1}]),
   paper: new Task("paper", "Paper", -1, 35000, [{id: "reed", count: 1}, {id: "tools", count: 1}]),
   leather: new Task("leather", "Leather", -1, 92000, [{id: "fabric", count: 1}, {id: "animal", count: 1}, {id: "light", count: 1}]),
-  book: new Task("book", "Book", -1, 87000, [{id: "feather", count: 1}, {id: "paper", count: 1}]),
+  book: new Task("book", "Book", -1, 100000, [{id: "feather", count: 1}, {id: "paper", count: 1}]),
   chariot: new Task("chariot", "Chariot", -1, 92000, [{id: "beast", count: 1}, {id: "cart", count: 1}]),
   alcoholic: new Task("alcoholic", "Alcoholic", -1, 20000, [{id: "vodka", count: 1}, {id: "human", count: 1}]),
   grass: new Task("grass", "Grass", -1, 13000, [{id: "moss", count: 1}, {id: "earth", count: 1}, {id: "light", count: 1}]),
@@ -108,15 +108,15 @@ let tasks = {
   fruit: new Task("fruit", "Fruit", -1, 13000, [{id: "tree", count: 1}, {id: "earth", count: 1}, {id: "water", count: 1}]),
   wine: new Task("wine", "Wine", -1, 33000, [{id: "grape", count: 1}, {id: "time", count: 1}]),
   reed: new Task("reed", "Reed", -1, 15000, [{id: "grass", count: 1}, {id: "swamp", count: 1}]),
-  feather: new Task("feather", "Feather", -1, 53000, [{id: "hunter", count: 1}, {id: "bird", count: 1}]),
+  feather: new Task("feather", "Feather", -1, 66000, [{id: "hunter", count: 1}, {id: "bird", count: 1}]),
   electricity: new Task("electricity", "Electricity", -1, 8000, [{id: "energy", count: 1}, {id: "metal", count: 1}, {id: "light", count: 1}]),
-  corpse: new Task("corpse", "Corpse", -1, 81000, [{id: "warrior", count: 1}, {id: "human", count: 1}]),
-  skull: new Task("skull", "Skull", -1, 81000, [{id: "warrior", count: 1}, {id: "human", count: 1}]),
+  corpse: new Task("corpse", "Corpse", -1, 57000, [{id: "warrior", count: 1}, {id: "human", count: 1}]),
+  skull: new Task("skull", "Skull", -1, 57000, [{id: "warrior", count: 1}, {id: "human", count: 1}]),
   pet: new Task("pet", "Pet", -1, 70000, [{id: "love", count: 1}, {id: "animal", count: 1}]),
-  dumb: new Task("dumb", "Dumb", -1, 82000, [{id: "air", count: 1}, {id: "skull", count: 1}]),
-  edgar: new Task("edgar", "Edgar", -1, 162000, [{id: "dumb", count: 1}, {id: "pet", count: 1}, {id: "beast", count: 1}]),
-  zombie: new Task("zombie", "Zombie", -1, 86000, [{id: "corpse", count: 1}, {id: "life", count: 1}]),
-  ghoul: new Task("ghoul", "Ghoul", -1, 166000, [{id: "zombie", count: 1}, {id: "corpse", count: 1}]),
+  dumb: new Task("dumb", "Dumb", -1, 58000, [{id: "air", count: 1}, {id: "skull", count: 1}]),
+  edgar: new Task("edgar", "Edgar", -1, 138000, [{id: "dumb", count: 1}, {id: "pet", count: 1}, {id: "beast", count: 1}]),
+  zombie: new Task("zombie", "Zombie", -1, 62000, [{id: "corpse", count: 1}, {id: "life", count: 1}]),
+  ghoul: new Task("ghoul", "Ghoul", -1, 118000, [{id: "zombie", count: 1}, {id: "corpse", count: 1}]),
   poison: new Task("poison", "Poison", -1, 29000, [{id: "mushroom", count: 1}, {id: "tools", count: 1}]),
   dart: new Task("dart", "Dart", -1, 53000, [{id: "poison", count: 1}, {id: "weapon", count: 1}]),
   assassin: new Task("assassin", "Assassin", -1, 69000, [{id: "dart", count: 1}, {id: "human", count: 1}]),
@@ -164,13 +164,13 @@ let tasks = {
   computer: new Task("computer", "Computer", -1, 36000, [{id: "processor", count: 1}, {id: "lamp", count: 1}]),
   internet: new Task("internet", "Internet", -1, 139000, [{id: "science", count: 1}, {id: "computer", count: 2}, {id: "human", count: 2}]),
   camera: new Task("camera", "Camera", -1, 30000, [{id: "mechanism", count: 1}, {id: "lense", count: 1}, {id: "lamp", count: 1}]),
-  video: new Task("video", "Video", -1, 41000, [{id: "mechanism", count: 1}, {id: "camera", count: 1}]),
-  porn: new Task("porn", "Porn", -1, 73000, [{id: "sex", count: 1}, {id: "video", count: 1}]),
-  pornhub: new Task("pornhub", "Pornhub", -1, 211000, [{id: "porn", count: 1}, {id: "internet", count: 1}]),
+  video: new Task("video", "Video", -1, 54000, [{id: "mechanism", count: 1}, {id: "camera", count: 1}, {id: "battery", count: 1}]),
+  porn: new Task("porn", "Porn", -1, 86000, [{id: "sex", count: 1}, {id: "video", count: 1}]),
+  pornhub: new Task("pornhub", "Pornhub", -1, 224000, [{id: "porn", count: 1}, {id: "internet", count: 1}]),
   boredom: new Task("boredom", "Boredom", -1, 67000, [{id: "human", count: 1}, {id: "time", count: 5}]),
   memes: new Task("memes", "Memes", -1, 205000, [{id: "internet", count: 1}, {id: "boredom", count: 1}]),
   fiberoptics: new Task("fiberoptics", "FiberOptics", -1, 157000, [{id: "light", count: 1}, {id: "circuit", count: 1}, {id: "glass", count: 1}, {id: "internet", count: 1}]),
-  youtube: new Task("youtube", "Youtube", -1, 189000, [{id: "video", count: 1}, {id: "time", count: 1}, {id: "internet", count: 1}]),
+  youtube: new Task("youtube", "Youtube", -1, 202000, [{id: "video", count: 1}, {id: "time", count: 1}, {id: "internet", count: 1}]),
   reddit: new Task("reddit", "Reddit", -1, 191000, [{id: "love", count: 1}, {id: "time", count: 1}, {id: "internet", count: 1}]),
   curiosity: new Task("curiosity", "Curiosity", -1, 47000, [{id: "time", count: 3}, {id: "human", count: 1}]),
   google: new Task("google", "Google", -1, 185000, [{id: "curiosity", count: 1}, {id: "internet", count: 1}]),
@@ -180,42 +180,45 @@ let tasks = {
   space: new Task("space", "Space", -1, 227000, [{id: "rocket", count: 1}, {id: "human", count: 1}]),
   moon: new Task("moon", "Moon", -1, 294000, [{id: "space", count: 1}, {id: "flag", count: 1}]),
   flag: new Task("flag", "Flag", -1, 68000, [{id: "fabric", count: 1}, {id: "metal", count: 1}]),
-  rover: new Task("rover", "Rover", -1, 693000, [{id: "car", count: 1}, {id: "space", count: 1}, {id: "moon", count: 1}]),
-  pillage: new Task("pillage", "Pillage", -1, 436000, [{id: "flag", count: 1}, {id: "village", count: 1}, {id: "army", count: 1}]),
-  conquer: new Task("conquer", "Conquer", -1, 476000, [{id: "pillage", count: 1}, {id: "blood", count: 1}]),
+  rover: new Task("rover", "Rover", -1, 706000, [{id: "car", count: 1}, {id: "space", count: 1}, {id: "moon", count: 1}, {id: "battery", count: 1}]),
+  mars: new Task("mars", "Mars", -1, 752000, [{id: "curiosity", count: 1}, {id: "rover", count: 1}]),
+  pillage: new Task("pillage", "Pillage", -1, 417000, [{id: "flag", count: 1}, {id: "village", count: 1}, {id: "army", count: 1}]),
+  conquer: new Task("conquer", "Conquer", -1, 457000, [{id: "pillage", count: 1}, {id: "blood", count: 1}]),
   blood: new Task("blood", "Blood", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
-  frontier: new Task("frontier", "Frontier", -1, 662000, [{id: "pillage", count: 1}, {id: "space", count: 1}]),
+  frontier: new Task("frontier", "Frontier", -1, 643000, [{id: "pillage", count: 1}, {id: "space", count: 1}]),
   flint: new Task("flint", "Flint", -1, 8000, [{id: "stone", count: 1}, {id: "sand", count: 1}]),
+  spear: new Task("spear", "Spear", -1, 38000, [{id: "flint", count: 1}, {id: "wood", count: 1}]),
   time: new Task("time", "Time", -1, 11000, [{id: "sand", count: 1}, {id: "glass", count: 1}]),
-  anime: new Task("anime", "Anime", -1, 85000, [{id: "time", count: 1}, {id: "video", count: 1}, {id: "paper", count: 1}]),
+  anime: new Task("anime", "Anime", -1, 98000, [{id: "time", count: 1}, {id: "video", count: 1}, {id: "paper", count: 1}]),
   monk: new Task("monk", "Monk", -1, 53000, [{id: "human", count: 1}, {id: "intellect", count: 1}, {id: "time", count: 1}]),
-  watch: new Task("watch", "Watch", -1, 26000, [{id: "time", count: 1}, {id: "crystal", count: 1}, {id: "circuit", count: 1}]),
+  watch: new Task("watch", "Watch", -1, 39000, [{id: "time", count: 1}, {id: "crystal", count: 1}, {id: "circuit", count: 1}, {id: "battery", count: 1}]),
   tribe: new Task("tribe", "Tribe", -1, 49000, [{id: "human", count: 3}]),
-  village: new Task("village", "Village", -1, 113000, [{id: "warrior", count: 1}, {id: "tribe", count: 1}]),
+  village: new Task("village", "Village", -1, 142000, [{id: "warrior", count: 1}, {id: "hunter", count: 1}, {id: "tribe", count: 1}]),
   colony: new Task("colony", "Colony", -1, 304000, [{id: "tribe", count: 1}, {id: "house", count: 1}]),
-  army: new Task("army", "Army", -1, 257000, [{id: "warrior", count: 1}, {id: "hero", count: 1}]),
-  king: new Task("king", "King", -1, 341000, [{id: "hero", count: 1}, {id: "royalty", count: 1}]),
-  royalty: new Task("royalty", "Royalty", -1, 149000, [{id: "sex", count: 1}, {id: "money", count: 1}]),
-  money: new Task("money", "Money", -1, 117000, [{id: "village", count: 1}, {id: "metal", count: 1}]),
-  empire: new Task("empire", "Empire", -1, 1119000, [{id: "conquer", count: 1}, {id: "colony", count: 1}, {id: "king", count: 1}]),
+  army: new Task("army", "Army", -1, 209000, [{id: "warrior", count: 1}, {id: "hero", count: 1}]),
+  king: new Task("king", "King", -1, 346000, [{id: "hero", count: 1}, {id: "royalty", count: 1}]),
+  royalty: new Task("royalty", "Royalty", -1, 178000, [{id: "sex", count: 1}, {id: "money", count: 1}]),
+  money: new Task("money", "Money", -1, 146000, [{id: "village", count: 1}, {id: "metal", count: 1}]),
+  empire: new Task("empire", "Empire", -1, 1105000, [{id: "conquer", count: 1}, {id: "colony", count: 1}, {id: "king", count: 1}]),
   drill: new Task("drill", "Drill", -1, 39000, [{id: "electricity", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}]),
   acorn: new Task("acorn", "Acorn", -1, 20000, [{id: "tree", count: 1}, {id: "seeds", count: 1}]),
   hair: new Task("hair", "Hair", -1, 110000, [{id: "human", count: 1}, {id: "time", count: 1}, {id: "string", count: 1}]),
   string: new Task("string", "String", -1, 84000, [{id: "fabric", count: 1}, {id: "tools", count: 1}]),
-  city: new Task("city", "City", -1, 875000, [{id: "building", count: 2}, {id: "school", count: 1}, {id: "skyscraper", count: 1}, {id: "car", count: 1}, {id: "house", count: 1}]),
+  city: new Task("city", "City", -1, 888000, [{id: "building", count: 2}, {id: "school", count: 1}, {id: "skyscraper", count: 1}, {id: "car", count: 1}, {id: "house", count: 1}]),
   bed: new Task("bed", "Bed", -1, 137000, [{id: "wool", count: 1}, {id: "fabric", count: 1}, {id: "wood", count: 1}]),
   sleep: new Task("sleep", "Sleep", -1, 153000, [{id: "bed", count: 1}, {id: "human", count: 1}]),
-  theft: new Task("theft", "Theft", -1, 133000, [{id: "human", count: 1}, {id: "money", count: 1}]),
-  depression: new Task("depression", "Depression", -1, 239000, [{id: "family", count: 1}, {id: "corpse", count: 1}]),
+  theft: new Task("theft", "Theft", -1, 162000, [{id: "human", count: 1}, {id: "money", count: 1}]),
+  depression: new Task("depression", "Depression", -1, 215000, [{id: "family", count: 1}, {id: "corpse", count: 1}]),
   bandage: new Task("bandage", "Bandage", -1, 104000, [{id: "fabric", count: 1}, {id: "blood", count: 1}]),
   nurse: new Task("nurse", "Nurse", -1, 162000, [{id: "human", count: 1}, {id: "love", count: 1}, {id: "bandage", count: 1}]),
   doctor: new Task("doctor", "Doctor", -1, 156000, [{id: "human", count: 1}, {id: "science", count: 1}, {id: "bandage", count: 1}]),
+  battery: new Task("battery", "Battery", -1, 14000, [{id: "energy", count: 1}, {id: "electricity", count: 1}, {id: "metal", count: 1}]),
   lust: new Task("lust", "Lust", -1, 225000, [{id: "sex", count: 7}]),
   gluttony: new Task("gluttony", "Gluttony", -1, 302000, [{id: "meat", count: 7}]),
-  greed: new Task("greed", "Greed", -1, 813000, [{id: "money", count: 7}]),
+  greed: new Task("greed", "Greed", -1, 1016000, [{id: "money", count: 7}]),
   sloth: new Task("sloth", "Sloth", -1, 1065000, [{id: "sleep", count: 7}]),
   wrath: new Task("wrath", "Wrath", -1, 393000, [{id: "vampire", count: 7}]),
-  envy: new Task("envy", "Envy", -1, 925000, [{id: "theft", count: 7}]),
+  envy: new Task("envy", "Envy", -1, 1128000, [{id: "theft", count: 7}]),
   pride: new Task("pride", "Pride", -1, 141000, [{id: "ego", count: 7}]),
   chastity: new Task("chastity", "Chastity", -1, 435000, [{id: "student", count: 7}]),
   abstinence: new Task("abstinence", "Abstinence", -1, 589000, [{id: "children", count: 7}]),
@@ -223,32 +226,36 @@ let tasks = {
   diligence: new Task("diligence", "Diligence", -1, 1086000, [{id: "doctor", count: 7}]),
   patience: new Task("patience", "Patience", -1, 365000, [{id: "monk", count: 7}]),
   kindness: new Task("kindness", "Kindness", -1, 1128000, [{id: "nurse", count: 7}]),
-  humility: new Task("humility", "Humility", -1, 1254000, [{id: "knight", count: 7}]),
-  jake: new Task("jake", "Jake", -1, 364000, [{id: "ego", count: 1}, {id: "love", count: 1}, {id: "hero", count: 1}, {id: "hair", count: 1}]),
+  humility: new Task("humility", "Humility", -1, 1086000, [{id: "knight", count: 7}]),
+  jake: new Task("jake", "Jake", -1, 340000, [{id: "ego", count: 1}, {id: "love", count: 1}, {id: "hero", count: 1}, {id: "hair", count: 1}]),
   david: new Task("david", "David", -1, 348000, [{id: "memes", count: 1}, {id: "teacher", count: 1}, {id: "science", count: 1}, {id: "computer", count: 1}]),
-  noah: new Task("noah", "Noah", -1, 485000, [{id: "sleep", count: 1}, {id: "depression", count: 1}, {id: "student", count: 1}, {id: "sex", count: 1}]),
-  isaac: new Task("isaac", "Isaac", -1, 419000, [{id: "reddit", count: 1}, {id: "computer", count: 1}, {id: "anime", count: 1}, {id: "hair", count: 1}]),
+  noah: new Task("noah", "Noah", -1, 461000, [{id: "sleep", count: 1}, {id: "depression", count: 1}, {id: "student", count: 1}, {id: "sex", count: 1}]),
+  isaac: new Task("isaac", "Isaac", -1, 432000, [{id: "reddit", count: 1}, {id: "computer", count: 1}, {id: "anime", count: 1}, {id: "hair", count: 1}]),
   miner: new Task("miner", "Miner", 1, 77000, [{id: "upgrade_miner", count: -1}, {id: "drill", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}, {id: "energy", count: 1}]),
   smelter: new Task("smelter", "Smelter", 1, 49000, [{id: "upgrade_smelter", count: -1}, {id: "mechanism", count: 1}, {id: "fire", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
   breeder: new Task("breeder", "Breeder", 1, 137000, [{id: "upgrade_breeder", count: -1}, {id: "human", count: 1}, {id: "beaker", count: 1}, {id: "sex", count: 1}, {id: "intellect", count: 1}, {id: "tools", count: 1}]),
-  farmer: new Task("farmer", "Farmer", 1, 154000, [{id: "upgrade_farmer", count: -1}, {id: "science", count: 1}, {id: "tools", count: 1}, {id: "tree", count: 1}, {id: "animal", count: 1}, {id: "seeds", count: 2}, {id: "beaker", count: 1}]),
-  timekeeper: new Task("timekeeper", "Timekeeper", 1, 123000, [{id: "upgrade_timekeeper", count: -1}, {id: "magic", count: 1}, {id: "wizard", count: 1}, {id: "time", count: 2}, {id: "sand", count: 2}, {id: "blood", count: 1}]),
-  smither: new Task("smither", "Smither", 1, 164000, [{id: "upgrade_smither", count: -1}, {id: "mechanism", count: 1}, {id: "metal", count: 1}, {id: "village", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  cloner: new Task("cloner", "Cloner", 1, 263000, [{id: "upgrade_cloner", count: -1}, {id: "breeder", count: 1}, {id: "sex", count: 1}, {id: "scientist", count: 1}, {id: "beaker", count: 1}]),
+  farmer: new Task("farmer", "Farmer", 1, 117000, [{id: "upgrade_farmer", count: -1}, {id: "tools", count: 1}, {id: "field", count: 1}, {id: "animal", count: 1}, {id: "seeds", count: 1}, {id: "fertilizer", count: 1}]),
+  timekeeper: new Task("timekeeper", "Timekeeper", 1, 109000, [{id: "upgrade_timekeeper", count: -1}, {id: "magic", count: 1}, {id: "wizard", count: 1}, {id: "time", count: 1}, {id: "sand", count: 1}, {id: "blood", count: 1}]),
+  smither: new Task("smither", "Smither", 1, 193000, [{id: "upgrade_smither", count: -1}, {id: "mechanism", count: 1}, {id: "metal", count: 1}, {id: "village", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
   provider: new Task("provider", "Provider", 1, 356000, [{id: "upgrade_provider", count: -1}, {id: "internet", count: 1}, {id: "skyscraper", count: 1}, {id: "fiberoptics", count: 1}]),
+  generator: new Task("generator", "Generator", 1, 87000, [{id: "upgrade_generator", count: -1}, {id: "energy", count: 1}, {id: "mechanism", count: 1}, {id: "solarpanel", count: 1}, {id: "science", count: 1}, {id: "battery", count: 1}, {id: "electricity", count: 1}]),
   builder: new Task("builder", "Builder", 1, 125000, [{id: "upgrade_builder", count: -1}, {id: "mechanism", count: 1}, {id: "building", count: 1}, {id: "cement", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
-  researcher: new Task("researcher", "Researcher", 1, 283000, [{id: "upgrade_researcher", count: -1}, {id: "scientist", count: 1}, {id: "book", count: 1}, {id: "curiosity", count: 1}, {id: "tools", count: 1}, {id: "beaker", count: 1}, {id: "science", count: 1}]),
-  trainer: new Task("trainer", "Trainer", 1, 173000, [{id: "upgrade_trainer", count: -1}, {id: "teacher", count: 1}, {id: "warrior", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  researcher: new Task("researcher", "Researcher", 1, 296000, [{id: "upgrade_researcher", count: -1}, {id: "scientist", count: 1}, {id: "book", count: 1}, {id: "curiosity", count: 1}, {id: "tools", count: 1}, {id: "beaker", count: 1}, {id: "science", count: 1}]),
+  trainer: new Task("trainer", "Trainer", 1, 149000, [{id: "upgrade_trainer", count: -1}, {id: "teacher", count: 1}, {id: "warrior", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
   engineer: new Task("engineer", "Engineer", 1, 95000, [{id: "upgrade_engineer", count: -1}, {id: "scientist", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}, {id: "circuit", count: 1}]),
   upgrade_miner: new Task("upgrade_miner", "Mine Stone", -1, 22500, [{id: "miner", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 10}, {id: "water", count: 10}], 0, [{id: "upgrade_miner", count: -1}, {id: "stone", count: 10}]),
   upgrade_smelter: new Task("upgrade_smelter", "Smelt Metal", -1, 30000, [{id: "smelter", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 20}, {id: "water", count: 10}], 0, [{id: "upgrade_smelter", count: -1}, {id: "metal", count: 10}]),
   upgrade_breeder: new Task("upgrade_breeder", "Breed Human", -1, 12000, [{id: "breeder", count: 0}, {id: "earth", count: 5}, {id: "water", count: 4}, {id: "fire", count: 3}, {id: "air", count: 2}, {id: "light", count: 2}], 0, [{id: "upgrade_breeder", count: -1}, {id: "human", count: 1}]),
-  upgrade_farmer: new Task("upgrade_farmer", "Farm Plants", -1, 111750, [{id: "farmer", count: 0}, {id: "earth", count: 43}, {id: "fire", count: 30}, {id: "water", count: 44}, {id: "air", count: 16}, {id: "light", count: 16}], 0, [{id: "upgrade_farmer", count: -1}, {id: "seeds", count: 5}, {id: "tree", count: 5}, {id: "animal", count: 2}]),
+  upgrade_cloner: new Task("upgrade_cloner", "Clone Human", -1, 60000, [{id: "cloner", count: 0}, {id: "earth", count: 25}, {id: "water", count: 20}, {id: "fire", count: 15}, {id: "air", count: 10}, {id: "light", count: 10}], 0, [{id: "upgrade_cloner", count: -1}, {id: "human", count: 5}]),
+  upgrade_farmer: new Task("upgrade_farmer", "Farm Plants", -1, 96750, [{id: "farmer", count: 0}, {id: "earth", count: 38}, {id: "fire", count: 21}, {id: "water", count: 35}, {id: "air", count: 13}, {id: "light", count: 22}], 0, [{id: "upgrade_farmer", count: -1}, {id: "seeds", count: 1}, {id: "grass", count: 3}, {id: "tree", count: 3}, {id: "animal", count: 2}]),
   upgrade_timekeeper: new Task("upgrade_timekeeper", "Rewind Time", -1, 60000, [{id: "timekeeper", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 15}, {id: "water", count: 20}, {id: "light", count: 5}], 0, [{id: "upgrade_timekeeper", count: -1}, {id: "time", count: 5}]),
-  upgrade_smither: new Task("upgrade_smither", "Smith Tools", -1, 150000, [{id: "smither", count: 0}, {id: "earth", count: 60}, {id: "water", count: 50}, {id: "fire", count: 50}, {id: "air", count: 20}, {id: "light", count: 20}], 0, [{id: "upgrade_smither", count: -1}, {id: "tools", count: 10}]),
+  upgrade_smither: new Task("upgrade_smither", "Smith Tools", -1, 99000, [{id: "smither", count: 0}, {id: "earth", count: 39}, {id: "water", count: 33}, {id: "fire", count: 36}, {id: "air", count: 12}, {id: "light", count: 12}], 0, [{id: "upgrade_smither", count: -1}, {id: "tools", count: 3}, {id: "weapon", count: 3}]),
   upgrade_provider: new Task("upgrade_provider", "Provide Internet", -1, 103500, [{id: "provider", count: 0}, {id: "earth", count: 31}, {id: "water", count: 34}, {id: "fire", count: 45}, {id: "air", count: 12}, {id: "light", count: 16}], 0, [{id: "upgrade_provider", count: -1}, {id: "internet", count: 1}]),
+  upgrade_generator: new Task("upgrade_generator", "Generate Electricity", -1, 17250, [{id: "generator", count: 0}, {id: "fire", count: 10}, {id: "air", count: 4}, {id: "earth", count: 3}, {id: "water", count: 3}, {id: "light", count: 3}], 0, [{id: "upgrade_generator", count: -1}, {id: "electricity", count: 3}, {id: "energy", count: 1}]),
   upgrade_builder: new Task("upgrade_builder", "Build Buildings", -1, 82500, [{id: "builder", count: 0}, {id: "earth", count: 30}, {id: "water", count: 38}, {id: "fire", count: 24}, {id: "air", count: 6}, {id: "light", count: 12}], 0, [{id: "upgrade_builder", count: -1}, {id: "building", count: 2}]),
   upgrade_researcher: new Task("upgrade_researcher", "Research Science", -1, 135000, [{id: "researcher", count: 0}, {id: "earth", count: 45}, {id: "water", count: 60}, {id: "fire", count: 45}, {id: "air", count: 10}, {id: "light", count: 20}], 0, [{id: "upgrade_researcher", count: -1}, {id: "science", count: 5}]),
-  upgrade_trainer: new Task("upgrade_trainer", "Train Warriors", -1, 96000, [{id: "trainer", count: 0}, {id: "earth", count: 38}, {id: "water", count: 32}, {id: "fire", count: 34}, {id: "air", count: 12}, {id: "light", count: 12}], 0, [{id: "upgrade_trainer", count: -1}, {id: "warrior", count: 2}]),
+  upgrade_trainer: new Task("upgrade_trainer", "Train Warriors", -1, 60000, [{id: "trainer", count: 0}, {id: "earth", count: 24}, {id: "water", count: 20}, {id: "fire", count: 20}, {id: "air", count: 8}, {id: "light", count: 8}], 0, [{id: "upgrade_trainer", count: -1}, {id: "warrior", count: 2}]),
   upgrade_engineer: new Task("upgrade_engineer", "Engineer Electronics", -1, 33000, [{id: "engineer", count: 0}, {id: "fire", count: 20}, {id: "air", count: 4}, {id: "earth", count: 8}, {id: "water", count: 8}, {id: "light", count: 4}], 0, [{id: "upgrade_engineer", count: -1}, {id: "mechanism", count: 2}, {id: "circuit", count: 2}]),
 };
 
@@ -258,10 +265,12 @@ let hidden = {
   "upgrade_miner": 1,
   "upgrade_smelter": 1,
   "upgrade_breeder": 1,
+  "upgrade_cloner": 1,
   "upgrade_farmer": 1,
   "upgrade_timekeeper": 1,
   "upgrade_smither": 1,
   "upgrade_provider": 1,
+  "upgrade_generator": 1,
   "upgrade_builder": 1,
   "upgrade_researcher": 1,
   "upgrade_trainer": 1,
@@ -274,23 +283,23 @@ let initial = [tasks.things];
 /* -- Things --
 
   Raw Counts:
-    Earth: 8675
-    Fire: 7218
-    Water: 8069
-    Air: 2943
-    Light: 3418
+    Earth: 9006
+     Fire: 7460
+    Water: 8433
+      Air: 3083
+    Light: 3556
 
-  Total Tasks: 238
+  Total Tasks: 243
+
   Largest Tasks:
-   Humility (1253 raw, 1107 steps)
-   Kindness (1127 raw, 981 steps)
-   Liberality (1127 raw, 981 steps)
-   Empire (1118 raw, 974 steps)
-   Diligence (1085 raw, 953 steps)
-   Sloth (1064 raw, 932 steps)
-   Envy (924 raw, 813 steps)
-   City (874 raw, 745 steps)
-   Greed (812 raw, 715 steps)
-   Rover (692 raw, 614 steps)
-   Frontier (661 raw, 584 steps)
+           Envy (1127 raw, 988 steps)
+     Liberality (1127 raw, 981 steps)
+       Kindness (1127 raw, 981 steps)
+         Empire (1104 raw, 958 steps)
+
+  Shortest Ends:
+           Fern (13 raw, 8 steps)
+      Butterfly (11 raw, 8 steps)
+          Golem (11 raw, 9 steps)
+          Whale (12 raw, 10 steps)
  */

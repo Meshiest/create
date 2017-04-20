@@ -1,6 +1,6 @@
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [], 0, [{id: "things", count: -1}, {id: "earth", count: 8566}, {id: "fire", count: 7118}, {id: "water", count: 7958}, {id: "air", count: 2910}, {id: "light", count: 3081}]),
+  things: new Task("things", "Create Things", 1, 5000, [], 0, [{id: "things", count: -1}, {id: "earth", count: 8660}, {id: "fire", count: 7188}, {id: "water", count: 8039}, {id: "air", count: 2943}, {id: "light", count: 3112}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
@@ -112,6 +112,9 @@ let tasks = {
   electricity: new Task("electricity", "Electricity", -1, 8000, [{id: "energy", count: 1}, {id: "metal", count: 1}, {id: "light", count: 1}]),
   corpse: new Task("corpse", "Corpse", -1, 81000, [{id: "warrior", count: 1}, {id: "human", count: 1}]),
   skull: new Task("skull", "Skull", -1, 81000, [{id: "warrior", count: 1}, {id: "human", count: 1}]),
+  pet: new Task("pet", "Pet", -1, 69000, [{id: "love", count: 1}, {id: "animal", count: 1}]),
+  dumb: new Task("dumb", "Dumb", -1, 82000, [{id: "air", count: 1}, {id: "skull", count: 1}]),
+  edgar: new Task("edgar", "Edgar", -1, 161000, [{id: "dumb", count: 1}, {id: "pet", count: 1}, {id: "beast", count: 1}]),
   zombie: new Task("zombie", "Zombie", -1, 86000, [{id: "corpse", count: 1}, {id: "life", count: 1}]),
   ghoul: new Task("ghoul", "Ghoul", -1, 166000, [{id: "zombie", count: 1}, {id: "corpse", count: 1}]),
   poison: new Task("poison", "Poison", -1, 29000, [{id: "mushroom", count: 1}, {id: "tools", count: 1}]),
@@ -271,13 +274,13 @@ let initial = [tasks.things];
 /* -- Things --
 
   Raw Counts:
-    Earth: 8566
-    Fire: 7118
-    Water: 7958
-    Air: 2910
-    Light: 3081
+    Earth: 8660
+    Fire: 7188
+    Water: 8039
+    Air: 2943
+    Light: 3112
 
-  Total Tasks: 235
+  Total Tasks: 238
   Largest Tasks:
    Humility (1253 raw, 1107 steps)
    Kindness (1120 raw, 981 steps)

@@ -98,12 +98,19 @@ class Card extends React.Component {
 
     this.start = this.start.bind(this);
     this.finish = this.finish.bind(this);
+    this.appear = this.appear.bind(this);
   }
 
   // show an animation when this card mounts
   componentDidMount() {
+    this.appear();
+  }
+
+  // card entrance animation
+  appear() {
     let card = $(this.refs.card);
     let comp = this;
+    card.css("opacity", 0);
     card.animate({opacity: 1}, {
       step(now, fx) {
         card.css('transform', 'translateX(-'+(100-now*100)+"%)");
@@ -140,13 +147,15 @@ class Card extends React.Component {
       },
       duration: "slow",
       complete() {
-        card.animate({height: 0}, {
-          duration: "fast",
-          complete(){
-            card.hide();
-            comp.props.onTaskFinish(comp.props.task);
-          }
-        });
+        if(comp.props.canAfford(comp.props.task))
+          comp.props.onTaskFinish(comp.props.task);
+        else
+          card.animate({height: 0}, {
+            duration: "fast",
+            complete(){
+              comp.props.onTaskFinish(comp.props.task);
+            }
+          });
       }
     });
   }
@@ -543,6 +552,8 @@ $(document).ready(() => {
       task.started = item.started;
       task.startTime = item.startTime;
       task.times = saveData.times[item.id];
+      if(task.limit > 0)
+        task.limit -= task.times;
 
       todo.push(task);
     }
@@ -583,6 +594,27 @@ class Controls extends React.Component {
     this.onTaskFinish = this.onTaskFinish.bind(this);
     this.toggleInventory = this.toggleInventory.bind(this);
     this.saveGame = this.saveGame.bind(this);
+    this.canAfford = this.canAfford.bind(this);
+  }
+
+  canAfford(task) {
+    // make sure we can do this task and we don't already have it in progress
+    if(task.limit == 0)
+      return false;
+
+    // make sure we have all the requirements
+    let hasRequirements = true;
+    for(let i = 0; i < task.requirements.length; i++) {
+      let req = task.requirements[i];
+
+      // if we don't have enough or we're not supposed to have a resource
+      if((this.state.completed[req.id] || 0) < req.count || req.count == 0 && !this.state.completed[req.id] || req.count < 0 && this.state.completed[req.id]) {
+        hasRequirements = false;
+        break;
+      }
+    }
+
+    return hasRequirements;
   }
 
   // callback for when the start button is pressed on the card component
@@ -606,10 +638,11 @@ class Controls extends React.Component {
 
     // check if we need to remove some tasks
     this.state.todo.forEach((task, i) => {
-      if(task === parent) {
+      let ref = controls.refs["task_" + task.id + "_" + task.times];
+
+      if(typeof ref === "undefined")
         return;
-      }
-      let ref = this.refs["task_" + task.id + "_" + task.times];
+
       let card = $(ref.refs.card);
 
       // we don't want to interrupt this!
@@ -677,8 +710,10 @@ class Controls extends React.Component {
       this.state.completed[output.id] = (this.state.completed[output.id] || 0) + output.count;
     }
 
-    // remove it
-    this.state.todo.splice(this.state.todo.indexOf(task), 1);
+    // remove it if we can't afford it
+    if(!this.canAfford(task))
+      this.state.todo.splice(this.state.todo.indexOf(task), 1);
+
 
     // Remove invalid tasks
     this.tryToRemoveTasks();
@@ -687,23 +722,8 @@ class Controls extends React.Component {
     for(let name in this.tasks) {
       let task = this.tasks[name];
       
-      // make sure we can do this task and we don't already have it in progress
-      if(task.limit == 0 || this.state.todo.includes(task))
-        continue;
-
-      // make sure we have all the requirements
-      let hasRequirements = true;
-      for(let i = 0; i < task.requirements.length; i++) {
-        let req = task.requirements[i];
-
-        // if we don't have enough or we're not supposed to have a resource
-        if((this.state.completed[req.id] || 0) < req.count || req.count == 0 && !this.state.completed[req.id] || req.count < 0 && this.state.completed[req.id]) {
-          hasRequirements = false;
-          break;
-        }
-      }
       // add the task to our todo
-      if(hasRequirements) {
+      if(!this.state.todo.includes(task) && this.canAfford(task)) {
         this.state.todo.push(task);
       }
     }
@@ -755,7 +775,15 @@ class Controls extends React.Component {
   render() {
     return (<div>
       <div className="card-container">
-        {this.state.todo.map((t, i) => <Card key={t.id + "_" + t.times} ref={"task_" + t.id + "_" + t.times} task={t} onTaskStart={this.onTaskStart} onTaskFinish={this.onTaskFinish}/>)}
+        {this.state.todo.map((t, i) => (
+          <Card key={t.id + "_" + t.times}
+            ref={"task_" + t.id + "_" + t.times}
+            task={t}
+            onTaskStart={this.onTaskStart}
+            onTaskFinish={this.onTaskFinish}
+            canAfford={this.canAfford}
+          />)
+        )}
       </div>
       <div className="inventory" ref="inventory">
         <div className="inventory-buttons">

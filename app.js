@@ -89,6 +89,7 @@ class Card extends React.Component {
     super(props);
 
     this.started = this.props.task.started;
+    this.visible = false;
 
     this.state = {
       duration: this.props.task.duration, // how long it takes to do (from task)
@@ -108,6 +109,9 @@ class Card extends React.Component {
 
   // card entrance animation
   appear() {
+    if(this.visible)
+      return;
+
     let card = $(this.refs.card);
     let comp = this;
     card.css("opacity", 0);
@@ -117,6 +121,7 @@ class Card extends React.Component {
       },
       duration: "slow",
       complete() {
+        comp.visible = true;
         if(comp.state.started) {
           comp.start(comp.state.startTime);
         }
@@ -126,6 +131,15 @@ class Card extends React.Component {
 
   // called on the start button click, starts the progress bar
   start(time) {
+    if(!this.refs.progressBar) {
+      window.requestAnimationFrame(()=>{this.start(time)}.bind(this));
+      return;
+    }
+
+    if(!this.props.canAfford(this.props.task) || !this.visible) {
+      return;
+    }
+
     this.props.task.startTime = time || Date.now();
     this.props.task.started = true;
 
@@ -147,6 +161,7 @@ class Card extends React.Component {
       },
       duration: "slow",
       complete() {
+        comp.visible = false;
         if(comp.props.canAfford(comp.props.task))
           comp.props.onTaskFinish(comp.props.task);
         else
@@ -205,7 +220,7 @@ class Card extends React.Component {
           </div>
         </div>
         <div className="card-button">
-          <button onClick={()=>{this.start()}} className={this.state.started ? "started" : ""}>
+          <button onClick={()=>{if(!this.state.started) this.start()}.bind(this)} className={this.state.started ? "started" : ""}>
             <i className="material-icons">arrow_forward</i>
           </button>
         </div>
@@ -586,7 +601,7 @@ class Controls extends React.Component {
     
     this.state = {
       todo: initial, // initial tasks are displayed
-      completed: {} // storage for completed tasks and how many times the tasks were completed
+      completed: {__start: 1} // storage for completed tasks and how many times the tasks were completed
         // {[taskId]: num}
     };
 

@@ -155,13 +155,13 @@ class Card extends React.Component {
   finish() {
     let comp = this;
     let card = $(this.refs.card);
+    comp.visible = false;
     card.animate({opacity: 0}, {
       step(now, fx) {
         card.css('transform', 'translateX('+(100-now*100)+"%)");
       },
       duration: "slow",
       complete() {
-        comp.visible = false;
         if(comp.props.canAfford(comp.props.task))
           comp.props.onTaskFinish(comp.props.task);
         else
@@ -672,6 +672,7 @@ class Controls extends React.Component {
         // we don't have enough of something or we're not supposed to have something
         if((controls.state.completed[req.id] || 0) < req.count || req.count == 0 && !controls.state.completed[req.id] || req.count < 0 && controls.state.completed[req.id]) {
           // hide the task
+          card.visible = false;
           card.animate({opacity: 0}, {
             step(now, fx) {
               card.css('transform', 'translateX(-'+(100-now*100)+"%)");

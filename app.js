@@ -182,7 +182,7 @@ class Card extends React.Component {
             ))}
             {Object.keys(requirements).map(id => (
               <span key={"requirement_" + id}
-                className="card-requirement needed">{(requirements[id] > 0 ? requirements[id] + " " : "") + id}</span>
+                className={"card-requirement " + (requirements[id] > 0 ? "remove" : "needed")}>{(requirements[id] > 0 ? requirements[id] + " " : "") + id}</span>
             ))}
           </div>
         </div>

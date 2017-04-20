@@ -232,7 +232,7 @@ tasks += $things.map { |k, v|
 # Create all the upgrade tasks
 tasks += $upgrades.map { |k, v|
   speed = what_are(v[:input]).length * v[:speed]
-  "  action_#{k.downcase}: new Task(\"action_#{k.downcase}\", \"#{v[:action]}\", #{$upgrades[k][:uses] || -1}, #{speed}, [{id: \"#{k}\", count: 0}, #{stringify v[:input]}], 0, [{id: \"action_#{k.downcase}\", count: -1}, #{stringify v[:output]}]),"
+  "  action_#{k.downcase}: new Task(\"action_#{k.downcase}\", \"#{v[:action]}\", #{$upgrades[k][:uses] || -1}, #{speed}, [{id: \"#{k.downcase}\", count: 0}, #{stringify v[:input]}], 0, [{id: \"action_#{k.downcase}\", count: -1}, #{stringify v[:output]}]),"
 }
 
 # Join the tasks

@@ -1,9 +1,9 @@
 $things = {
+  "Alcohol" => ["Fire", "Water"],
+  "Steam" => ["Air", "Water"],
   "Lava" => ["Earth", "Fire"],
   "Swamp" => ["Earth", "Water"],
-  "Alcohol" => ["Fire", "Water"],
   "Energy" => ["Fire", "Air"],
-  "Steam" => ["Air", "Water"],
   "Life" => ["Swamp", "Energy", "Light"],
   "Bacteria" => ["Life", "Swamp", "Light"],
   "Weeds" => ["Life", "Water", "Light"],

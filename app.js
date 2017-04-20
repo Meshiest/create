@@ -218,12 +218,12 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 9006}, {id: "fire", count: 7460}, {id: "water", count: 8433}, {id: "air", count: 3083}, {id: "light", count: 3556}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "fire", count: 7460}, {id: "water", count: 8433}, {id: "air", count: 3083}, {id: "earth", count: 9006}, {id: "light", count: 3556}]),
+  alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
+  steam: new Task("steam", "Steam", -1, 3000, [{id: "air", count: 1}, {id: "water", count: 1}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
-  alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
   energy: new Task("energy", "Energy", -1, 3000, [{id: "fire", count: 1}, {id: "air", count: 1}]),
-  steam: new Task("steam", "Steam", -1, 3000, [{id: "air", count: 1}, {id: "water", count: 1}]),
   life: new Task("life", "Life", -1, 6000, [{id: "swamp", count: 1}, {id: "energy", count: 1}, {id: "light", count: 1}]),
   bacteria: new Task("bacteria", "Bacteria", -1, 9000, [{id: "life", count: 1}, {id: "swamp", count: 1}, {id: "light", count: 1}]),
   weeds: new Task("weeds", "Weeds", -1, 8000, [{id: "life", count: 1}, {id: "water", count: 1}, {id: "light", count: 1}]),
@@ -501,10 +501,10 @@ let initial = [tasks.things];
 /* -- Things --
 
   Raw Counts:
-    Earth: 9006
      Fire: 7460
     Water: 8433
       Air: 3083
+    Earth: 9006
     Light: 3556
 
   Total Tasks: 243
@@ -521,6 +521,7 @@ let initial = [tasks.things];
           Golem (11 raw, 9 steps)
           Whale (12 raw, 10 steps)
  */
+
 
 
 

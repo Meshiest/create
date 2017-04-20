@@ -209,7 +209,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 0}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
@@ -437,17 +437,17 @@ let tasks = {
   david: new Task("david", "David", -1, 348000, [{id: "memes", count: 1}, {id: "teacher", count: 1}, {id: "science", count: 1}, {id: "computer", count: 1}]),
   noah: new Task("noah", "Noah", -1, 485000, [{id: "sleep", count: 1}, {id: "depression", count: 1}, {id: "student", count: 1}, {id: "sex", count: 1}]),
   isaac: new Task("isaac", "Isaac", -1, 419000, [{id: "reddit", count: 1}, {id: "computer", count: 1}, {id: "anime", count: 1}, {id: "hair", count: 1}]),
-  miner: new Task("miner", "Miner", 1, 77000, [{id: "drill", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}, {id: "energy", count: 1}]),
-  smelter: new Task("smelter", "Smelter", 1, 49000, [{id: "mechanism", count: 1}, {id: "fire", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
-  breeder: new Task("breeder", "Breeder", 1, 137000, [{id: "human", count: 1}, {id: "beaker", count: 1}, {id: "sex", count: 1}, {id: "intellect", count: 1}, {id: "tools", count: 1}]),
-  farmer: new Task("farmer", "Farmer", 1, 154000, [{id: "science", count: 1}, {id: "tools", count: 1}, {id: "tree", count: 1}, {id: "animal", count: 1}, {id: "seeds", count: 2}, {id: "beaker", count: 1}]),
-  timekeeper: new Task("timekeeper", "Timekeeper", 1, 123000, [{id: "magic", count: 1}, {id: "wizard", count: 1}, {id: "time", count: 2}, {id: "sand", count: 2}, {id: "blood", count: 1}]),
-  smither: new Task("smither", "Smither", 1, 164000, [{id: "mechanism", count: 1}, {id: "metal", count: 1}, {id: "village", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
-  provider: new Task("provider", "Provider", 1, 356000, [{id: "internet", count: 1}, {id: "skyscraper", count: 1}, {id: "fiberoptics", count: 1}]),
-  builder: new Task("builder", "Builder", 1, 125000, [{id: "mechanism", count: 1}, {id: "building", count: 1}, {id: "cement", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
-  researcher: new Task("researcher", "Researcher", 1, 283000, [{id: "scientist", count: 1}, {id: "book", count: 1}, {id: "curiosity", count: 1}, {id: "tools", count: 1}, {id: "beaker", count: 1}, {id: "science", count: 1}]),
-  trainer: new Task("trainer", "Trainer", 1, 173000, [{id: "teacher", count: 1}, {id: "warrior", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
-  engineer: new Task("engineer", "Engineer", 1, 95000, [{id: "scientist", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}, {id: "circuit", count: 1}]),
+  miner: new Task("miner", "Miner", 1, 77000, [{id: "upgrade_miner", count: -1}, {id: "drill", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}, {id: "energy", count: 1}]),
+  smelter: new Task("smelter", "Smelter", 1, 49000, [{id: "upgrade_smelter", count: -1}, {id: "mechanism", count: 1}, {id: "fire", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  breeder: new Task("breeder", "Breeder", 1, 137000, [{id: "upgrade_breeder", count: -1}, {id: "human", count: 1}, {id: "beaker", count: 1}, {id: "sex", count: 1}, {id: "intellect", count: 1}, {id: "tools", count: 1}]),
+  farmer: new Task("farmer", "Farmer", 1, 154000, [{id: "upgrade_farmer", count: -1}, {id: "science", count: 1}, {id: "tools", count: 1}, {id: "tree", count: 1}, {id: "animal", count: 1}, {id: "seeds", count: 2}, {id: "beaker", count: 1}]),
+  timekeeper: new Task("timekeeper", "Timekeeper", 1, 123000, [{id: "upgrade_timekeeper", count: -1}, {id: "magic", count: 1}, {id: "wizard", count: 1}, {id: "time", count: 2}, {id: "sand", count: 2}, {id: "blood", count: 1}]),
+  smither: new Task("smither", "Smither", 1, 164000, [{id: "upgrade_smither", count: -1}, {id: "mechanism", count: 1}, {id: "metal", count: 1}, {id: "village", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  provider: new Task("provider", "Provider", 1, 356000, [{id: "upgrade_provider", count: -1}, {id: "internet", count: 1}, {id: "skyscraper", count: 1}, {id: "fiberoptics", count: 1}]),
+  builder: new Task("builder", "Builder", 1, 125000, [{id: "upgrade_builder", count: -1}, {id: "mechanism", count: 1}, {id: "building", count: 1}, {id: "cement", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  researcher: new Task("researcher", "Researcher", 1, 283000, [{id: "upgrade_researcher", count: -1}, {id: "scientist", count: 1}, {id: "book", count: 1}, {id: "curiosity", count: 1}, {id: "tools", count: 1}, {id: "beaker", count: 1}, {id: "science", count: 1}]),
+  trainer: new Task("trainer", "Trainer", 1, 173000, [{id: "upgrade_trainer", count: -1}, {id: "teacher", count: 1}, {id: "warrior", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  engineer: new Task("engineer", "Engineer", 1, 95000, [{id: "upgrade_engineer", count: -1}, {id: "scientist", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}, {id: "circuit", count: 1}]),
   upgrade_miner: new Task("upgrade_miner", "Mine Stone", -1, 22500, [{id: "miner", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 10}, {id: "water", count: 10}], 0, [{id: "upgrade_miner", count: -1}, {id: "stone", count: 10}]),
   upgrade_smelter: new Task("upgrade_smelter", "Smelt Metal", -1, 30000, [{id: "smelter", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 20}, {id: "water", count: 10}], 0, [{id: "upgrade_smelter", count: -1}, {id: "metal", count: 10}]),
   upgrade_breeder: new Task("upgrade_breeder", "Breed Human", -1, 12000, [{id: "breeder", count: 0}, {id: "earth", count: 5}, {id: "water", count: 4}, {id: "fire", count: 3}, {id: "air", count: 2}, {id: "light", count: 2}], 0, [{id: "upgrade_breeder", count: -1}, {id: "human", count: 1}]),
@@ -503,6 +503,7 @@ let initial = [tasks.things];
    Rover (692 raw, 614 steps)
    Frontier (661 raw, 584 steps)
  */
+
 
 $(document).ready(() => {
   // Make sure we can store things
@@ -669,6 +670,9 @@ class Controls extends React.Component {
     // remove it
     this.state.todo.splice(this.state.todo.indexOf(task), 1);
 
+    // Remove invalid tasks
+    this.tryToRemoveTasks();
+
     // check if we can add new tasks
     for(let name in this.tasks) {
       let task = this.tasks[name];
@@ -698,8 +702,6 @@ class Controls extends React.Component {
       todo: this.state.todo,
       completed: this.state.completed
     });
-
-    this.tryToRemoveTasks();
   }
 
   toggleInventory() {
@@ -722,8 +724,7 @@ class Controls extends React.Component {
     let saveData = {
       completed: this.state.completed,
       todo: this.state.todo.map(t => {
-        let ref = comp.refs["task_" + t.id + "_" + t.times];
-        return {id: t.id, started: ref.started, startTime: ref.state.startTime };
+        return {id: t.id, started: t.started, startTime: t.startTime };
       })
     };
     saveData.times = {};

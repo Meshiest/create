@@ -364,7 +364,8 @@ tasks = ["  things: new Task(\"things\", \"Create Things\", 1, 5000, [{id: \"__s
 
 # Create all the thing tasks
 tasks += $things.map { |k, v|
-  "  #{k.downcase}: new Task(\"#{k.downcase}\", \"#{k}\", #{$upgrades[k] ? 1 : -1}, #{1000 + what_is(k).length * 1000}, [#{stringify v}]),"
+  upgrade = $upgrades[k] ? "{id: \"upgrade_#{k.downcase}\", count: -1}, " : ""
+  "  #{k.downcase}: new Task(\"#{k.downcase}\", \"#{k}\", #{$upgrades[k] ? 1 : -1}, #{1000 + what_is(k).length * 1000}, [#{upgrade}#{stringify v}]),"
 }
 
 # Create all the upgrade tasks

@@ -200,7 +200,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  elements: new Task("elements", "Create Elements", 1, 5000, [], 0, [{id: "earth", count: 2252}, {id: "fire", count: 1874}, {id: "water", count: 2050}, {id: "air", count: 796}, {id: "light", count: 835}]),
+  things: new Task("things", "Create Things", 1, 5000, [], 0, [{id: "earth", count: 2546}, {id: "fire", count: 2125}, {id: "water", count: 2333}, {id: "air", count: 897}, {id: "light", count: 936}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
@@ -233,7 +233,6 @@ let tasks = {
   sorcery: new Task("sorcery", "Sorcery", -1, 23000, [{id: "magic", count: 1}, {id: "stone", count: 1}]),
   wizard: new Task("wizard", "Wizard", -1, 36000, [{id: "magic", count: 1}, {id: "human", count: 1}]),
   demigod: new Task("demigod", "Demigod", -1, 39000, [{id: "wizard", count: 1}, {id: "energy", count: 1}, {id: "light", count: 1}]),
-  blood: new Task("blood", "Blood", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
   vampire: new Task("vampire", "Vampire", -1, 57000, [{id: "human", count: 1}, {id: "blood", count: 1}]),
   animal: new Task("animal", "Animal", -1, 28000, [{id: "human", count: 1}, {id: "beast", count: 1}]),
   wool: new Task("wool", "Wool", -1, 44000, [{id: "human", count: 1}, {id: "animal", count: 1}]),
@@ -242,7 +241,10 @@ let tasks = {
   metal: new Task("metal", "Metal", -1, 5000, [{id: "stone", count: 1}, {id: "fire", count: 1}]),
   tools: new Task("tools", "Tools", -1, 21000, [{id: "human", count: 1}, {id: "metal", count: 1}]),
   weapon: new Task("weapon", "Weapon", -1, 25000, [{id: "tools", count: 1}, {id: "metal", count: 1}]),
-  sex: new Task("sex", "Sex", -1, 33000, [{id: "human", count: 1}, {id: "human", count: 1}]),
+  sex: new Task("sex", "Sex", -1, 33000, [{id: "human", count: 2}]),
+  love: new Task("love", "Love", -1, 42000, [{id: "human", count: 2}, {id: "time", count: 1}]),
+  children: new Task("children", "Children", -1, 83000, [{id: "sex", count: 1}, {id: "love", count: 1}, {id: "time", count: 1}]),
+  abuse: new Task("abuse", "Abuse", -1, 85000, [{id: "alcohol", count: 1}, {id: "children", count: 1}]),
   hunter: new Task("hunter", "Hunter", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
   ninja: new Task("ninja", "Ninja", -1, 109000, [{id: "hunter", count: 1}, {id: "assassin", count: 1}]),
   ninjutsu: new Task("ninjutsu", "Ninjutsu", -1, 128000, [{id: "ninja", count: 1}, {id: "magic", count: 1}]),
@@ -285,6 +287,8 @@ let tasks = {
   wheat: new Task("wheat", "Wheat", -1, 31000, [{id: "field", count: 1}, {id: "seeds", count: 1}]),
   flour: new Task("flour", "Flour", -1, 34000, [{id: "wheat", count: 1}, {id: "stone", count: 1}]),
   dough: new Task("dough", "Dough", -1, 35000, [{id: "flour", count: 1}, {id: "water", count: 1}]),
+  sugar: new Task("sugar", "Sugar", -1, 23000, [{id: "field", count: 1}, {id: "light", count: 1}]),
+  cake: new Task("cake", "Cake", -1, 104000, [{id: "sugar", count: 1}, {id: "egg", count: 1}, {id: "milk", count: 1}, {id: "wheat", count: 1}]),
   bread: new Task("bread", "Bread", -1, 36000, [{id: "dough", count: 1}, {id: "fire", count: 1}]),
   beer: new Task("beer", "Beer", -1, 38000, [{id: "bread", count: 1}, {id: "alcohol", count: 1}]),
   reed: new Task("reed", "Reed", -1, 14000, [{id: "grass", count: 1}, {id: "swamp", count: 1}]),
@@ -301,7 +305,9 @@ let tasks = {
   glass: new Task("glass", "Glass", -1, 6000, [{id: "sand", count: 1}, {id: "fire", count: 1}]),
   tobacco: new Task("tobacco", "Tobacco", -1, 13000, [{id: "grass", count: 1}, {id: "fire", count: 1}]),
   weed: new Task("weed", "Weed", -1, 13000, [{id: "grass", count: 1}, {id: "fire", count: 1}]),
+  baked: new Task("baked", "Baked", -1, 29000, [{id: "weed", count: 1}, {id: "human", count: 1}]),
   cigarette: new Task("cigarette", "Cigarette", -1, 46000, [{id: "tobacco", count: 1}, {id: "paper", count: 1}]),
+  joint: new Task("joint", "Joint", -1, 46000, [{id: "weed", count: 1}, {id: "paper", count: 1}]),
   fertilizer: new Task("fertilizer", "Fertilizer", -1, 39000, [{id: "animal", count: 1}, {id: "grass", count: 1}]),
   shell: new Task("shell", "Shell", -1, 14000, [{id: "stone", count: 1}, {id: "plankton", count: 1}]),
   limestone: new Task("limestone", "Limestone", -1, 17000, [{id: "shell", count: 1}, {id: "stone", count: 1}]),
@@ -323,9 +329,13 @@ let tasks = {
   torch: new Task("torch", "Torch", -1, 32000, [{id: "fire", count: 1}, {id: "wood", count: 1}]),
   lamp: new Task("lamp", "Lamp", -1, 12000, [{id: "electricity", count: 1}, {id: "glass", count: 1}]),
   mirror: new Task("mirror", "Mirror", -1, 5000, [{id: "light", count: 1}, {id: "stone", count: 1}]),
+  ego: new Task("ego", "Ego", -1, 21000, [{id: "mirror", count: 1}, {id: "human", count: 1}]),
+  intellect: new Task("intellect", "Intellect", -1, 26000, [{id: "human", count: 1}, {id: "time", count: 1}]),
+  science: new Task("science", "Science", -1, 35000, [{id: "intellect", count: 1}, {id: "time", count: 1}]),
   lense: new Task("lense", "Lense", -1, 6000, [{id: "light", count: 1}, {id: "crystal", count: 1}]),
   telescope: new Task("telescope", "Telescope", -1, 10000, [{id: "lense", count: 1}, {id: "mirror", count: 1}]),
   solarpanel: new Task("solarpanel", "Solarpanel", -1, 16000, [{id: "glass", count: 1}, {id: "circuit", count: 1}]),
+  beaker: new Task("beaker", "Beaker", -1, 40000, [{id: "glass", count: 1}, {id: "science", count: 1}]),
   circuit: new Task("circuit", "Circuit", -1, 11000, [{id: "metal", count: 1}, {id: "electricity", count: 1}]),
   mechanism: new Task("mechanism", "Mechanism", -1, 11000, [{id: "electricity", count: 1}, {id: "metal", count: 1}]),
   processor: new Task("processor", "Processor", -1, 21000, [{id: "circuit", count: 1}, {id: "mechanism", count: 1}]),
@@ -336,14 +346,15 @@ let tasks = {
   space: new Task("space", "Space", -1, 152000, [{id: "rocket", count: 1}, {id: "human", count: 1}]),
   moon: new Task("moon", "Moon", -1, 219000, [{id: "space", count: 1}, {id: "flag", count: 1}]),
   flag: new Task("flag", "Flag", -1, 68000, [{id: "fabric", count: 1}, {id: "metal", count: 1}]),
-  rover: new Task("rover", "Rover", -1, 262000, [{id: "car", count: 1}, {id: "space", count: 1}]),
+  rover: new Task("rover", "Rover", -1, 480000, [{id: "car", count: 1}, {id: "space", count: 1}, {id: "moon", count: 1}]),
   pillage: new Task("pillage", "Pillage", -1, 321000, [{id: "flag", count: 1}, {id: "village", count: 1}, {id: "army", count: 1}]),
   conquer: new Task("conquer", "Conquer", -1, 361000, [{id: "pillage", count: 1}, {id: "blood", count: 1}]),
+  blood: new Task("blood", "Blood", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
   frontier: new Task("frontier", "Frontier", -1, 472000, [{id: "pillage", count: 1}, {id: "space", count: 1}]),
   flint: new Task("flint", "Flint", -1, 8000, [{id: "stone", count: 1}, {id: "sand", count: 1}]),
   time: new Task("time", "Time", -1, 10000, [{id: "sand", count: 1}, {id: "glass", count: 1}]),
   watch: new Task("watch", "Watch", -1, 24000, [{id: "time", count: 1}, {id: "crystal", count: 1}, {id: "circuit", count: 1}]),
-  tribe: new Task("tribe", "Tribe", -1, 49000, [{id: "human", count: 1}, {id: "human", count: 1}, {id: "human", count: 1}]),
+  tribe: new Task("tribe", "Tribe", -1, 49000, [{id: "human", count: 3}]),
   village: new Task("village", "Village", -1, 113000, [{id: "warrior", count: 1}, {id: "tribe", count: 1}]),
   colony: new Task("colony", "Colony", -1, 79000, [{id: "tribe", count: 1}, {id: "house", count: 1}]),
   army: new Task("army", "Army", -1, 142000, [{id: "warrior", count: 1}, {id: "hero", count: 1}]),
@@ -351,10 +362,17 @@ let tasks = {
   royalty: new Task("royalty", "Royalty", -1, 149000, [{id: "sex", count: 1}, {id: "money", count: 1}]),
   money: new Task("money", "Money", -1, 117000, [{id: "village", count: 1}, {id: "metal", count: 1}]),
   empire: new Task("empire", "Empire", -1, 664000, [{id: "conquer", count: 1}, {id: "colony", count: 1}, {id: "king", count: 1}]),
+  drill: new Task("drill", "Drill", -1, 37000, [{id: "electricity", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}]),
+  miner: new Task("miner", "Miner", 1, 75000, [{id: "drill", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}, {id: "energy", count: 1}]),
+  smelter: new Task("smelter", "Smelter", 1, 48000, [{id: "mechanism", count: 1}, {id: "fire", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
+  breeder: new Task("breeder", "Breeder", 1, 133000, [{id: "human", count: 1}, {id: "beaker", count: 1}, {id: "sex", count: 1}, {id: "intellect", count: 1}, {id: "tools", count: 1}]),
+  action_miner: new Task("action_miner", "Mine Stone", -1, 15000, [{id: "Miner", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 10}, {id: "water", count: 10}], 0, [{id: "action_miner", count: -1}, {id: "stone", count: 10}]),
+  action_smelter: new Task("action_smelter", "Smelt Metal", -1, 20000, [{id: "Smelter", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 20}, {id: "water", count: 10}], 0, [{id: "action_smelter", count: -1}, {id: "metal", count: 10}]),
+  action_breeder: new Task("action_breeder", "Breed Human", -1, 8000, [{id: "Breeder", count: 0}, {id: "earth", count: 5}, {id: "water", count: 4}, {id: "fire", count: 3}, {id: "air", count: 2}, {id: "light", count: 2}], 0, [{id: "action_breeder", count: -1}, {id: "human", count: 1}]),
 };
 
 // Initial Tasks
-let initial = [tasks.elements];
+let initial = [tasks.things];
 
 
 // Controls component: manages tasks

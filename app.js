@@ -110,7 +110,7 @@ class Card extends React.Component {
   // card entrance animation
   appear() {
     if(this.visible)
-      return;
+      return; 
 
     let card = $(this.refs.card);
     let comp = this;
@@ -557,7 +557,7 @@ $(document).ready(() => {
   }
 
   // Create our load game task
-  tasks.__loaded_game = new Task("__loaded_game", "Load Things", 1, 5000, [{id: "__start", count: 0}], ()=>{
+  tasks.__loaded_game = new Task("__loaded_game", "Load Things", 1, 5000, [{id: "__start", count: 1}], ()=>{
     let todo = [];
     for(let i = 0; i < saveData.todo.length; i++) {
       let item = saveData.todo[i];

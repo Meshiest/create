@@ -145,12 +145,12 @@ class Card extends React.Component {
   // rendering of the card
   render() {
     let requirements = {};
-    let output = {[this.props.task.id]: 1};
+    let output = hidden[this.props.task.id] ? {} : {[this.props.task.id]: 1};
     
     for(let i = 0; i < this.props.task.output.length; i++) {
       let out = this.props.task.output[i];
 
-      if(out.hidden)
+      if(out.hidden || hidden[out.id])
         continue;
 
       output[out.id] = (output[out.id] || 0) + out.count;
@@ -159,7 +159,7 @@ class Card extends React.Component {
     for(let i = 0; i < this.props.task.requirements.length; i++) {
       let req = this.props.task.requirements[i];
 
-      if(req.hidden)
+      if(req.hidden || hidden[req.id])
         continue;
 
       if(req.count >= 0)
@@ -200,7 +200,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [], 0, [{id: "things", count: -1}, {id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
@@ -496,6 +496,13 @@ let initial = [tasks.things];
  */
 
 
+// Game Loading Logic
+tasks.__loaded_game = new Task("__loaded_game", "Load Game", 1, 5000, [{id: "__start", count: 1}], ()=>{
+
+});
+hidden.__loaded_game = 1;
+hidden.__start = 1;
+initial.push(tasks.__loaded_game);
 
 // Controls component: manages tasks
 class Controls extends React.Component {
@@ -517,6 +524,7 @@ class Controls extends React.Component {
     this.tryToRemoveTasks = this.tryToRemoveTasks.bind(this);
     this.onTaskFinish = this.onTaskFinish.bind(this);
     this.toggleInventory = this.toggleInventory.bind(this);
+    this.saveGame = this.saveGame.bind(this);
   }
 
   // callback for when the start button is pressed on the card component
@@ -653,12 +661,21 @@ class Controls extends React.Component {
     });
   }
 
+  saveGame() {
+
+  }
+
   render() {
     return (<div>
       <div className="card-container">
         {this.state.todo.map((t, i) => <Card key={t.id + "_" + t.times} ref={"task_" + t.id + "_" + t.times} task={t} onTaskStart={this.onTaskStart} onTaskFinish={this.onTaskFinish}/>)}
       </div>
       <div className="inventory" ref="inventory">
+        <div className="inventory-buttons">
+          <button onClick={this.saveGame}>
+            <i className="material-icons">save</i>
+          </button>
+        </div>
         <div className="inventory-content">
           {!Object.keys(this.state.completed).length && <h2>Nothing Here Yet!</h2>}
           {Object.keys(this.state.completed).map(k => (
@@ -677,4 +694,4 @@ class Controls extends React.Component {
   }
 }
 
-ReactDOM.render(<Controls/>, document.getElementById("controls"));
+window.GameController = ReactDOM.render(<Controls/>, document.getElementById("controls"));

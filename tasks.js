@@ -1,6 +1,6 @@
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [], 0, [{id: "things", count: -1}, {id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 8675}, {id: "fire", count: 7218}, {id: "water", count: 8069}, {id: "air", count: 2943}, {id: "light", count: 3418}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
   swamp: new Task("swamp", "Swamp", -1, 3000, [{id: "earth", count: 1}, {id: "water", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),

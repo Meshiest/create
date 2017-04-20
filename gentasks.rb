@@ -360,7 +360,7 @@ $upgrades.each { |k, v|
 everything = what_are($things.keys)
 
 # The first task must be the starting task
-tasks = ["  things: new Task(\"things\", \"Create Things\", 1, 5000, [], 0, [{id: \"things\", count: -1}, #{stringify what_are $things.keys}]),"]
+tasks = ["  things: new Task(\"things\", \"Create Things\", 1, 5000, [{id: \"__start\", count: 1}], 0, [#{stringify what_are $things.keys}]),"]
 
 # Create all the thing tasks
 tasks += $things.map { |k, v|

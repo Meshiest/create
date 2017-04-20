@@ -52,6 +52,14 @@ body > div {
   width: 100vw;
 }
 
+.inventory-buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px;
+}
+
 .inventory-content {
   align-items: center;
   background-color: #fff;
@@ -60,7 +68,6 @@ body > div {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  flex-basis: 0;
   max-width: 400px;
   padding: 10px;
   margin: 10px auto;
@@ -200,7 +207,7 @@ body > div {
   padding: 5px;
 }
 
-.card-button > button {
+button {
   align-items: center;
   background-color: #1E88E5;
   border: none;
@@ -218,17 +225,17 @@ body > div {
   width: 35px;
 }
 
-.card-button > button.started {
+button.started {
   pointer-events: none;
   transform: scale(0.8);
   opacity: 0;
 }
-.card-button > button:hover {
+button:hover {
   background-color: #1976D2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.card-button > button:focus {
+button:focus {
   outline: none;
 }
 

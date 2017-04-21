@@ -41,11 +41,13 @@ body {
   width: 100vw;
 }
 
-.inventory.card-container {
+.inventory {
   background-color: #eee;
   height: 100vh;
   justify-content: flex-start;
   left: 0;
+  margin: auto;
+  max-width: 400px;
   overflow-y: auto;
   padding-top: 60px;
   position: fixed;
@@ -142,8 +144,12 @@ body {
   margin-bottom: 10px;
 }
 
-.inventory.card-container .card {
+.inventory .card {
   margin: 10px;
+}
+
+.inventory .card .card-content {
+  overflow-y: auto;
 }
 
 .card-info {

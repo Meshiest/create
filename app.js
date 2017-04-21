@@ -236,7 +236,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 16174}, {id: "air", count: 5582}, {id: "fire", count: 14505}, {id: "water", count: 15539}, {id: "light", count: 6586}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 16327}, {id: "air", count: 5636}, {id: "fire", count: 14652}, {id: "water", count: 15685}, {id: "light", count: 6653}]),
   dust: new Task("dust", "Dust", 1, 3000, [{id: "earth", count: 1}, {id: "air", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
   steam: new Task("steam", "Steam", -1, 3000, [{id: "air", count: 1}, {id: "water", count: 1}]),
@@ -379,7 +379,7 @@ let tasks = {
   grass: new Task("grass", "Grass", -1, 13000, [{id: "moss", count: 1}, {id: "earth", count: 1}, {id: "light", count: 1}]),
   field: new Task("field", "Field", -1, 22000, [{id: "tools", count: 1}, {id: "earth", count: 1}]),
   wheat: new Task("wheat", "Wheat", -1, 33000, [{id: "field", count: 1}, {id: "seeds", count: 1}, {id: "light", count: 1}, {id: "water", count: 1}]),
-  glasses: new Task("glasses", "Glasses", 1, 11000, [{id: "metal", count: 1}, {id: "glass", count: 1}]),
+  glasses: new Task("glasses", "Glasses", -1, 11000, [{id: "metal", count: 1}, {id: "glass", count: 1}]),
   flour: new Task("flour", "Flour", -1, 36000, [{id: "wheat", count: 1}, {id: "stone", count: 1}]),
   dough: new Task("dough", "Dough", -1, 37000, [{id: "flour", count: 1}, {id: "water", count: 1}]),
   sugar: new Task("sugar", "Sugar", -1, 23000, [{id: "field", count: 1}, {id: "light", count: 1}]),
@@ -572,6 +572,7 @@ let tasks = {
   puff: new Task("puff", "Puff", 1, 87000, [{id: "sugar", count: 1}, {id: "spice", count: 1}]),
   sgdc: new Task("sgdc", "SGDC", 1, 323000, [{id: "memes", count: 1}, {id: "programming", count: 1}, {id: "love", count: 1}, {id: "spice", count: 1}]),
   jake: new Task("jake", "Jake", 1, 339000, [{id: "ego", count: 1}, {id: "love", count: 1}, {id: "hero", count: 1}, {id: "hair", count: 1}]),
+  james: new Task("james", "James", 1, 568000, [{id: "computer", count: 1}, {id: "memes", count: 1}, {id: "hair", count: 1}, {id: "glasses", count: 1}, {id: "depression", count: 1}, {id: "spice", count: 1}]),
   david: new Task("david", "David", 1, 430000, [{id: "memes", count: 1}, {id: "teacher", count: 1}, {id: "science", count: 1}, {id: "computer", count: 1}]),
   noah: new Task("noah", "Noah", 1, 461000, [{id: "sleep", count: 1}, {id: "depression", count: 1}, {id: "student", count: 1}, {id: "sex", count: 1}]),
   isaac: new Task("isaac", "Isaac", 1, 446000, [{id: "reddit", count: 1}, {id: "programming", count: 1}, {id: "anime", count: 1}, {id: "hair", count: 1}]),
@@ -694,7 +695,6 @@ let initial = [tasks.things];
 let scoreValues = {
   dust: 1,
   fern: 8,
-  glasses: 8,
   butterfly: 8,
   golem: 9,
   phoenix: 10,
@@ -852,6 +852,7 @@ let scoreValues = {
   meteor: 413,
   thomas: 422,
   milkyway: 449,
+  james: 488,
   abstinence: 498,
   frontier: 569,
   solarsystem: 616,
@@ -871,13 +872,13 @@ let scoreValues = {
 /* -- Things --
 
   Raw Counts:
-    Earth: 16174
-      Air: 5582
-     Fire: 14505
-    Water: 15539
-    Light: 6586
+    Earth: 16327
+      Air: 5636
+     Fire: 14652
+    Water: 15685
+    Light: 6653
 
-  Total Tasks: 392
+  Total Tasks: 393
 
   Largest Tasks:
    Supercluster (1864 raw, 1647 steps)
@@ -888,8 +889,8 @@ let scoreValues = {
   Shortest Ends:
            Dust (2 raw, 1 steps)
            Fern (13 raw, 8 steps)
-        Glasses (10 raw, 8 steps)
       Butterfly (11 raw, 8 steps)
+          Golem (11 raw, 9 steps)
  */
 
 
@@ -1312,7 +1313,7 @@ class Controls extends React.Component {
           />)
         )}
       </div>
-      <div className="inventory card-container" ref="inventory">
+      <div className="inventory" ref="inventory">
         {this.state.completed.things && <div className="card">
           <div className="card-content">
             <h2><span>Score</span><span>{score.score}</span></h2>

@@ -334,6 +334,7 @@ $things = {
   "Puff" => ["Sugar", "Spice"],
   "SGDC" => ["Memes", "Programming", "Love", "Spice"],
   "Jake" => ["Ego", "Love", "Hero", "Hair"],
+  "James" => ["Computer", "Memes", "Hair", "Glasses", "Depression", "Spice"],
   "David" => ["Memes", "Teacher", "Science", "Computer"],
   "Noah" => ["Sleep", "Depression", "Student", "Sex"],
   "Isaac" => ["Reddit", "Programming", "Anime", "Hair"],

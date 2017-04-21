@@ -236,7 +236,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 16069}, {id: "air", count: 5546}, {id: "fire", count: 14392}, {id: "water", count: 15434}, {id: "light", count: 6537}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "earth", count: 16174}, {id: "air", count: 5582}, {id: "fire", count: 14505}, {id: "water", count: 15539}, {id: "light", count: 6586}]),
   dust: new Task("dust", "Dust", 1, 3000, [{id: "earth", count: 1}, {id: "air", count: 1}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
   steam: new Task("steam", "Steam", -1, 3000, [{id: "air", count: 1}, {id: "water", count: 1}]),
@@ -569,6 +569,8 @@ let tasks = {
   patience: new Task("patience", "Patience", 1, 365000, [{id: "monk", count: 7}]),
   kindness: new Task("kindness", "Kindness", 1, 1128000, [{id: "nurse", count: 7}]),
   humility: new Task("humility", "Humility", 1, 1086000, [{id: "knight", count: 7}]),
+  puff: new Task("puff", "Puff", 1, 87000, [{id: "sugar", count: 1}, {id: "spice", count: 1}]),
+  sgdc: new Task("sgdc", "SGDC", 1, 323000, [{id: "memes", count: 1}, {id: "programming", count: 1}, {id: "love", count: 1}, {id: "spice", count: 1}]),
   jake: new Task("jake", "Jake", 1, 339000, [{id: "ego", count: 1}, {id: "love", count: 1}, {id: "hero", count: 1}, {id: "hair", count: 1}]),
   david: new Task("david", "David", 1, 430000, [{id: "memes", count: 1}, {id: "teacher", count: 1}, {id: "science", count: 1}, {id: "computer", count: 1}]),
   noah: new Task("noah", "Noah", 1, 461000, [{id: "sleep", count: 1}, {id: "depression", count: 1}, {id: "student", count: 1}, {id: "sex", count: 1}]),
@@ -748,6 +750,7 @@ let scoreValues = {
   flute: 72,
   firearm: 74,
   coffin: 76,
+  puff: 76,
   drone: 77,
   grenade: 78,
   necromancer: 79,
@@ -826,6 +829,7 @@ let scoreValues = {
   safe: 267,
   writer: 269,
   researcher: 275,
+  sgdc: 277,
   roomba: 281,
   osx: 289,
   banker: 290,
@@ -867,13 +871,13 @@ let scoreValues = {
 /* -- Things --
 
   Raw Counts:
-    Earth: 16069
-      Air: 5546
-     Fire: 14392
-    Water: 15434
-    Light: 6537
+    Earth: 16174
+      Air: 5582
+     Fire: 14505
+    Water: 15539
+    Light: 6586
 
-  Total Tasks: 390
+  Total Tasks: 392
 
   Largest Tasks:
    Supercluster (1864 raw, 1647 steps)
@@ -887,6 +891,7 @@ let scoreValues = {
         Glasses (10 raw, 8 steps)
       Butterfly (11 raw, 8 steps)
  */
+
 
 
 

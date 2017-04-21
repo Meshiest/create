@@ -135,6 +135,7 @@ $things = {
   "Cement" => ["Limestone", "Clay"],
   "Snake" => ["Worm", "Sand"],
   "Fish" => ["Snake", "Water"],
+  "Squid" => ["Fish", "Snake"],
   "Concrete" => ["Cement", "Water"],
   "Bricks" => ["Clay", "Fire"],
   "Bar" => ["Alcoholic", "Vodka", "Beer", "Alcohol", "Wine", "Building"],
@@ -231,6 +232,8 @@ $things = {
   "David" => ["Memes", "Teacher", "Science", "Computer"],
   "Noah" => ["Sleep", "Depression", "Student", "Sex"],
   "Isaac" => ["Reddit", "Computer", "Anime", "Hair"],
+  "Ink" => ["Squid", "Weapon"],
+  "Pen" => ["Feather", "Ink"],
 }
 
 # Breaks a thing down into components
@@ -347,6 +350,14 @@ $upgrades = {
     speed: 750,
     input: what_are(["Mechanism", "Circuit"]) * 2,
     output: ["Mechanism", "Circuit"] * 2,
+  },
+  "Writer" => {
+    cost: ["Human", "Tools", "Book", "Paper", "Pen"],
+    action: "Write Books",
+    uses: -1,
+    speed: 1000,
+    input: what_are(["Book"]) * 5,
+    output: ["Book"] * 5,
   },
 }
 

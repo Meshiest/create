@@ -235,7 +235,7 @@ class Card extends React.Component {
 
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "fire", count: 7460}, {id: "water", count: 8433}, {id: "air", count: 3083}, {id: "earth", count: 9006}, {id: "light", count: 3556}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "fire", count: 7559}, {id: "water", count: 8576}, {id: "air", count: 3128}, {id: "earth", count: 9147}, {id: "light", count: 3615}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
   steam: new Task("steam", "Steam", -1, 3000, [{id: "air", count: 1}, {id: "water", count: 1}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
@@ -370,6 +370,7 @@ let tasks = {
   cement: new Task("cement", "Cement", -1, 23000, [{id: "limestone", count: 1}, {id: "clay", count: 1}]),
   snake: new Task("snake", "Snake", -1, 15000, [{id: "worm", count: 1}, {id: "sand", count: 1}]),
   fish: new Task("fish", "Fish", -1, 16000, [{id: "snake", count: 1}, {id: "water", count: 1}]),
+  squid: new Task("squid", "Squid", -1, 30000, [{id: "fish", count: 1}, {id: "snake", count: 1}]),
   concrete: new Task("concrete", "Concrete", -1, 24000, [{id: "cement", count: 1}, {id: "water", count: 1}]),
   bricks: new Task("bricks", "Bricks", -1, 8000, [{id: "clay", count: 1}, {id: "fire", count: 1}]),
   bar: new Task("bar", "Bar", -1, 152000, [{id: "alcoholic", count: 1}, {id: "vodka", count: 1}, {id: "beer", count: 1}, {id: "alcohol", count: 1}, {id: "wine", count: 1}, {id: "building", count: 1}]),
@@ -466,6 +467,8 @@ let tasks = {
   david: new Task("david", "David", -1, 348000, [{id: "memes", count: 1}, {id: "teacher", count: 1}, {id: "science", count: 1}, {id: "computer", count: 1}]),
   noah: new Task("noah", "Noah", -1, 461000, [{id: "sleep", count: 1}, {id: "depression", count: 1}, {id: "student", count: 1}, {id: "sex", count: 1}]),
   isaac: new Task("isaac", "Isaac", -1, 432000, [{id: "reddit", count: 1}, {id: "computer", count: 1}, {id: "anime", count: 1}, {id: "hair", count: 1}]),
+  ink: new Task("ink", "Ink", -1, 54000, [{id: "squid", count: 1}, {id: "weapon", count: 1}]),
+  pen: new Task("pen", "Pen", -1, 119000, [{id: "feather", count: 1}, {id: "ink", count: 1}]),
   miner: new Task("miner", "Miner", 1, 77000, [{id: "upgrade_miner", count: -1}, {id: "drill", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}, {id: "energy", count: 1}]),
   smelter: new Task("smelter", "Smelter", 1, 49000, [{id: "upgrade_smelter", count: -1}, {id: "mechanism", count: 1}, {id: "fire", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
   breeder: new Task("breeder", "Breeder", 1, 137000, [{id: "upgrade_breeder", count: -1}, {id: "human", count: 1}, {id: "beaker", count: 1}, {id: "sex", count: 1}, {id: "intellect", count: 1}, {id: "tools", count: 1}]),
@@ -479,6 +482,7 @@ let tasks = {
   researcher: new Task("researcher", "Researcher", 1, 296000, [{id: "upgrade_researcher", count: -1}, {id: "scientist", count: 1}, {id: "book", count: 1}, {id: "curiosity", count: 1}, {id: "tools", count: 1}, {id: "beaker", count: 1}, {id: "science", count: 1}]),
   trainer: new Task("trainer", "Trainer", 1, 149000, [{id: "upgrade_trainer", count: -1}, {id: "teacher", count: 1}, {id: "warrior", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
   engineer: new Task("engineer", "Engineer", 1, 95000, [{id: "upgrade_engineer", count: -1}, {id: "scientist", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}, {id: "circuit", count: 1}]),
+  writer: new Task("writer", "Writer", 1, 288000, [{id: "upgrade_writer", count: -1}, {id: "human", count: 1}, {id: "tools", count: 1}, {id: "book", count: 1}, {id: "paper", count: 1}, {id: "pen", count: 1}]),
   upgrade_miner: new Task("upgrade_miner", "Mine Stone", -1, 22500, [{id: "miner", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 10}, {id: "water", count: 10}], 0, [{id: "upgrade_miner", count: -1}, {id: "stone", count: 10}]),
   upgrade_smelter: new Task("upgrade_smelter", "Smelt Metal", -1, 30000, [{id: "smelter", count: 0}, {id: "earth", count: 10}, {id: "fire", count: 20}, {id: "water", count: 10}], 0, [{id: "upgrade_smelter", count: -1}, {id: "metal", count: 10}]),
   upgrade_breeder: new Task("upgrade_breeder", "Breed Human", -1, 12000, [{id: "breeder", count: 0}, {id: "earth", count: 5}, {id: "water", count: 4}, {id: "fire", count: 3}, {id: "air", count: 2}, {id: "light", count: 2}], 0, [{id: "upgrade_breeder", count: -1}, {id: "human", count: 1}]),
@@ -492,6 +496,7 @@ let tasks = {
   upgrade_researcher: new Task("upgrade_researcher", "Research Science", -1, 135000, [{id: "researcher", count: 0}, {id: "earth", count: 45}, {id: "water", count: 60}, {id: "fire", count: 45}, {id: "air", count: 10}, {id: "light", count: 20}], 0, [{id: "upgrade_researcher", count: -1}, {id: "science", count: 5}]),
   upgrade_trainer: new Task("upgrade_trainer", "Train Warriors", -1, 60000, [{id: "trainer", count: 0}, {id: "earth", count: 24}, {id: "water", count: 20}, {id: "fire", count: 20}, {id: "air", count: 8}, {id: "light", count: 8}], 0, [{id: "upgrade_trainer", count: -1}, {id: "warrior", count: 2}]),
   upgrade_engineer: new Task("upgrade_engineer", "Engineer Electronics", -1, 33000, [{id: "engineer", count: 0}, {id: "fire", count: 20}, {id: "air", count: 4}, {id: "earth", count: 8}, {id: "water", count: 8}, {id: "light", count: 4}], 0, [{id: "upgrade_engineer", count: -1}, {id: "mechanism", count: 2}, {id: "circuit", count: 2}]),
+  upgrade_writer: new Task("upgrade_writer", "Write Books", -1, 495000, [{id: "writer", count: 0}, {id: "earth", count: 145}, {id: "water", count: 135}, {id: "fire", count: 100}, {id: "air", count: 50}, {id: "light", count: 65}], 0, [{id: "upgrade_writer", count: -1}, {id: "book", count: 5}]),
 };
 
 // Things to hide from the menu
@@ -510,6 +515,7 @@ let hidden = {
   "upgrade_researcher": 1,
   "upgrade_trainer": 1,
   "upgrade_engineer": 1,
+  "upgrade_writer": 1,
 };
 
 // Initial Tasks
@@ -518,26 +524,27 @@ let initial = [tasks.things];
 /* -- Things --
 
   Raw Counts:
-     Fire: 7460
-    Water: 8433
-      Air: 3083
-    Earth: 9006
-    Light: 3556
+     Fire: 7559
+    Water: 8576
+      Air: 3128
+    Earth: 9147
+    Light: 3615
 
-  Total Tasks: 243
+  Total Tasks: 247
 
   Largest Tasks:
            Envy (1127 raw, 988 steps)
-     Liberality (1127 raw, 981 steps)
        Kindness (1127 raw, 981 steps)
+     Liberality (1127 raw, 981 steps)
          Empire (1104 raw, 958 steps)
 
   Shortest Ends:
            Fern (13 raw, 8 steps)
       Butterfly (11 raw, 8 steps)
           Golem (11 raw, 9 steps)
-          Whale (12 raw, 10 steps)
+        Phoenix (14 raw, 10 steps)
  */
+
 
 
 

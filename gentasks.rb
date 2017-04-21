@@ -33,7 +33,10 @@ $things = {
   "Wizard" => ["Magic", "Human"],
   "Demigod" => ["Wizard", "Energy", "Light"],
   "Vampire" => ["Human", "Blood"],
-  "Slayer" => ["Vampire", "Mirror", "Wood"],
+  "Spice" => ["Fire", "Food"],
+  "Garlic" => ["Spice", "Fruit"],
+  "Food" => ["Meat", "Tools"],
+  "Slayer" => ["Vampire", "Mirror", "Garlic", "Wood"],
   "Animal" => ["Human", "Beast"],
   "Wool" => ["Human", "Animal"],
   "Meat" => ["Human", "Animal"],
@@ -80,17 +83,16 @@ $things = {
   "Cart" => ["Wheel", "Wood"],
   "Locomotive" => ["Cart", "Engine"],
   "Oil" => ["Water", "Coal"],
+  "Plastic" => ["Oil", "Tools"],
+  "Lego" => ["Plastic", "Children"],
   "Chair" => ["Wood", "Tools"],
   "Car" => ["Engine", "Cart", "Lamp", "Chair"],
   "Wing" => ["Air", "Mechanism"],
   "Airplane" => ["Car", "Wing", "Circuit"],
   "Airport" => ["Airplane", "Building"],
-  "Teacher" => ["Student", "Time"],
   "Student" => ["Human", "Curiosity"],
   "School" => ["Building", "Teacher", "Student", "Book"],
-  "Paper" => ["Leaf", "Light"],
   "Leather" => ["Fabric", "Animal", "Light"],
-  "Book" => ["Leather", "Paper"],
   "Chariot" => ["Beast", "Cart"],
   "Alcoholic" => ["Vodka", "Human"],
   "Grass" => ["Moss", "Earth", "Light"],
@@ -108,7 +110,7 @@ $things = {
   "Reed" => ["Grass", "Swamp"],
   "Paper" => ["Reed", "Tools"],
   "Feather" => ["Hunter", "Bird"],
-  "Book" => ["Feather", "Paper"],
+  "Book" => ["Leather", "Paper"],
   "Electricity" => ["Energy", "Metal", "Light"],
   "Corpse" => ["Warrior", "Human"],
   "Skull" => ["Warrior", "Human"],
@@ -122,9 +124,11 @@ $things = {
   "Assassin" => ["Dart", "Human"],
   "Glass" => ["Sand", "Fire", "Light"],
   "Tobacco" => ["Grass", "Fire"],
+  "Cancer" => ["Tobacco", "Human"],
   "Weed" => ["Grass", "Fire"],
   "Baked" => ["Weed", "Human"],
   "Cigarette" => ["Tobacco", "Paper"],
+  "Cigar" => ["Cigarette", "Intellect"],
   "Joint" => ["Weed", "Paper"],
   "Fertilizer" => ["Animal", "Grass"],
   "Shell" => ["Stone", "Plankton"],
@@ -167,9 +171,10 @@ $things = {
   "Camera" => ["Mechanism", "Lense", "Lamp"],
   "Video" => ["Mechanism", "Camera", "Battery"],
   "Porn" => ["Sex", "Video"],
+  "Hentai" => ["Porn", "Anime"],
   "Pornhub" => ["Porn", "Internet"],
   "Boredom" => ["Human", "Time", "Time", "Time", "Time", "Time"],
-  "Memes" => ["Internet", "Boredom"],
+  "Memes" => ["Internet", "Cancer"],
   "FiberOptics" => ["Light", "Circuit", "Glass", "Internet"],
   "Youtube" => ["Video", "Time", "Internet"],
   "Reddit" => ["Love", "Time", "Internet"],
@@ -179,6 +184,7 @@ $things = {
   "Rocket" => ["Hydrazine", "Airplane"],
   "Satellite" => ["Solarpanel", "Telescope", "Rocket", "Computer"],
   "Space" => ["Rocket", "Human"],
+  "Alien" => ["Space", "Life"],
   "Moon" => ["Space", "Flag"],
   "Flag" => ["Fabric", "Metal"],
   "Rover" => ["Car", "Space", "Moon", "Battery"],
@@ -231,9 +237,33 @@ $things = {
   "Jake" => ["Ego", "Love", "Hero", "Hair"],
   "David" => ["Memes", "Teacher", "Science", "Computer"],
   "Noah" => ["Sleep", "Depression", "Student", "Sex"],
-  "Isaac" => ["Reddit", "Computer", "Anime", "Hair"],
+  "Isaac" => ["Reddit", "Programming", "Anime", "Hair"],
+  "Jared" => ["Student", "Programming", "Java", "Depression"],
+  "Thomas" => ["Abuse", "Memes", "Lego", "Depression"],
   "Ink" => ["Squid", "Weapon"],
   "Pen" => ["Feather", "Ink"],
+  "Penguin" => ["Feather", "Fish"],
+  "Programming" => ["Computer", "Science", "Time"],
+  "Linux" => ["Penguin", "Programming"],
+  "Unix" => ["Computer", "Programming"],
+  "Epoch" => ["Unix", "Time"],
+  "Github" => ["Internet", "Love", "Programming"],
+  "Bash" => ["Linux", "Shell"],
+  "ZSH" => ["Linux", "Shell", "Love"],
+  "C" => ["Programming", "Time", "Time"],
+  "CPlusPlus" => ["C", "Intellect"],
+  "Go" => ["C", "Time"],
+  "Java" => ["Programming", "Ego"],
+  "Perl" => ["Programming", "Cancer"],
+  "Ruby" => ["Programming", "Love"],
+  "Javascript" => ["Programming", "Cancer", "Internet"],
+  "rProgramming" => ["Reddit", "Programming"],
+  "rUnixPorn" => ["Reddit", "Unix", "Porn"], 
+  "rPics" => ["Reddit", "Camera"],
+  "rGonewild" => ["Reddit", "Porn"],
+  "rAskreddit" => ["Reddit", "Curiosity"],
+  "rScience" => ["Reddit", "Science"],
+  "rAnime" => ["Reddit", "Anime"],
 }
 
 # Breaks a thing down into components
@@ -270,6 +300,30 @@ $upgrades = {
     speed: 750,
     input: what_is("Human"),
     output: ["Human"],
+  },
+  "Chef" => {
+    cost: ["Human", "Tools", "Food"],
+    action: "Cook Food",
+    uses: -1,
+    speed: 750,
+    input: what_is("Food") * 2,
+    output: ["Food"] * 2,
+  },
+  "Teacher" => {
+    cost: ["Student", "Book", "Time", "Intellect"],
+    action: "Teach Student",
+    uses: -1,
+    speed: 750,
+    input: what_are(["Student", "Intellect"]),
+    output: ["Student", "Intellect"],
+  },
+  "God" => {
+    cost: ["Demigod", "Demigod", "Life"],
+    action: "Make Life",
+    uses: -1,
+    speed: 750,
+    input: what_is("Life") * 5,
+    output: ["Life"] * 5,
   },
   "Cloner" => {
     cost: ["Breeder", "Sex", "Scientist", "Beaker"],
@@ -327,6 +381,14 @@ $upgrades = {
     input: what_is("Building") * 2,
     output: ["Building"] * 2,
   },
+  "Voyager" => {
+    cost: ["Rocket", "Frontier"],
+    action: "Explore Space",
+    uses: -1,
+    speed: 750,
+    input: what_is("Space") * 2,
+    output: ["Space"] * 2,
+  },
   "Researcher" => {
     cost: ["Scientist", "Book", "Curiosity", "Tools", "Beaker", "Science"],
     action: "Research Science",
@@ -359,6 +421,38 @@ $upgrades = {
     input: what_are(["Book"]) * 5,
     output: ["Book"] * 5,
   },
+  "Banker" => {
+    cost: ["Human", "Theft", "Money", "Time"],
+    action: "Make Money",
+    uses: -1,
+    speed: 750,
+    input: what_are(["Money"]) * 3,
+    output: ["Money"] * 3,
+  },
+  "Programmer" => {
+    cost: ["Programming", "Human", "Ego", "Computer", "Intellect"],
+    action: "Write Code",
+    uses: -1,
+    speed: 750,
+    input: what_are(["Programming"]) * 3,
+    output: ["Programming"] * 3,
+  },
+  "Redditor" => {
+    cost: ["Human", "Boredom", "Time", "Reddit"],
+    action: "Read Reddit",
+    uses: -1,
+    speed: 1000,
+    input: what_are(["Reddit"]) * 3,
+    output: ["Reddit"] * 3,
+  },
+  "Camgirl" => {
+    cost: ["Human", "Sex", "Video", "Porn", "Internet"],
+    action: "Make Porn",
+    uses: -1,
+    speed: 750,
+    input: what_are(["Porn"]),
+    output: ["Porn"],
+  },
 }
 
 # "Creation Name" => {
@@ -384,7 +478,7 @@ end
 
 # If a thing is used in a recipe
 def is_used? thing
-  !$things.values.flatten.include? thing
+  $things.values.flatten.include? thing
 end
 
 # Add all the upgrade roots as things
@@ -400,7 +494,8 @@ tasks = ["  things: new Task(\"things\", \"Create Things\", 1, 5000, [{id: \"__s
 # Create all the thing tasks
 tasks += $things.map { |k, v|
   upgrade = $upgrades[k] ? "{id: \"upgrade_#{k.downcase}\", count: -1}, " : ""
-  "  #{k.downcase}: new Task(\"#{k.downcase}\", \"#{k}\", #{$upgrades[k] ? 1 : -1}, #{1000 + what_is(k).length * 1000}, [#{upgrade}#{stringify v}]),"
+  amount = is_used?(k) ? -1 : 1
+  "  #{k.downcase}: new Task(\"#{k.downcase}\", \"#{k}\", #{$upgrades[k] ? 1 : amount}, #{1000 + what_is(k).length * 1000}, [#{upgrade}#{stringify v}]),"
 }
 
 # Create all the upgrade tasks
@@ -438,6 +533,6 @@ let initial = [tasks.things];
 #{$things.keys.sort{|a,b|how_long(b)-how_long(a)}[0..3].map{|a|"#{a.rjust(15)} (#{what_is(a).length} raw, #{how_long(a)} steps)"}.join("\n")}
 
   Shortest Ends:
-#{$things.keys.select{|t|is_used? t}.sort{|a,b|how_long(a)-how_long(b)}[0..3].map{|a|"#{a.rjust(15)} (#{what_is(a).length} raw, #{how_long(a)} steps)"}.join("\n")}
+#{$things.keys.select{|t|!is_used? t}.sort{|a,b|how_long(a)-how_long(b)}[0..3].map{|a|"#{a.rjust(15)} (#{what_is(a).length} raw, #{how_long(a)} steps)"}.join("\n")}
  */
 """

@@ -255,11 +255,11 @@ button:focus {
 }
 
 .tooltip {
-  position: fixed;
-  pointer-events: none;
-  transform: translate(-50%, 10px);
   display: block;
   overflow: visible;
+  pointer-events: none;
+  position: fixed;
+  transform: translate(-50%, 10px);
 }
 
 .tooltip > .card {
@@ -268,4 +268,28 @@ button:focus {
 }
 .tooltip > .card > .card-content {
   padding: 5px;
+}
+
+.achievements {
+  bottom: 0;
+  height: auto;
+  position: fixed;
+  width: 100%;
+}
+
+.achievement.card {
+  margin: 5px;
+}
+
+.achievement .card-content {
+  text-align: center;
+  background-color: #000;
+  color: #ff0;
+  padding: 5px;
+}
+.achievement .card-content h2 {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

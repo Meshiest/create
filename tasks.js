@@ -1,6 +1,6 @@
 // All available tasks
 let tasks = {
-  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "fire", count: 10004}, {id: "water", count: 10967}, {id: "air", count: 3937}, {id: "earth", count: 11472}, {id: "light", count: 4691}]),
+  things: new Task("things", "Create Things", 1, 5000, [{id: "__start", count: 1}], 0, [{id: "fire", count: 9975}, {id: "water", count: 10923}, {id: "air", count: 3912}, {id: "earth", count: 11400}, {id: "light", count: 4674}]),
   alcohol: new Task("alcohol", "Alcohol", -1, 3000, [{id: "fire", count: 1}, {id: "water", count: 1}]),
   steam: new Task("steam", "Steam", -1, 3000, [{id: "air", count: 1}, {id: "water", count: 1}]),
   lava: new Task("lava", "Lava", -1, 3000, [{id: "earth", count: 1}, {id: "fire", count: 1}]),
@@ -181,7 +181,8 @@ let tasks = {
   youtube: new Task("youtube", "Youtube", 1, 202000, [{id: "video", count: 1}, {id: "time", count: 1}, {id: "internet", count: 1}]),
   reddit: new Task("reddit", "Reddit", -1, 191000, [{id: "love", count: 1}, {id: "time", count: 1}, {id: "internet", count: 1}]),
   curiosity: new Task("curiosity", "Curiosity", -1, 47000, [{id: "time", count: 3}, {id: "human", count: 1}]),
-  google: new Task("google", "Google", 1, 185000, [{id: "curiosity", count: 1}, {id: "internet", count: 1}]),
+  google: new Task("google", "Google", -1, 185000, [{id: "curiosity", count: 1}, {id: "internet", count: 1}]),
+  bing: new Task("bing", "Bing", 1, 214000, [{id: "google", count: 1}, {id: "cancer", count: 1}]),
   hydrazine: new Task("hydrazine", "Hydrazine", -1, 15000, [{id: "gasoline", count: 1}, {id: "water", count: 1}]),
   rocket: new Task("rocket", "Rocket", -1, 211000, [{id: "hydrazine", count: 1}, {id: "airplane", count: 1}]),
   satellite: new Task("satellite", "Satellite", 1, 272000, [{id: "solarpanel", count: 1}, {id: "telescope", count: 1}, {id: "rocket", count: 1}, {id: "computer", count: 1}]),
@@ -194,7 +195,7 @@ let tasks = {
   pillage: new Task("pillage", "Pillage", -1, 417000, [{id: "flag", count: 1}, {id: "village", count: 1}, {id: "army", count: 1}]),
   conquer: new Task("conquer", "Conquer", -1, 457000, [{id: "pillage", count: 1}, {id: "blood", count: 1}]),
   blood: new Task("blood", "Blood", -1, 41000, [{id: "human", count: 1}, {id: "weapon", count: 1}]),
-  frontier: new Task("frontier", "Frontier", -1, 643000, [{id: "pillage", count: 1}, {id: "space", count: 1}]),
+  frontier: new Task("frontier", "Frontier", 1, 643000, [{id: "pillage", count: 1}, {id: "space", count: 1}]),
   flint: new Task("flint", "Flint", -1, 8000, [{id: "stone", count: 1}, {id: "sand", count: 1}]),
   spear: new Task("spear", "Spear", -1, 38000, [{id: "flint", count: 1}, {id: "wood", count: 1}]),
   time: new Task("time", "Time", -1, 11000, [{id: "sand", count: 1}, {id: "glass", count: 1}]),
@@ -279,7 +280,7 @@ let tasks = {
   provider: new Task("provider", "Provider", 1, 356000, [{id: "upgrade_provider", count: -1}, {id: "internet", count: 1}, {id: "skyscraper", count: 1}, {id: "fiberoptics", count: 1}]),
   generator: new Task("generator", "Generator", 1, 87000, [{id: "upgrade_generator", count: -1}, {id: "energy", count: 1}, {id: "mechanism", count: 1}, {id: "solarpanel", count: 1}, {id: "science", count: 1}, {id: "battery", count: 1}, {id: "electricity", count: 1}]),
   builder: new Task("builder", "Builder", 1, 125000, [{id: "upgrade_builder", count: -1}, {id: "mechanism", count: 1}, {id: "building", count: 1}, {id: "cement", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
-  voyager: new Task("voyager", "Voyager", 1, 853000, [{id: "upgrade_voyager", count: -1}, {id: "rocket", count: 1}, {id: "frontier", count: 1}]),
+  voyager: new Task("voyager", "Voyager", 1, 453000, [{id: "upgrade_voyager", count: -1}, {id: "rocket", count: 1}, {id: "space", count: 1}, {id: "human", count: 1}]),
   researcher: new Task("researcher", "Researcher", 1, 322000, [{id: "upgrade_researcher", count: -1}, {id: "scientist", count: 1}, {id: "book", count: 1}, {id: "curiosity", count: 1}, {id: "tools", count: 1}, {id: "beaker", count: 1}, {id: "science", count: 1}]),
   trainer: new Task("trainer", "Trainer", 1, 300000, [{id: "upgrade_trainer", count: -1}, {id: "teacher", count: 1}, {id: "warrior", count: 1}, {id: "tools", count: 1}, {id: "human", count: 1}]),
   engineer: new Task("engineer", "Engineer", 1, 95000, [{id: "upgrade_engineer", count: -1}, {id: "scientist", count: 1}, {id: "tools", count: 1}, {id: "mechanism", count: 1}, {id: "circuit", count: 1}]),
@@ -342,16 +343,119 @@ let hidden = {
 // Initial Tasks
 let initial = [tasks.things];
 
+let scoreValues = {
+  fern: 8,
+  butterfly: 8,
+  golem: 9,
+  phoenix: 10,
+  whale: 10,
+  turtle: 10,
+  scorpion: 12,
+  thunderbird: 12,
+  ghost: 13,
+  acorn: 16,
+  sorcery: 18,
+  ceramics: 19,
+  baked: 22,
+  dolphin: 22,
+  torch: 27,
+  watch: 31,
+  joint: 36,
+  katana: 39,
+  smelter: 40,
+  werewolf: 59,
+  cigar: 59,
+  miner: 64,
+  god: 66,
+  clothes: 69,
+  generator: 71,
+  firearm: 74,
+  necromancer: 79,
+  chariot: 81,
+  engineer: 81,
+  chef: 86,
+  timekeeper: 91,
+  cake: 92,
+  perl: 93,
+  go: 96,
+  farmer: 97,
+  locomotive: 99,
+  ghoul: 103,
+  builder: 104,
+  ruby: 106,
+  epoch: 110,
+  cplusplus: 110,
+  steamship: 113,
+  edgar: 119,
+  pride: 120,
+  ninjutsu: 123,
+  bar: 125,
+  frigate: 141,
+  slayer: 145,
+  bash: 151,
+  hentai: 153,
+  programmer: 153,
+  smither: 166,
+  youtube: 171,
+  bing: 180,
+  zsh: 186,
+  rpics: 187,
+  lust: 190,
+  pornhub: 191,
+  rscience: 194,
+  raskreddit: 201,
+  alien: 204,
+  javascript: 211,
+  airport: 220,
+  github: 224,
+  cloner: 225,
+  rprogramming: 233,
+  rgonewild: 235,
+  redditor: 238,
+  satellite: 239,
+  ranime: 243,
+  trainer: 256,
+  gluttony: 260,
+  writer: 269,
+  researcher: 275,
+  camgirl: 275,
+  banker: 290,
+  jake: 293,
+  provider: 302,
+  patience: 309,
+  runixporn: 336,
+  wrath: 344,
+  chastity: 365,
+  david: 393,
+  jared: 394,
+  noah: 396,
+  voyager: 400,
+  isaac: 408,
+  abstinence: 498,
+  thomas: 513,
+  frontier: 565,
+  mars: 663,
+  greed: 890,
+  city: 908,
+  sloth: 932,
+  diligence: 953,
+  humility: 953,
+  empire: 958,
+  liberality: 981,
+  kindness: 981,
+  envy: 988, 
+};
+
 /* -- Things --
 
   Raw Counts:
-     Fire: 10004
-    Water: 10967
-      Air: 3937
-    Earth: 11472
-    Light: 4691
+     Fire: 9975
+    Water: 10923
+      Air: 3912
+    Earth: 11400
+    Light: 4674
 
-  Total Tasks: 287
+  Total Tasks: 288
 
   Largest Tasks:
            Envy (1127 raw, 988 steps)

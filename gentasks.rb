@@ -180,6 +180,7 @@ $things = {
   "Reddit" => ["Love", "Time", "Internet"],
   "Curiosity" => ["Time", "Time", "Time", "Human"],
   "Google" => ["Curiosity", "Internet"],
+  "Bing" => ["Google", "Cancer"],
   "Hydrazine" => ["Gasoline", "Water"],
   "Rocket" => ["Hydrazine", "Airplane"],
   "Satellite" => ["Solarpanel", "Telescope", "Rocket", "Computer"],
@@ -382,7 +383,7 @@ $upgrades = {
     output: ["Building"] * 2,
   },
   "Voyager" => {
-    cost: ["Rocket", "Frontier"],
+    cost: ["Rocket", "Space", "Human"],
     action: "Explore Space",
     uses: -1,
     speed: 750,
@@ -471,9 +472,12 @@ def stringify things
   }.join(", ")
 end
 
+
+
+$lengthCache = {}
 # Calculates how many steps are in this thing
 def how_long thing
-  $things[thing] && (1 + $things[thing].map{|t|how_long(t)}.inject(&:+)) || 0
+  $lengthCache[thing] ||= $things[thing] && (1 + $things[thing].map{|t|how_long(t)}.inject(&:+)) || 0
 end
 
 # If a thing is used in a recipe
@@ -521,6 +525,10 @@ let hidden = {
 
 // Initial Tasks
 let initial = [tasks.things];
+
+let scoreValues = {
+#{$things.keys.select{|t|!is_used? t}.sort{|a,b|how_long(a)-how_long(b)}.map{|a|"  #{a.downcase}: #{how_long(a)},"}.join("\n")} 
+};
 
 /* -- Things --
 

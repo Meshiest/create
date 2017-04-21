@@ -209,12 +209,14 @@ class Card extends React.Component {
             {Object.keys(output).map(id => output[id] != 0 && (
               <span key={"output_" + id}
                 num={output[id]}
+                onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, id)}}
                 className={'card-requirement ' + (output[id] > 0 ? "create" : "remove")}>
                   {(output[id] > 0 ? Math.abs(output[id]) + " " : "") + id}
                 </span>
             ))}
             {Object.keys(requirements).map(id => (
               <span key={"requirement_" + id}
+                onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, id)}}
                 className={"card-requirement " + (requirements[id] > 0 ? "remove" : "needed")}>{(requirements[id] > 0 ? requirements[id] + " " : "") + id}</span>
             ))}
           </div>
@@ -589,13 +591,70 @@ $(document).ready(() => {
 hidden.__loaded_game = 1;
 hidden.__start = 1;
 
+function identify(event, task) {
+  let elem = event.currentTarget;
+  if(!elem)
+    return;
+  if(TooltipController.task !== task) {
+    TooltipController.setTask(task);
+  }
+}
+
+$(document.body).mousemove((e) => {
+  if(!TooltipController.task)
+    return;
+  
+  $('#tooltip').css("left", e.pageX);
+  $('#tooltip').css("top", e.pageY);
+});
+
+
+class Tooltip extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.task = '';
+    this.state = {};
+
+    this.setTask = this.setTask.bind(this);
+  }
+
+  setTask(task) {
+    this.task = task;
+    this.setState({
+      task: task,
+      requirements: tasks[task] ? tasks[task].requirements : [{id: "Raw Element", count: 0}]
+    });
+  }
+
+  render() {
+    if(!this.state.task)
+      return <div></div>;
+
+    let requirements = this.state.requirements;
+    return (<div className="card">
+      <div className="card-content">
+        <div className="card-requirements">
+          {requirements.map(req => (
+            !hidden[req.id] && !req.hidden &&
+            <span key={req.id}
+              className={"card-requirement " + (req.count > 0 ? "remove" : "needed")}>{(req.count > 0 ? req.count + " " : "") + req.id}</span>
+          ))}
+        </div>
+      </div>
+    </div>);
+  }
+}
+
+window.TooltipController = ReactDOM.render(<Tooltip/>, document.getElementById("tooltip"));
+
 // Controls component: manages tasks
 class Controls extends React.Component {
   constructor(props) {
     super(props);
 
     // list of all tasks
-    this.tasks = tasks
+    this.tasks = tasks;
 
     this.showInventory = false;
     
@@ -809,12 +868,12 @@ class Controls extends React.Component {
           </button>}
         </div>
         <div className="inventory-content">
-          {!Object.keys(this.state.completed).length && <h2>Nothing Here Yet!</h2>}
-          {Object.keys(this.state.completed).map(k => (
-            this.state.completed[k] > -1 && !hidden[k] && <span className="inventory-item" key={k}>
+          {!this.state.completed.things && <h2>Nothing Here Yet!</h2>}
+          {Object.keys(this.state.completed).map(k => (this.state.completed[k] > -1 && !hidden[k] && (
+            <span className="inventory-item" key={k} onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, k)}}>
               {this.state.completed[k] + " " + k}
             </span>
-          ))}
+          )))}
         </div>
       </div>
       <div className="toolbar">

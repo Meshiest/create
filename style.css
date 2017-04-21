@@ -13,7 +13,7 @@ body {
   overflow: hidden;
 }
 
-body > div {
+#controls {
   flex-grow: 1;
   min-height: 100vh;
 }
@@ -252,4 +252,20 @@ button:focus {
   background-color: #1E88E5;
   height: 4px;
   position: relative;
+}
+
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  display: block;
+  overflow: visible;
+}
+
+.tooltip > .card {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+.tooltip > .card > .card-content {
+  padding: 5px;
 }

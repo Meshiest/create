@@ -909,12 +909,10 @@ class Controls extends React.Component {
     
     task.times ++;
 
-    console.log("B", task.id, task.limit, task.times, task.hidden, hidden[task.id]);
     // decrease the task if it's not an unlimited task
     if(task.limit > 0) {
       task.limit --;
 
-      console.log(task.id, task.limit, task.times, task.hidden, hidden[task.id]);
       if(task.limit == 0 && task.times == 1 && !task.hidden && !hidden[task.id]) {
         achievement(task.name);
       }

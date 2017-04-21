@@ -210,8 +210,9 @@ class Card extends React.Component {
               <span key={"output_" + id}
                 num={output[id]}
                 onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, id)}}
-                className={'card-requirement ' + (output[id] > 0 ? "create" : "remove")}>
-                  {(output[id] > 0 ? Math.abs(output[id]) + " " : "") + id}
+                className={'card-requirement ' + (scoreValues[id] ? "final" : (output[id] > 0 ? "create" : "remove"))}>
+                  {scoreValues[id] && <i className="material-icons">star</i>}
+                  {(output[id] > 0 && !scoreValues[id] ? Math.abs(output[id]) + " " : "") + id}
                 </span>
             ))}
             {Object.keys(requirements).map(id => (
@@ -912,6 +913,7 @@ class Controls extends React.Component {
     this.toggleInventory = this.toggleInventory.bind(this);
     this.saveGame = this.saveGame.bind(this);
     this.canAfford = this.canAfford.bind(this);
+    this.computeScore = this.computeScore.bind(this);
   }
 
   canAfford(task) {
@@ -1097,7 +1099,20 @@ class Controls extends React.Component {
     console.log("Saved Game");
   }
 
+  computeScore() {
+    let score = {ends: 0, score: 0};
+    Object.keys(scoreValues).map(t => {
+      if(this.state.completed[t]) {
+        score.ends ++;
+        score.score += scoreValues[t];
+      }
+    });
+    score.score *= 10;
+    return score;
+  }
+
   render() {
+    let score = this.computeScore();
     return (<div>
       <div className="card-container">
         {this.state.todo.map((t, i) => (
@@ -1110,7 +1125,13 @@ class Controls extends React.Component {
           />)
         )}
       </div>
-      <div className="inventory" ref="inventory">
+      <div className="inventory card-container" ref="inventory">
+        {this.state.completed.things && <div className="card">
+          <div className="card-content">
+            <h2><span>Score</span><span>{score.score}</span></h2>
+            <h2><span>Final Products</span><span>{score.ends}</span></h2>
+          </div>
+        </div>}
         <div className="inventory-buttons">
           {this.state.completed.things && <button ref="saveButton" onClick={this.saveGame}>
             <i className="material-icons">save</i>
@@ -1119,8 +1140,9 @@ class Controls extends React.Component {
         <div className="inventory-content">
           {!this.state.completed.things && <h2>Nothing Here Yet!</h2>}
           {Object.keys(this.state.completed).map(k => (this.state.completed[k] > -1 && !hidden[k] && (
-            <span className="inventory-item" key={k} onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, k)}}>
-              {this.state.completed[k] + " " + k}
+            <span className={"inventory-item " + (scoreValues[k] ? "final" : "")} key={k} onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, k)}}>
+              {scoreValues[k] && <i className="material-icons">star</i>}
+              {(scoreValues[k] ? "" : this.state.completed[k] + " ") + k}
             </span>
           )))}
         </div>

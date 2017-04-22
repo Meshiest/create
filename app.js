@@ -915,6 +915,14 @@ $(document).ready(() => {
   // Create our load game task
   tasks.__loaded_game = new Task("__loaded_game", "Load Things", 1, 5000, [{id: "__start", count: 1}], ()=>{
     let todo = [];
+    for(let t in saveData.times) {
+      let task = tasks[t];
+      task.times = saveData.times[t];
+      if(task.limit > 0) {
+        task.limit -= task.times;
+        task.limit = Math.max(task.limit, 0);
+      }
+    }
     for(let i = 0; i < saveData.todo.length; i++) {
       let item = saveData.todo[i];
       if(!tasks[item.id])
@@ -923,9 +931,6 @@ $(document).ready(() => {
       let task = tasks[item.id];
       task.started = item.started;
       task.startTime = item.startTime;
-      task.times = saveData.times[item.id];
-      if(task.limit > 0)
-        task.limit -= task.times;
 
       todo.push(task);
     }

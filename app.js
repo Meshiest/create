@@ -894,7 +894,109 @@ let scoreValues = {
  */
 
 
+function loadGame(saveData) {
+  let todo = [];
+  for(let t in saveData.times) {
+    let task = tasks[t];
+    task.times = saveData.times[t];
+    if(task.limit > 0) {
+      task.limit -= task.times;
+      task.limit = Math.max(task.limit, 0);
+    }
+  }
+  for(let i = 0; i < saveData.todo.length; i++) {
+    let item = saveData.todo[i];
+    if(!tasks[item.id])
+      continue;
 
+    let task = tasks[item.id];
+    task.started = item.started;
+    task.startTime = item.startTime;
+
+    todo.push(task);
+  }
+
+  GameController.setState({
+    todo: todo,
+    saved: true,
+  });
+}
+
+$(document).ready(() => {
+  if(location.hash.length <= 1)
+    return;
+
+  let saveData = location.hash.substr(1);
+
+  try {
+    saveData = JSON.parse(atob(saveData));
+  } catch (e) {
+    console.log("Error Importing Save");
+    console.error(e);
+    return;
+  }
+
+  /*
+    {completed:{thing: 1}, times: {thing: 1}, todo: [{id: "asdf", started: false, startTime: 0}]}
+  */
+
+  // make sure completed is an object with value type number
+  if(typeof saveData.completed === "object" && typeof saveData.completed.length === "undefined") {
+    for(let key in saveData.completed)
+      if(typeof saveData.completed[key] !== "number") {
+        console.error("Import completed value type not number");
+        return;
+      }
+  } else {
+    console.error("Import completed type not object");
+    return;
+  }
+
+  // make sure times is an object with value type number
+  if(typeof saveData.times === "object" && typeof saveData.times.length === "undefined") {
+    for(let key in saveData.times)
+      if(typeof saveData.times[key] !== "number") {
+        console.error("Import times value type not number");
+        return;
+      }
+  } else {
+    console.error("Import times type not object");
+    return;
+  }
+
+  // make sure times is an array with value type object with keys id, started, startTime
+  if(typeof saveData.todo === "object" && typeof saveData.todo.length !== "undefined") {
+    for(let i = 0; i < saveData.todo.length; i++) {
+      let thing = saveData.todo[i];
+      if(typeof thing.id !== "string") {
+        console.error("Import todo id value type not string");
+        return;
+      }
+      if(typeof thing.started !== "boolean") {
+        console.error("Import todo started value type not boolean");
+        return;
+      }
+      if(typeof thing.startTime !== "number") {
+        console.error("Import todo startTime value type not number");
+        return;
+      }
+    }
+  } else {
+    console.error("Import todo type not array");
+    return;
+  }
+
+  // Create our load game task
+  tasks.__imported_game = new Task("__imported_game", "Import Things", 1, 5000, [{id: "__start", count: 1}], ()=>{
+    loadGame(saveData);
+  }, Object.keys(saveData.completed).map(t => ({id: t, count: saveData.completed[t]})));
+
+  GameController.state.todo.push(tasks.__imported_game);
+  GameController.setState({
+    todo: GameController.state.todo
+  });
+
+});
 
 $(document).ready(() => {
   // Make sure we can store things
@@ -914,40 +1016,17 @@ $(document).ready(() => {
 
   // Create our load game task
   tasks.__loaded_game = new Task("__loaded_game", "Load Things", 1, 5000, [{id: "__start", count: 1}], ()=>{
-    let todo = [];
-    for(let t in saveData.times) {
-      let task = tasks[t];
-      task.times = saveData.times[t];
-      if(task.limit > 0) {
-        task.limit -= task.times;
-        task.limit = Math.max(task.limit, 0);
-      }
-    }
-    for(let i = 0; i < saveData.todo.length; i++) {
-      let item = saveData.todo[i];
-      if(!tasks[item.id])
-        continue;
-
-      let task = tasks[item.id];
-      task.started = item.started;
-      task.startTime = item.startTime;
-
-      todo.push(task);
-    }
-
-    GameController.setState({
-      todo: todo,
-    });
+    loadGame(saveData);
   }, Object.keys(saveData.completed).map(t => ({id: t, count: saveData.completed[t]})));
 
   GameController.state.todo.push(tasks.__loaded_game);
-
   GameController.setState({
     todo: GameController.state.todo
-  })
+  });
 });
 
 hidden.__loaded_game = 1;
+hidden.__imported_game = 1;
 hidden.__start = 1;
 
 function identify(event, task) {
@@ -1105,6 +1184,7 @@ class Controls extends React.Component {
     this.onTaskFinish = this.onTaskFinish.bind(this);
     this.toggleInventory = this.toggleInventory.bind(this);
     this.saveGame = this.saveGame.bind(this);
+    this.saveLink = this.saveLink.bind(this);
     this.canAfford = this.canAfford.bind(this);
     this.computeScore = this.computeScore.bind(this);
   }
@@ -1262,6 +1342,10 @@ class Controls extends React.Component {
     });
   }
 
+  saveLink() {
+    window.location.href = window.location.origin + "#" + btoa(localStorage.CreateSaveData);
+  }
+
   saveGame() {
     // Can't save to storage
     if(typeof Storage === "undefined") {
@@ -1288,7 +1372,10 @@ class Controls extends React.Component {
     // Animate Button
     let elem = $(this.refs.saveButton);
     $(this.refs.saveButton).shake({direction: "up", times: 0.5, distance: 20});
-    
+  
+
+
+    this.setState({saved: true});
     console.log("Saved Game");
   }
 
@@ -1331,6 +1418,9 @@ class Controls extends React.Component {
         <div className="inventory-buttons">
           {this.state.completed.things && <button ref="saveButton" onClick={this.saveGame}>
             <i className="material-icons">save</i>
+          </button>}
+          {this.state.saved && <button onClick={this.saveLink}>
+            <i className="material-icons">link</i>
           </button>}
         </div>
         <div className="card-container">

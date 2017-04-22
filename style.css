@@ -65,6 +65,9 @@ body {
   justify-content: center;
   margin: 5px;
 }
+.inventory-buttons button {
+  margin: 5px;
+}
 
 .inventory-content {
   align-items: center;

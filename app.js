@@ -1314,10 +1314,13 @@ class Controls extends React.Component {
         )}
       </div>
       <div className="inventory" ref="inventory">
-        {this.state.completed.things && <div className="card">
-          <div className="card-content">
-            <h2><span>Score</span><span>{score.score}</span></h2>
-            <h2><span>Final Products</span><span>{score.ends}</span></h2>
+        {this.state.completed.things &&
+        <div className="card-container">
+          <div className="card">
+            <div className="card-content">
+              <h2><span>Score</span><span>{score.score}</span></h2>
+              <h2><span>Final Products</span><span>{score.ends}</span></h2>
+            </div>
           </div>
         </div>}
         <div className="inventory-buttons">
@@ -1325,14 +1328,16 @@ class Controls extends React.Component {
             <i className="material-icons">save</i>
           </button>}
         </div>
-        <div className="inventory-content">
-          {!this.state.completed.things && <h2>Nothing Here Yet!</h2>}
-          {Object.keys(this.state.completed).map(k => (this.state.completed[k] > -1 && !hidden[k] && (
-            <span className={"inventory-item " + (scoreValues[k] ? "final" : "")} key={k} onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, k)}}>
-              {scoreValues[k] && <i className="material-icons">star</i>}
-              {(scoreValues[k] ? "" : this.state.completed[k] + " ") + k}
-            </span>
-          )))}
+        <div className="card-container">
+          <div className="inventory-content">
+            {!this.state.completed.things && <h2>Nothing Here Yet!</h2>}
+            {Object.keys(this.state.completed).map(k => (this.state.completed[k] > -1 && !hidden[k] && (
+              <span className={"inventory-item " + (scoreValues[k] ? "final" : "")} key={k} onMouseLeave={e=>{identify(e, '')}} onMouseOver={e=>{identify(e, k)}}>
+                {scoreValues[k] && <i className="material-icons">star</i>}
+                {(scoreValues[k] ? "" : this.state.completed[k] + " ") + k}
+              </span>
+            )))}
+          </div>
         </div>
       </div>
       <div className="toolbar">

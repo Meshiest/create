@@ -1343,7 +1343,7 @@ class Controls extends React.Component {
   }
 
   saveLink() {
-    window.location.href = window.location.origin + "#" + btoa(localStorage.CreateSaveData);
+    window.location.href = window.location.origin + window.location.pathname + "#" + btoa(localStorage.CreateSaveData);
   }
 
   saveGame() {

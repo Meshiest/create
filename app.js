@@ -994,6 +994,9 @@ function loadGame(saveData) {
   let todo = [];
   for(let t in saveData.times) {
     let task = tasks[t];
+    if(typeof task === "undefined")
+      continue;
+    
     task.times = saveData.times[t];
     if(task.limit > 0) {
       task.limit -= task.times;

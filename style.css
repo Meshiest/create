@@ -302,6 +302,10 @@ button:focus {
   padding: 5px;
 }
 
+.first-time {
+  background-color: #efe;
+}
+
 .achievements {
   bottom: 0;
   height: auto;
@@ -324,4 +328,10 @@ button:focus {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.count {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
 }

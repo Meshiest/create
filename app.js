@@ -7,7 +7,7 @@ class Task {
     name: Task Name
     limit: Number of times task can be done, -1 for unlimited
     duration: How long it takes to do the task
-    requirements: 
+    requirements:
       [{id: "task id", count: "num required times task was run", keep: true/false, hidden: true/false}]
       if count < 0, the requirement means there must be none of specified task completed
       when keep is true resources will not be consumed
@@ -110,7 +110,7 @@ class Card extends React.Component {
   // card entrance animation
   appear() {
     if(this.visible)
-      return; 
+      return;
 
     let card = $(this.refs.card);
     let comp = this;
@@ -179,7 +179,7 @@ class Card extends React.Component {
   render() {
     let requirements = {};
     let output = hidden[this.props.task.id] ? {} : {[this.props.task.id]: 1};
-    
+
     for(let i = 0; i < this.props.task.output.length; i++) {
       let out = this.props.task.output[i];
 
@@ -199,11 +199,15 @@ class Card extends React.Component {
         requirements[req.id] = (requirements[req.id] || 0) + req.count;
     }
 
-    return (<div className="card" ref="card" style={{opacity: 0}}>
+    const { done } = this.props;
+    const alreadyDone = typeof done !== 'undefined';
+
+    return (<div className={'card ' + (alreadyDone ? '' : 'first-time')} ref="card" style={{opacity: 0}}>
       <div className="card-info">
         <div className="card-content">
           <h2>
             {this.props.task.name}
+            {alreadyDone && <span className="count">x{done}</span>}
           </h2>
           <div className="card-requirements">
             {Object.keys(output).map(id => output[id] != 0 && (
@@ -962,7 +966,7 @@ let scoreValues = {
   liberality: 981,
   kindness: 981,
   envy: 988,
-  supercluster: 1647, 
+  supercluster: 1647,
 };
 
 /* -- Things --
@@ -996,7 +1000,7 @@ function loadGame(saveData) {
     let task = tasks[t];
     if(typeof task === "undefined")
       continue;
-    
+
     task.times = saveData.times[t];
     if(task.limit > 0) {
       task.limit -= task.times;
@@ -1140,7 +1144,7 @@ function identify(event, task) {
 $(document.body).mousemove((e) => {
   if(!TooltipController.task)
     return;
-  
+
   $('#tooltip').css("left", e.pageX);
   $('#tooltip').css("top", e.pageY);
 });
@@ -1235,7 +1239,7 @@ class AchievementCard extends React.Component {
     let comp = this;
     setTimeout(()=> {
       $(this.refs.card).animate({height: 0}, {
-        duration: "slow", 
+        duration: "slow",
         complete() {
           comp.props.onFinish(comp.props.content)
         }
@@ -1271,7 +1275,7 @@ class Controls extends React.Component {
     this.tasks = tasks;
 
     this.showInventory = false;
-    
+
     this.state = {
       todo: initial, // initial tasks are displayed
       completed: {__start: 1} // storage for completed tasks and how many times the tasks were completed
@@ -1381,7 +1385,7 @@ class Controls extends React.Component {
 
   // Called when the duration for a task is done
   onTaskFinish(task) {
-    
+
     task.times ++;
 
     // decrease the task if it's not an unlimited task
@@ -1420,7 +1424,7 @@ class Controls extends React.Component {
     // check if we can add new tasks
     for(let name in this.tasks) {
       let task = this.tasks[name];
-      
+
       // add the task to our todo
       if(!this.state.todo.includes(task) && this.canAfford(task)) {
         this.state.todo.push(task);
@@ -1464,14 +1468,14 @@ class Controls extends React.Component {
     Object.keys(tasks).forEach(t => {
       saveData.times[t] = tasks[t].times;
     });
-    
+
     // Save to storage
     localStorage.CreateSaveData = JSON.stringify(saveData);
 
     // Animate Button
     let elem = $(this.refs.saveButton);
     $(this.refs.saveButton).shake({direction: "up", times: 0.5, distance: 20});
-  
+
 
 
     this.setState({saved: true});
@@ -1498,6 +1502,7 @@ class Controls extends React.Component {
           <Card key={t.id + "_" + t.times}
             ref={"task_" + t.id + "_" + t.times}
             task={t}
+            done={this.state.completed[t.id]}
             onTaskStart={this.onTaskStart}
             onTaskFinish={this.onTaskFinish}
             canAfford={this.canAfford}

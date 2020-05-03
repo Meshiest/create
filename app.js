@@ -21,7 +21,7 @@ class Task {
   constructor(id, name, limit, duration, requirements, action, output) {
     this.name = name;
     this.limit = limit || 1;
-    this.duration = duration || 1000;
+    this.duration = (duration || 1000)/10;
     this.requirements = requirements || [];
     this.id = id;
     this.times = 0;

@@ -49,7 +49,8 @@ class ProgressBar extends React.Component {
   }
 
   // Starts rendering
-  start(time) {
+  start(time, duration) {
+    this.duration = duration;
     this.setState({
       startTime: time || Date.now()
     });
@@ -130,13 +131,15 @@ class Card extends React.Component {
   }
 
   // called on the start button click, starts the progress bar
-  start(time) {
+  start(time, count=1) {
     if(!this.refs.progressBar) {
-      window.requestAnimationFrame(()=>{this.start(time)}.bind(this));
+      window.requestAnimationFrame(()=>{this.start(time, count)}.bind(this));
       return;
     }
 
-    if(!this.props.canAfford(this.props.task) || !this.visible) {
+    console.log('count', count);
+
+    if(!this.props.canAfford(this.props.task, count) || !this.visible) {
       return;
     }
 
@@ -145,16 +148,19 @@ class Card extends React.Component {
 
     this.setState({
       started: true,
-      startTime: time || Date.now()
+      count,
+      startTime: time || Date.now(),
+      duration: this.props.task.duration * count,
     });
 
-    this.props.onTaskStart(this.props.task);
-    this.refs.progressBar.start(time);
+    this.props.onTaskStart(this.props.task, count);
+    this.refs.progressBar.start(time, this.props.task.duration * count);
   }
 
   finish() {
     let comp = this;
     let card = $(this.refs.card);
+    const { count } = this.state;
     comp.visible = false;
     card.animate({opacity: 0}, {
       step(now, fx) {
@@ -163,12 +169,12 @@ class Card extends React.Component {
       duration: "slow",
       complete() {
         if(comp.props.canAfford(comp.props.task))
-          comp.props.onTaskFinish(comp.props.task);
+          comp.props.onTaskFinish(comp.props.task, count);
         else
           card.animate({height: 0}, {
             duration: "fast",
             complete(){
-              comp.props.onTaskFinish(comp.props.task);
+              comp.props.onTaskFinish(comp.props.task, count);
             }
           });
       }
@@ -177,11 +183,12 @@ class Card extends React.Component {
 
   // rendering of the card
   render() {
+    const { task } = this.props;
     let requirements = {};
-    let output = hidden[this.props.task.id] ? {} : {[this.props.task.id]: 1};
+    let output = hidden[task.id] ? {} : {[task.id]: 1};
 
-    for(let i = 0; i < this.props.task.output.length; i++) {
-      let out = this.props.task.output[i];
+    for(let i = 0; i < task.output.length; i++) {
+      let out = task.output[i];
 
       if(out.hidden || hidden[out.id])
         continue;
@@ -189,8 +196,8 @@ class Card extends React.Component {
       output[out.id] = (output[out.id] || 0) + out.count;
     }
 
-    for(let i = 0; i < this.props.task.requirements.length; i++) {
-      let req = this.props.task.requirements[i];
+    for(let i = 0; i < task.requirements.length; i++) {
+      let req = task.requirements[i];
 
       if(req.hidden || hidden[req.id])
         continue;
@@ -200,7 +207,8 @@ class Card extends React.Component {
     }
 
     const { done } = this.props;
-    const alreadyDone = typeof done !== 'undefined';
+    const alreadyDone = typeof done !== 'undefined'
+    const tenAvailable = !scoreValues[task.id] && this.props.canAfford(this.props.task, 10);
 
     return (<div className={'card ' + (alreadyDone ? '' : 'first-time')} ref="card" style={{opacity: 0}}>
       <div className="card-info">
@@ -227,9 +235,12 @@ class Card extends React.Component {
           </div>
         </div>
         <div className="card-button">
-          <button onClick={()=>{if(!this.state.started) this.start()}.bind(this)} className={this.state.started ? "started" : ""}>
+          <button onClick={()=>{if(!this.state.started) this.start(null)}.bind(this)} className={this.state.started ? "started" : ""}>
             <i className="material-icons">arrow_forward</i>
           </button>
+          {tenAvailable && <button onClick={()=>{if(!this.state.started) this.start(null,10)}.bind(this)} className={this.state.started ? "ten started" : "ten"}>
+            x<span className="big">10</span>
+          </button>}
         </div>
       </div>
       <ProgressBar ref="progressBar" onFinish={this.finish} duration={this.state.duration} />
@@ -1292,7 +1303,7 @@ class Controls extends React.Component {
     this.computeScore = this.computeScore.bind(this);
   }
 
-  canAfford(task) {
+  canAfford(task, mult=1) {
     // make sure we can do this task and we don't already have it in progress
     if(task.limit == 0)
       return false;
@@ -1303,7 +1314,8 @@ class Controls extends React.Component {
       let req = task.requirements[i];
 
       // if we don't have enough or we're not supposed to have a resource
-      if((this.state.completed[req.id] || 0) < req.count || req.count == 0 && !this.state.completed[req.id] || req.count < 0 && this.state.completed[req.id]) {
+      const complete = this.state.completed[req.id] || 0;
+      if(complete < req.count * mult || req.count == 0 && !complete || req.count < 0 && complete) {
         hasRequirements = false;
         break;
       }
@@ -1314,12 +1326,12 @@ class Controls extends React.Component {
 
   // callback for when the start button is pressed on the card component
   // consumes ingredients and removes unqualified tasks if necessary
-  onTaskStart(parent) {
+  onTaskStart(parent, count=1) {
     // remove our resources
     for(let i = 0; i < parent.requirements.length; i++) {
       let req = parent.requirements[i];
       if(req.count > 0 && !req.keep)
-        this.state.completed[req.id] -= req.count
+        this.state.completed[req.id] -= req.count * count
     }
 
     this.setState({completed: this.state.completed});
@@ -1384,7 +1396,7 @@ class Controls extends React.Component {
   }
 
   // Called when the duration for a task is done
-  onTaskFinish(task) {
+  onTaskFinish(task, count=1) {
 
     task.times ++;
 
@@ -1403,14 +1415,14 @@ class Controls extends React.Component {
 
     // we haven't completed this task before
     if(!this.state.completed[task.id])
-      this.state.completed[task.id] = 1;
+      this.state.completed[task.id] = count;
     else // complete it again
-      this.state.completed[task.id] ++;
+      this.state.completed[task.id] += count;
 
     // give potential for multiple outputs
     for(let i = 0; i < task.output.length; i++) {
       let output = task.output[i];
-      this.state.completed[output.id] = (this.state.completed[output.id] || 0) + output.count;
+      this.state.completed[output.id] = (this.state.completed[output.id] || 0) + output.count * count;
     }
 
     // remove it if we can't afford it

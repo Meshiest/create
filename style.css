@@ -239,6 +239,17 @@ body {
   padding: 5px;
 }
 
+.card-button .ten {
+  margin-top: 5px;
+  font-size: 8px;
+  transform: scale(0.7);
+  filter: hue-rotate(270deg);
+}
+
+span.big {
+  font-size: 14px;
+}
+
 button {
   align-items: center;
   background-color: #1E88E5;

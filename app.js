@@ -137,8 +137,6 @@ class Card extends React.Component {
       return;
     }
 
-    console.log('count', count);
-
     if(!this.props.canAfford(this.props.task, count) || !this.visible) {
       return;
     }
